@@ -10,7 +10,45 @@ from .parsing import number, parse_tables
 
 
 def _date_text(value: str) -> str:
-    return value.replace("/", "-")[:10]
+    parsed = _parse_date(value)
+    return parsed.isoformat() if parsed else value.replace("/", "-")[:10]
+
+
+def _parse_date(value: str) -> date | None:
+    text = value.strip().split()[0]
+    for fmt in ("%Y/%m/%d", "%Y-%m-%d"):
+        try:
+            return datetime.strptime(text, fmt).date()
+        except ValueError:
+            pass
+    parts = text.replace("-", "/").split("/")
+    if len(parts) == 3 and all(part.isdigit() for part in parts):
+        year, month, day = map(int, parts)
+        if year < 1911:
+            year += 1911
+        try:
+            return date(year, month, day)
+        except ValueError:
+            return None
+    return None
+
+
+def _latest(rows: list[list[str]]) -> list[str]:
+    dated = [(parsed, row) for row in rows if row and (parsed := _parse_date(row[0]))]
+    if not dated:
+        raise ValueError("no valid dated row found")
+    return max(dated, key=lambda item: item[0])[1]
+
+
+def _page_date(tables: list[list[list[str]]], fallback: date) -> date:
+    parsed = [
+        candidate
+        for table in tables
+        for row in table
+        for cell in row
+        if (candidate := _parse_date(cell)) is not None
+    ]
+    return max(parsed) if parsed else fallback
 
 
 class DerivativesCollector:
@@ -22,14 +60,14 @@ class DerivativesCollector:
         features: dict[str, Any] = {}
         zones: dict[str, Any] = {"calls": [], "puts": [], "max_pain": None, "status": "partial"}
         statuses: list[SourceStatus] = []
-        self._pc_ratio(features, statuses)
-        self._taiwan_vix(features, statuses)
-        self._futures(features, statuses, spot)
-        self._institution_positions(features, statuses)
-        self._options(zones, statuses, spot)
+        self._pc_ratio(features, statuses, trade_date)
+        self._taiwan_vix(features, statuses, trade_date)
+        self._futures(features, statuses, spot, trade_date)
+        self._institution_positions(features, statuses, trade_date)
+        self._options(zones, statuses, spot, trade_date)
         return features, zones, statuses
 
-    def _pc_ratio(self, features: dict, statuses: list[SourceStatus]) -> None:
+    def _pc_ratio(self, features: dict, statuses: list[SourceStatus], trade_date: date) -> None:
         url = self.sources["taifex_pc_ratio"]
         try:
             tables = parse_tables(self.client.get_text(url))
@@ -40,18 +78,21 @@ class DerivativesCollector:
                         candidates.append(row)
             if not candidates:
                 raise ValueError("Put/Call table not found")
-            row = candidates[-1]
+            row = _latest(candidates)
             volume_ratio = number(row[3])
             oi_ratio = number(row[6])
             features["put_call_volume_ratio"] = (volume_ratio or 100) / 100.0
             features["put_call_oi_ratio"] = (oi_ratio or 100) / 100.0
             # Centered interpretation; extremes remain diagnostic rather than directional.
             features["put_call_sentiment"] = 1.0 - min(abs(features["put_call_oi_ratio"] - 1.0), 1.0)
-            statuses.append(SourceStatus("TAIFEX Put/Call", "ready", _date_text(row[0]), url=url))
+            as_of = _parse_date(row[0])
+            fresh = as_of == trade_date
+            message = "" if fresh else f"最新資料為 {as_of.isoformat() if as_of else row[0]}，非報告交易日"
+            statuses.append(SourceStatus("TAIFEX Put/Call", "ready" if fresh else "partial", _date_text(row[0]), message, url))
         except Exception as error:
             statuses.append(SourceStatus("TAIFEX Put/Call", "partial", message=str(error), url=url))
 
-    def _taiwan_vix(self, features: dict, statuses: list[SourceStatus]) -> None:
+    def _taiwan_vix(self, features: dict, statuses: list[SourceStatus], trade_date: date) -> None:
         url = self.sources["taiwan_vix"]
         try:
             tables = parse_tables(self.client.get_text(url))
@@ -65,13 +106,16 @@ class DerivativesCollector:
                             candidates.append((row[0], clean[-1]))
             if not candidates:
                 raise ValueError("TAIWAN VIX value not found")
-            as_of, value = candidates[-1]
+            as_of, value = max(candidates, key=lambda item: _parse_date(item[0]) or date.min)
             features["taiwan_vix"] = value
-            statuses.append(SourceStatus("TAIWAN VIX", "ready", _date_text(as_of), url=url))
+            parsed_as_of = _parse_date(as_of)
+            fresh = parsed_as_of == trade_date
+            message = "" if fresh else f"最新資料為 {parsed_as_of.isoformat() if parsed_as_of else as_of}，非報告交易日"
+            statuses.append(SourceStatus("TAIWAN VIX", "ready" if fresh else "partial", _date_text(as_of), message, url))
         except Exception as error:
             statuses.append(SourceStatus("TAIWAN VIX", "partial", message=str(error), url=url))
 
-    def _futures(self, features: dict, statuses: list[SourceStatus], spot: float | None) -> None:
+    def _futures(self, features: dict, statuses: list[SourceStatus], spot: float | None, trade_date: date) -> None:
         url = self.sources["taifex_daily_futures"]
         try:
             tables = parse_tables(self.client.get_text(url))
@@ -90,11 +134,12 @@ class DerivativesCollector:
             if spot:
                 features["futures_basis"] = settlement - spot
                 features["futures_basis_pct"] = (settlement - spot) / spot
-            statuses.append(SourceStatus("TAIFEX台指期行情", "ready", url=url))
+            as_of = _page_date(tables, trade_date)
+            statuses.append(SourceStatus("TAIFEX台指期行情", "ready", as_of.isoformat(), url=url))
         except Exception as error:
             statuses.append(SourceStatus("TAIFEX台指期行情", "partial", message=str(error), url=url))
 
-    def _institution_positions(self, features: dict, statuses: list[SourceStatus]) -> None:
+    def _institution_positions(self, features: dict, statuses: list[SourceStatus], trade_date: date) -> None:
         url = self.sources["taifex_futures"]
         try:
             tables = parse_tables(self.client.get_text(url))
@@ -118,11 +163,13 @@ class DerivativesCollector:
                 features["foreign_futures_net_ratio"] = sum(foreign_nets) / max(sum(abs(v) for v in foreign_nets), 1.0)
             if noninst_ratios:
                 features["noninst_short_long_ratio"] = sum(noninst_ratios) / len(noninst_ratios)
-            statuses.append(SourceStatus("TAIFEX三大法人期貨", "ready" if foreign_nets else "partial", url=url))
+            message = "" if foreign_nets else "回傳成功，但找不到臺指期外資未平倉淨額"
+            as_of = _page_date(tables, trade_date)
+            statuses.append(SourceStatus("TAIFEX三大法人期貨", "ready" if foreign_nets else "partial", as_of.isoformat(), message, url))
         except Exception as error:
             statuses.append(SourceStatus("TAIFEX三大法人期貨", "partial", message=str(error), url=url))
 
-    def _options(self, zones: dict, statuses: list[SourceStatus], spot: float | None) -> None:
+    def _options(self, zones: dict, statuses: list[SourceStatus], spot: float | None, trade_date: date) -> None:
         url = self.sources["taifex_options"]
         try:
             tables = parse_tables(self.client.get_text(url))
@@ -163,6 +210,7 @@ class DerivativesCollector:
                 call_weight = sum(r["weight"] for r in zones["calls"])
                 put_weight = sum(r["weight"] for r in zones["puts"])
                 zones["pressure_balance"] = safe_div(put_weight - call_weight, put_weight + call_weight)
-            statuses.append(SourceStatus("TAIFEX選擇權履約價", "ready", url=url))
+            as_of = _page_date(tables, trade_date)
+            statuses.append(SourceStatus("TAIFEX選擇權履約價", "ready", as_of.isoformat(), url=url))
         except Exception as error:
             statuses.append(SourceStatus("TAIFEX選擇權履約價", "partial", message=str(error), url=url))
