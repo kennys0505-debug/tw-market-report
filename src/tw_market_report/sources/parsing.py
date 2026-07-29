@@ -56,6 +56,13 @@ class TableParser(HTMLParser):
             self._row = []
         elif tag in {"td", "th"} and self._row is not None:
             self._cell = []
+        elif tag == "input" and self._cell is not None:
+            # Several TAIFEX tables render their values in readonly form inputs.
+            # HTMLParser does not expose those through handle_data(), so preserve
+            # the value attribute as cell text.
+            value = dict(attrs).get("value")
+            if value:
+                self._cell.append(str(value))
 
     def handle_data(self, data: str) -> None:
         if self._cell is not None:
