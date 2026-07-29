@@ -1,0 +1,51 @@
+{
+  "timezone": "Asia/Taipei",
+  "close_report_time": "22:00",
+  "premarket_report_time": "08:15",
+  "history_days": 1260,
+  "correlation_window": 252,
+  "correlation_threshold": 0.75,
+  "shadow_mode": true,
+  "exposure_enabled_after_sessions": 60,
+  "module_weights": {
+    "trend_breadth": 0.25,
+    "capital_flow": 0.20,
+    "leverage_lending": 0.15,
+    "futures": 0.15,
+    "options_volatility": 0.10,
+    "overseas": 0.10,
+    "valuation": 0.05
+  },
+  "state_thresholds": {
+    "strong_bull": 65,
+    "turn_bull": 60,
+    "turn_bear": 40,
+    "strong_bear": 30
+  },
+  "exposure_ranges": {
+    "強多": [80, 100],
+    "轉多": [60, 80],
+    "盤整": [40, 60],
+    "轉空": [20, 40],
+    "強空": [0, 20]
+  },
+  "sources": {
+    "twse_calendar": "https://openapi.twse.com.tw/v1/holidaySchedule/holidaySchedule?queryYear={roc_year}",
+    "twse_mi_index": "https://www.twse.com.tw/exchangeReport/MI_INDEX?response=json&type=ALLBUT0999&date={date}",
+    "twse_margin": "https://www.twse.com.tw/exchangeReport/MI_MARGN?response=json&selectType=MS&date={date}",
+    "twse_institutional": "https://www.twse.com.tw/fund/BFI82U?response=json&dayDate={date}&type=day",
+    "twse_lending": "https://www.twse.com.tw/rwd/zh/lending/TWT72U?response=json&date={date}",
+    "twse_valuation": "https://www.twse.com.tw/exchangeReport/BWIBBU_d?response=json&date={date}&selectType=ALL",
+    "tpex_quotes": "https://www.tpex.org.tw/openapi/v1/tpex_mainboard_quotes",
+    "tpex_historical_quotes": "https://www.tpex.org.tw/web/stock/aftertrading/daily_close_quotes/stk_quote_result.php?l=zh-tw&o=json&d={roc_date}&s=0,asc,0",
+    "tpex_highlight": "https://www.tpex.org.tw/openapi/v1/tpex_mainborad_highlight",
+    "tpex_margin": "https://www.tpex.org.tw/openapi/v1/tpex_mainboard_margin_balance",
+    "taifex_pc_ratio": "https://www.taifex.com.tw/cht/3/pcRatio",
+    "taifex_daily_futures": "https://www.taifex.com.tw/cht/3/futDailyMarketReport",
+    "taifex_futures": "https://www.taifex.com.tw/cht/3/futContractsDate",
+    "taifex_options": "https://www.taifex.com.tw/cht/3/optDailyMarketSummary",
+    "taiwan_vix": "https://www.taifex.com.tw/cht/7/vixMinNew",
+    "cboe_vix_csv": "https://cdn.cboe.com/api/global/us_indices/daily_prices/VIX_History.csv",
+    "yahoo_chart": "https://query1.finance.yahoo.com/v8/finance/chart/{symbol}?range=3mo&interval=1d"
+  }
+}
