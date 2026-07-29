@@ -162,28 +162,39 @@ def classify_state(
 def reversal_stage(features: dict[str, Any], state: str, history: list[dict[str, Any]]) -> tuple[str, list[str]]:
     reasons: list[str] = []
     extreme_count = 0
+
     down_pct = features.get("limit_down_percentile_5y")
     if isinstance(down_pct, (int, float)) and down_pct >= 95:
         extreme_count += 1
         reasons.append("跌停比例進入五年極端區")
+
     margin_pct = features.get("margin_stress_percentile")
-if isinstance(margin_pct, (int, float)) and margin_pct <= 10:
-    extreme_count += 1
-    reasons.append("融資壓力代理接近歷史低檔")
+    if isinstance(margin_pct, (int, float)) and margin_pct <= 10:
+        extreme_count += 1
+        reasons.append("融資壓力代理接近歷史低檔")
 
-vix_pct = features.get("taiwan_vix_percentile")
-if isinstance(vix_pct, (int, float)) and vix_pct >= 95:
-    extreme_count += 1
-    reasons.append("TAIWAN VIX進入極端區")
+    vix_pct = features.get("taiwan_vix_percentile")
+    if isinstance(vix_pct, (int, float)) and vix_pct >= 95:
+        extreme_count += 1
+        reasons.append("TAIWAN VIX進入極端區")
 
-valuation_pct = features.get("valuation_stress_percentile")
-if isinstance(valuation_pct, (int, float)) and valuation_pct >= 95:
-    extreme_count += 1
-    reasons.append("估值／回撤壓力進入極端區")
+    valuation_pct = features.get("valuation_stress_percentile")
+    if isinstance(valuation_pct, (int, float)) and valuation_pct >= 95:
+        extreme_count += 1
+        reasons.append("估值／回撤壓力進入極端區")
+
     confirmations = sum(
         bool(features.get(key))
-        for key in ("price_reversal", "breadth_reversal", "limit_contraction", "institution_reversal", "futures_reversal", "options_reversal")
+        for key in (
+            "price_reversal",
+            "breadth_reversal",
+            "limit_contraction",
+            "institution_reversal",
+            "futures_reversal",
+            "options_reversal",
+        )
     )
+
     if confirmations >= 3 and history and history[-1].get("reversal_stage") in {"初步反轉", "反轉確認"}:
         return "反轉確認", reasons
     if confirmations >= 2:
