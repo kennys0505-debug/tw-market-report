@@ -1,0 +1,94 @@
+name: Taiwan market report
+
+on:
+  schedule:
+    - cron: "15 0 * * 1-5" # 08:15 Asia/Taipei
+    - cron: "0 14 * * 1-5" # 22:00 Asia/Taipei
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Report mode
+        required: true
+        default: close
+        type: choice
+        options: [close, premarket, fixture]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: market-report-${{ github.event.schedule || inputs.mode }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install project
+        run: python -m pip install -e .
+
+      - name: Run tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Select mode
+        id: mode
+        shell: bash
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            MODE="${{ inputs.mode }}"
+          elif [[ "${{ github.event.schedule }}" == "15 0 * * 1-5" ]]; then
+            MODE="premarket"
+          else
+            MODE="close"
+          fi
+          echo "mode=$MODE" >> "$GITHUB_OUTPUT"
+
+      - name: Refresh limit-signal validation gate
+        if: steps.mode.outputs.mode != 'fixture'
+        run: python -m tw_market_report.cli backtest
+
+      - name: Build report
+        shell: bash
+        env:
+          LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
+          LINE_USER_ID: ${{ secrets.LINE_USER_ID }}
+          REPORT_URL: ${{ vars.REPORT_URL }}
+        run: |
+          if [[ "${{ steps.mode.outputs.mode }}" == "fixture" ]]; then
+            python -m tw_market_report.cli fixture
+          else
+            python -m tw_market_report.cli run --mode "${{ steps.mode.outputs.mode }}" --notify
+          fi
+
+      - name: Persist history and generated report
+        if: steps.mode.outputs.mode != 'fixture'
+        shell: bash
+        run: |
+          git config user.name "market-report-bot"
+          git config user.email "market-report-bot@users.noreply.github.com"
+          git add -A data docs
+          if ! git diff --cached --quiet; then
+            git commit -m "data: update ${{ steps.mode.outputs.mode }} report [skip ci]"
+            git push
+          fi
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: docs
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
