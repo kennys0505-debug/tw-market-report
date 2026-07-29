@@ -22,9 +22,26 @@ def _count_pair(value: Any) -> tuple[int, int]:
 
 
 def _tables(payload: Any) -> list[dict[str, Any]]:
-    if isinstance(payload, dict) and isinstance(payload.get("tables"), list):
-        return payload["tables"]
-    return []
+    """Return every fields/data pair used by TWSE's old and new JSON shapes."""
+    if not isinstance(payload, dict):
+        return []
+    result = [table for table in payload.get("tables", []) if isinstance(table, dict)]
+    for key, fields in payload.items():
+        match = re.fullmatch(r"fields(\d*)", str(key))
+        if not match or not isinstance(fields, list):
+            continue
+        data = payload.get(f"data{match.group(1)}")
+        if isinstance(data, list):
+            result.append({"fields": fields, "data": data, "title": payload.get(f"title{match.group(1)}", "")})
+    return result
+
+
+def _all_rows(payload: Any) -> list[dict[str, Any]]:
+    return [
+        row
+        for table in _tables(payload)
+        for row in row_objects(table.get("fields") or [], table.get("data") or [])
+    ]
 
 
 class DomesticCollector:
@@ -128,6 +145,18 @@ class DomesticCollector:
             up_limit = int(number(find_field(merged, "漲停"), 0) or 0)
             down_limit = int(number(find_field(merged, "跌停"), 0) or 0)
             eligible = up + down + flat
+            # The OpenAPI schema has also used machine-readable property names.
+            # Its documented column order is stable, so use a guarded positional
+            # fallback when the Chinese labels are absent.
+            if not eligible and rows and isinstance(rows[0], dict):
+                values = list(rows[0].values())
+                if len(values) >= 14:
+                    close_candidate = number(values[6])
+                    candidates = [int(number(values[index], 0) or 0) for index in (8, 9, 10, 11, 12)]
+                    if close_candidate is not None and all(value >= 0 for value in candidates):
+                        features["otc_close"] = features.get("otc_close") or close_candidate
+                        up, up_limit, down, down_limit, flat = candidates
+                        eligible = up + down + flat
             if eligible:
                 limits["tpex"] = LimitStats(
                     market="tpex",
@@ -141,7 +170,8 @@ class DomesticCollector:
                     universe_verified=False,
                     calculation_method="official_market_highlight",
                 )
-            statuses.append(SourceStatus("TPEx市場現況", "ready" if eligible else "partial", ymd, url=url))
+            message = "" if eligible else "回傳成功，但找不到上漲、下跌與平盤家數欄位"
+            statuses.append(SourceStatus("TPEx市場現況", "ready" if eligible else "partial", ymd, message, url))
         except Exception as error:
             statuses.append(SourceStatus("TPEx市場現況", "partial", ymd, str(error), url))
 
@@ -167,17 +197,17 @@ class DomesticCollector:
         url = self.sources["twse_margin"].format(date=ymd)
         try:
             payload = self.client.get_json(url)
-            tables = _tables(payload)
             values: list[float] = []
-            for table in tables:
-                for row in row_objects(table.get("fields", []), table.get("data", [])):
-                    if "融資" in " ".join(map(str, row.values())):
-                        value = number(find_field(row, "今日餘額"))
-                        if value is not None:
-                            values.append(value)
+            for row in _all_rows(payload):
+                label = " ".join(map(str, row.values()))
+                if "融資" in label and ("金額" in label or "仟元" in label or "千元" in label):
+                    value = number(find_field(row, "今日餘額") or find_field(row, "本日餘額"))
+                    if value is not None:
+                        values.append(value)
             if values:
                 features["margin_balance"] = max(values)
-            statuses.append(SourceStatus("TWSE融資融券", "ready" if values else "partial", ymd, url=url))
+            message = "" if values else "回傳成功，但找不到融資金額的今日餘額欄位"
+            statuses.append(SourceStatus("TWSE融資融券", "ready" if values else "partial", ymd, message, url))
         except Exception as error:
             statuses.append(SourceStatus("TWSE融資融券", "partial", ymd, str(error), url))
 
@@ -185,22 +215,24 @@ class DomesticCollector:
         url = self.sources["twse_lending"].format(date=ymd)
         try:
             payload = self.client.get_json(url)
-            fields = payload.get("fields", []) if isinstance(payload, dict) else []
-            rows = row_objects(fields, payload.get("data", [])) if fields else []
-            balances = [number(find_field(row, "借券賣出", "餘額")) for row in rows]
+            rows = _all_rows(payload)
+            balances = [
+                number(find_field(row, "今日借券餘額") or find_field(row, "本日借券餘額"))
+                for row in rows
+            ]
             clean = [value for value in balances if value is not None]
             if clean:
-                features["borrowed_sell_balance"] = sum(clean)
-            statuses.append(SourceStatus("TWSE借券賣出", "ready" if clean else "partial", ymd, url=url))
+                features["borrowed_balance"] = sum(clean)
+            message = "" if clean else "TWT72U是借券餘額資料；回傳中找不到今日借券餘額欄位"
+            statuses.append(SourceStatus("TWSE借券餘額", "ready" if clean else "partial", ymd, message, url))
         except Exception as error:
-            statuses.append(SourceStatus("TWSE借券賣出", "partial", ymd, str(error), url))
+            statuses.append(SourceStatus("TWSE借券餘額", "partial", ymd, str(error), url))
 
     def _collect_valuation(self, ymd: str, features: dict, statuses: list[SourceStatus]) -> None:
         url = self.sources["twse_valuation"].format(date=ymd)
         try:
             payload = self.client.get_json(url)
-            fields = payload.get("fields", [])
-            rows = row_objects(fields, payload.get("data", []))
+            rows = _all_rows(payload)
             pe_values: list[float] = []
             pb_values: list[float] = []
             yield_values: list[float] = []
@@ -224,6 +256,7 @@ class DomesticCollector:
                 features["market_pb_median"] = statistics.median(pb_values)
             if yield_values:
                 features["market_dividend_yield_median"] = statistics.median(yield_values)
-            statuses.append(SourceStatus("TWSE估值", "ready" if pe_values else "partial", ymd, url=url))
+            message = "" if pe_values else "回傳成功，但找不到本益比欄位"
+            statuses.append(SourceStatus("TWSE估值", "ready" if pe_values else "partial", ymd, message, url))
         except Exception as error:
             statuses.append(SourceStatus("TWSE估值", "partial", ymd, str(error), url))
