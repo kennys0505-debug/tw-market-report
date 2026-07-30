@@ -25,6 +25,9 @@ class PipelineTests(unittest.TestCase):
             self.assertNotIn("<script src=", html)
             self.assertGreater(payload["limit_up_count"], 0)
             self.assertEqual(payload["report_mode"], "close")
+            self.assertTrue(all(value == 1.0 for value in payload["module_coverage"].values()))
+            self.assertIn("module_observed_coverage", payload)
+            self.assertIn("imputed_score_features", payload)
 
     def test_line_message_contains_required_limit_counts(self):
         message = line_message({

@@ -1,7 +1,7 @@
 import unittest
 
 from tw_market_report.fixture import fixture_history
-from tw_market_report.scoring import apply_overnight_overlay, classify_state, score_modules
+from tw_market_report.scoring import apply_overnight_overlay, classify_state, reversal_stage, score_modules
 
 
 class ScoringTests(unittest.TestCase):
@@ -20,6 +20,16 @@ class ScoringTests(unittest.TestCase):
         modules = {name: 50 for name in modules}
         self.assertEqual(classify_state(70, modules, []), "盤整")
 
+    def test_missing_features_are_neutral_instead_of_disappearing(self):
+        scores, coverage, positive, negative = score_modules(
+            {"futures_basis_pct": 0.01},
+            [],
+        )
+        self.assertAlmostEqual(coverage["futures"], 1 / 3)
+        self.assertEqual(scores["futures"], 50.0)
+        self.assertEqual(positive, [])
+        self.assertEqual(negative, [])
+
     def test_turn_state_requires_market_confirmation(self):
         modules = {name: 65 for name in ["a", "b", "c", "d", "e", "f", "g"]}
         history = [{"composite_score": 62, "domestic_market_state": "盤整"}]
@@ -35,6 +45,19 @@ class ScoringTests(unittest.TestCase):
         })
         self.assertEqual(state, "高風險")
         self.assertEqual(adjustment, -10)
+
+    def test_reversal_stage_treats_missing_percentiles_as_neutral(self):
+        stage, reasons = reversal_stage(
+            {
+                "margin_stress_percentile": None,
+                "taiwan_vix_percentile": None,
+                "valuation_stress_percentile": None,
+            },
+            "盤整",
+            [],
+        )
+        self.assertEqual(stage, "無")
+        self.assertEqual(reasons, [])
 
 
 if __name__ == "__main__":
