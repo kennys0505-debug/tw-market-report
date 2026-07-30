@@ -3,8 +3,9 @@ from __future__ import annotations
 import argparse
 import os
 import sys
-from datetime import date
+from datetime import date, datetime
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 from .config import load_config
 from .backfill import HistoryBackfiller
@@ -13,7 +14,7 @@ from .history import load_history, write_json
 from .notify import send_line
 from .pipeline import ReportPipeline
 from .render import render_dashboard
-from .sources.calendar import is_taiwan_trading_day
+from .sources.calendar import is_taiwan_trading_day, latest_completed_trading_day
 
 
 def parser() -> argparse.ArgumentParser:
@@ -49,9 +50,13 @@ def main(argv: list[str] | None = None) -> int:
         written, skipped = HistoryBackfiller(config, args.delay).run(date.fromisoformat(args.start), date.fromisoformat(args.end))
         print(f"backfill complete written={written} skipped={skipped}")
         return 0
-    run_date = date.fromisoformat(args.date) if args.date else None
+    requested_date = date.fromisoformat(args.date) if args.date else None
     fixture = args.command == "fixture"
-    effective_date = run_date or date.today()
+    now = datetime.now(ZoneInfo(config.raw.get("timezone", "Asia/Taipei")))
+    run_date = requested_date
+    if not fixture and run_date is None and args.mode == "close":
+        run_date = latest_completed_trading_day(now, config.sources)
+    effective_date = run_date or now.date()
     if not fixture and not is_taiwan_trading_day(effective_date, config.sources):
         print(f"Skip non-trading day: {effective_date}")
         return 0
