@@ -56,6 +56,8 @@ class MarketSnapshot:
     shadow_mode: bool = True
     module_scores: dict[str, float] = field(default_factory=dict)
     module_coverage: dict[str, float] = field(default_factory=dict)
+    module_observed_coverage: dict[str, float] = field(default_factory=dict)
+    imputed_score_features: list[str] = field(default_factory=list)
     features: dict[str, float | str | None] = field(default_factory=dict)
     limits: dict[str, LimitStats] = field(default_factory=dict)
     historical_limit_analogs: list[dict[str, Any]] = field(default_factory=list)

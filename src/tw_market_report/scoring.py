@@ -93,9 +93,6 @@ def score_modules(
         expected = [name for name, spec in FEATURES.items() if spec.module == module]
         available = [name for name in expected if isinstance(current_features.get(name), (int, float))]
         coverage[module] = len(available) / len(expected) if expected else 0.0
-        if not available:
-            scores[module] = 50.0
-            continue
         groups = _correlation_groups(available, history, correlation_window, correlation_threshold)
         group_scores: list[float] = []
         for group in groups:
@@ -110,6 +107,11 @@ def score_modules(
                 contributions.append((FEATURES[name].label, raw_score - 50.0))
             if weights:
                 group_scores.append(sum(weighted) / sum(weights))
+        # A missing indicator must not disappear from the module average.  Treat
+        # it as neutral until it becomes observable, so one available feature
+        # cannot dominate a low-readiness module.  ``coverage`` above remains
+        # the observed-data ratio used by the confidence calculation.
+        group_scores.extend(50.0 for name in expected if name not in available)
         scores[module] = mean(group_scores, 50.0)
     positive = sorted((item for item in contributions if item[1] > 0), key=lambda item: item[1], reverse=True)[:5]
     negative = sorted((item for item in contributions if item[1] < 0), key=lambda item: item[1])[:5]
@@ -162,39 +164,26 @@ def classify_state(
 def reversal_stage(features: dict[str, Any], state: str, history: list[dict[str, Any]]) -> tuple[str, list[str]]:
     reasons: list[str] = []
     extreme_count = 0
-
     down_pct = features.get("limit_down_percentile_5y")
     if isinstance(down_pct, (int, float)) and down_pct >= 95:
         extreme_count += 1
         reasons.append("跌停比例進入五年極端區")
-
     margin_pct = features.get("margin_stress_percentile")
     if isinstance(margin_pct, (int, float)) and margin_pct <= 10:
         extreme_count += 1
         reasons.append("融資壓力代理接近歷史低檔")
-
     vix_pct = features.get("taiwan_vix_percentile")
     if isinstance(vix_pct, (int, float)) and vix_pct >= 95:
         extreme_count += 1
         reasons.append("TAIWAN VIX進入極端區")
-
     valuation_pct = features.get("valuation_stress_percentile")
     if isinstance(valuation_pct, (int, float)) and valuation_pct >= 95:
         extreme_count += 1
         reasons.append("估值／回撤壓力進入極端區")
-
     confirmations = sum(
         bool(features.get(key))
-        for key in (
-            "price_reversal",
-            "breadth_reversal",
-            "limit_contraction",
-            "institution_reversal",
-            "futures_reversal",
-            "options_reversal",
-        )
+        for key in ("price_reversal", "breadth_reversal", "limit_contraction", "institution_reversal", "futures_reversal", "options_reversal")
     )
-
     if confirmations >= 3 and history and history[-1].get("reversal_stage") in {"初步反轉", "反轉確認"}:
         return "反轉確認", reasons
     if confirmations >= 2:

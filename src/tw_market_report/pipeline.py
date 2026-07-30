@@ -13,7 +13,7 @@ from .fixture import fixture_current, fixture_history
 from .history import load_history, load_json, upsert_history, write_json
 from .limits import attach_limit_percentiles, combine_limit_stats, historical_analogs
 from .models import LimitStats, MarketSnapshot, SourceStatus
-from .scoring import apply_overnight_overlay, classify_state, reversal_stage, score_modules
+from .scoring import FEATURES, apply_overnight_overlay, classify_state, reversal_stage, score_modules
 from .sources.derivatives import DerivativesCollector
 from .sources.domestic import DomesticCollector
 from .sources.overseas import OverseasCollector
@@ -81,7 +81,7 @@ class ReportPipeline:
         scoring_features = dict(features)
         if not limit_scoring_enabled:
             scoring_features.pop("limit_breadth", None)
-        module_scores, coverage, positives, negatives = score_modules(
+        module_scores, observed_coverage, positives, negatives = score_modules(
             scoring_features,
             history,
             int(self.config.raw.get("correlation_window", 252)),
@@ -89,7 +89,16 @@ class ReportPipeline:
         )
         if features.get("overseas_data_stale"):
             module_scores["overseas"] = 50.0
-            coverage["overseas"] = 0.0
+            observed_coverage["overseas"] = 0.0
+        # Every expected indicator now participates in the calculation. Missing
+        # observations are neutral-imputed by score_modules; keep their real
+        # availability separately so the dashboard can be complete without
+        # overstating confidence.
+        coverage = {name: 1.0 for name in module_scores}
+        imputed = sorted(
+            name for name in FEATURES
+            if not isinstance(scoring_features.get(name), (int, float))
+        )
         composite = sum(module_scores.get(name, 50.0) * weight for name, weight in self.config.module_weights.items())
         core_ready = any(status.name == "TWSE收盤行情" and status.status in {"ready", "fixture"} for status in statuses)
         if not core_ready:
@@ -98,7 +107,7 @@ class ReportPipeline:
         else:
             state = classify_state(composite, module_scores, history, features)
         reversal, reasons = reversal_stage(features, state, history)
-        weighted_coverage = sum(coverage.get(name, 0.0) * weight for name, weight in self.config.module_weights.items())
+        weighted_coverage = sum(observed_coverage.get(name, 0.0) * weight for name, weight in self.config.module_weights.items())
         alignment = max(sum(score >= 55 for score in module_scores.values()), sum(score <= 45 for score in module_scores.values()))
         confidence = "高" if weighted_coverage >= 0.85 and alignment >= 5 else "中" if weighted_coverage >= 0.60 else "低"
         snapshot = MarketSnapshot(
@@ -112,6 +121,8 @@ class ReportPipeline:
             shadow_mode=self.config.shadow_mode,
             module_scores={key: round(value, 2) for key, value in module_scores.items()},
             module_coverage={key: round(value, 3) for key, value in coverage.items()},
+            module_observed_coverage={key: round(value, 3) for key, value in observed_coverage.items()},
+            imputed_score_features=imputed,
             features=features,
             limits=limits,
             historical_limit_analogs=analogs,
@@ -148,6 +159,8 @@ class ReportPipeline:
             shadow_mode=bool(base_data.get("shadow_mode", True)),
             module_scores=base_data.get("module_scores", {}),
             module_coverage=base_data.get("module_coverage", {}),
+            module_observed_coverage=base_data.get("module_observed_coverage", base_data.get("module_coverage", {})),
+            imputed_score_features=base_data.get("imputed_score_features", []),
             features={**base_data.get("features", {}), **overseas, "overnight_exposure_adjustment": adjustment},
             limits={key: LimitStats(**value) for key, value in base_data.get("limits", {}).items()},
             historical_limit_analogs=base_data.get("historical_limit_analogs", []),
