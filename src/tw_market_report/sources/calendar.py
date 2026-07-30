@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import date
+from datetime import date, datetime, time, timedelta
 from typing import Any
 
 from .http import HttpClient
@@ -39,3 +39,18 @@ def is_taiwan_trading_day(target: date, sources: dict[str, str], client: HttpCli
         # Source failure must not suppress a legitimate trading day. The close pipeline
         # still refuses to publish a new state when its official core data is absent.
         return True
+
+
+def latest_completed_trading_day(
+    now: datetime,
+    sources: dict[str, str],
+    client: HttpClient | None = None,
+    close_cutoff: time = time(15, 0),
+) -> date:
+    """Resolve the latest session whose official close should already exist."""
+    candidate = now.date() if now.time() >= close_cutoff else now.date() - timedelta(days=1)
+    for _ in range(14):
+        if is_taiwan_trading_day(candidate, sources, client):
+            return candidate
+        candidate -= timedelta(days=1)
+    raise RuntimeError("Unable to resolve a completed Taiwan trading day")
