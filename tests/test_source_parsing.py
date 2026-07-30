@@ -17,6 +17,9 @@ class FakeClient:
     def get_text(self, _url):
         return self.text_payload
 
+    def post_form_text(self, _url, _fields):
+        return self.text_payload
+
 
 class SourceParsingTests(unittest.TestCase):
     def test_html_table_preserves_input_value(self):
@@ -40,6 +43,52 @@ class SourceParsingTests(unittest.TestCase):
         collector._pc_ratio(features, statuses, date(2026, 7, 29))
         self.assertEqual(statuses[0].as_of, "2026-07-29")
         self.assertAlmostEqual(features["put_call_oi_ratio"], 1.05)
+
+    def test_taiwan_vix_uses_last_value_from_daily_file(self):
+        collector = DerivativesCollector(
+            {
+                "taiwan_vix": "https://example.test/page",
+                "taiwan_vix_data": "https://example.test/data?date={date}",
+            },
+            client=FakeClient(text_payload="09:00:15,18.20\n13:44:45 19.35\n"),
+        )
+        features, statuses = {}, []
+        collector._taiwan_vix(features, statuses, date(2026, 7, 29))
+        self.assertEqual(features["taiwan_vix"], 19.35)
+        self.assertEqual(statuses[0].status, "ready")
+
+    def test_futures_uses_settlement_column(self):
+        html = """
+        <table><tr><td>TX</td><td>202608</td><td>100</td><td>110</td><td>90</td>
+        <td>105</td><td>5</td><td>5%</td><td>1000</td><td>103</td><td>2000</td></tr></table>
+        """
+        collector = DerivativesCollector(
+            {"taifex_daily_futures": "https://example.test"},
+            client=FakeClient(text_payload=html),
+        )
+        features, statuses = {}, []
+        collector._futures(features, statuses, 100, date(2026, 7, 29))
+        self.assertEqual(features["tx_settlement"], 103)
+        self.assertEqual(features["futures_basis"], 3)
+
+    def test_institution_positions_tracks_product_across_rowspans(self):
+        html = """
+        <table>
+          <tr><td>1</td><td>臺股期貨</td><td>自營商</td><td>1</td><td>10</td></tr>
+          <tr><td>外資</td><td>1</td><td>10</td><td>2</td><td>20</td><td>-100</td><td>-1000</td></tr>
+          <tr><td>2</td><td>小型臺指期貨</td><td>自營商</td><td>1</td><td>10</td></tr>
+          <tr><td>外資</td><td>1</td><td>10</td><td>2</td><td>20</td><td>40</td><td>400</td></tr>
+        </table>
+        """
+        collector = DerivativesCollector(
+            {"taifex_futures": "https://example.test"},
+            client=FakeClient(text_payload=html),
+        )
+        features, statuses = {}, []
+        collector._institution_positions(features, statuses, date(2026, 7, 29))
+        self.assertEqual(features["foreign_tx_net"], -100)
+        self.assertEqual(features["foreign_mtx_net"], 40)
+        self.assertEqual(features["foreign_futures_net"], -90)
 
     def test_twse_numbered_fields_are_parsed(self):
         payload = {
