@@ -45,6 +45,7 @@
     "taifex_futures": "https://www.taifex.com.tw/cht/3/futContractsDate",
     "taifex_options": "https://www.taifex.com.tw/cht/3/optDailyMarketSummary",
     "taiwan_vix": "https://www.taifex.com.tw/cht/7/vixMinNew",
+    "taiwan_vix_data": "https://www.taifex.com.tw/cht/7/getVixData?filesname={date}",
     "cboe_vix_csv": "https://cdn.cboe.com/api/global/us_indices/daily_prices/VIX_History.csv",
     "yahoo_chart": "https://query1.finance.yahoo.com/v8/finance/chart/{symbol}?range=3mo&interval=1d"
   }
