@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from datetime import date, datetime
 from typing import Any
 
@@ -15,7 +16,10 @@ def _date_text(value: str) -> str:
 
 
 def _parse_date(value: str) -> date | None:
-    text = value.strip().split()[0]
+    tokens = value.strip().split()
+    if not tokens:
+        return None
+    text = tokens[0]
     for fmt in ("%Y/%m/%d", "%Y-%m-%d"):
         try:
             return datetime.strptime(text, fmt).date()
@@ -93,32 +97,38 @@ class DerivativesCollector:
             statuses.append(SourceStatus("TAIFEX Put/Call", "partial", message=str(error), url=url))
 
     def _taiwan_vix(self, features: dict, statuses: list[SourceStatus], trade_date: date) -> None:
-        url = self.sources["taiwan_vix"]
+        page_url = self.sources["taiwan_vix"]
+        url = self.sources.get(
+            "taiwan_vix_data",
+            "https://www.taifex.com.tw/cht/7/getVixData?filesname={date}",
+        ).format(date=trade_date.strftime("%Y%m%d"))
         try:
-            tables = parse_tables(self.client.get_text(url))
-            candidates: list[tuple[str, float]] = []
-            for table in tables:
-                for row in table:
-                    if row and "/" in row[0]:
-                        values = [number(cell) for cell in row[1:]]
-                        clean = [value for value in values if value is not None]
-                        if clean:
-                            candidates.append((row[0], clean[-1]))
+            text = self.client.get_text(url)
+            candidates: list[float] = []
+            for line in text.splitlines():
+                cells = [cell for cell in re.split(r"[\s,\t]+", line.strip()) if cell]
+                if len(cells) < 2:
+                    continue
+                value = number(cells[-1])
+                if value is not None and 0 < value < 200:
+                    candidates.append(value)
             if not candidates:
                 raise ValueError("TAIWAN VIX value not found")
-            as_of, value = max(candidates, key=lambda item: _parse_date(item[0]) or date.min)
-            features["taiwan_vix"] = value
-            parsed_as_of = _parse_date(as_of)
-            fresh = parsed_as_of == trade_date
-            message = "" if fresh else f"最新資料為 {parsed_as_of.isoformat() if parsed_as_of else as_of}，非報告交易日"
-            statuses.append(SourceStatus("TAIWAN VIX", "ready" if fresh else "partial", _date_text(as_of), message, url))
+            features["taiwan_vix"] = candidates[-1]
+            statuses.append(SourceStatus("TAIWAN VIX", "ready", trade_date.isoformat(), url=page_url))
         except Exception as error:
-            statuses.append(SourceStatus("TAIWAN VIX", "partial", message=str(error), url=url))
+            statuses.append(SourceStatus("TAIWAN VIX", "partial", trade_date.isoformat(), str(error), page_url))
 
     def _futures(self, features: dict, statuses: list[SourceStatus], spot: float | None, trade_date: date) -> None:
         url = self.sources["taifex_daily_futures"]
         try:
-            tables = parse_tables(self.client.get_text(url))
+            query_date = trade_date.strftime("%Y/%m/%d")
+            html = self.client.post_form_text(url, {
+                "queryType": "2", "marketCode": "0", "MarketCode": "0",
+                "dateaddcnt": "", "commodity_id": "TX", "commodity_idt": "TX",
+                "commodity_id2": "", "commodity_id2t": "", "queryDate": query_date,
+            })
+            tables = parse_tables(html)
             candidates: list[dict[str, Any]] = []
             for table in tables:
                 for row in table:
@@ -127,9 +137,10 @@ class DerivativesCollector:
                         candidates.append({"row": row, "numbers": nums})
             if not candidates:
                 raise ValueError("TX daily row not found")
-            nums = candidates[0]["numbers"]
-            clean = [value for value in nums[1:] if value is not None]
-            settlement = clean[4] if len(clean) > 4 else clean[-1]
+            row = candidates[0]["row"]
+            settlement = number(row[9]) if len(row) > 9 else None
+            if settlement is None:
+                raise ValueError("TX settlement price not found")
             features["tx_settlement"] = settlement
             if spot:
                 features["futures_basis"] = settlement - spot
@@ -142,27 +153,33 @@ class DerivativesCollector:
     def _institution_positions(self, features: dict, statuses: list[SourceStatus], trade_date: date) -> None:
         url = self.sources["taifex_futures"]
         try:
-            tables = parse_tables(self.client.get_text(url))
+            html = self.client.post_form_text(url, {
+                "queryType": "1", "goDay": "", "doQuery": "1", "dateaddcnt": "",
+                "queryDate": trade_date.strftime("%Y/%m/%d"), "commodityId": "",
+            })
+            tables = parse_tables(html)
             text_rows = [row for table in tables for row in table]
             foreign_nets: list[float] = []
-            noninst_ratios: list[float] = []
+            current_product = ""
+            weights = {"臺股期貨": 1.0, "小型臺指期貨": 0.25, "微型臺指期貨": 0.05}
+            product_codes = {"臺股期貨": "tx", "小型臺指期貨": "mtx", "微型臺指期貨": "tmf"}
             for row in text_rows:
                 joined = " ".join(row)
-                if any(product in joined for product in ("臺股期貨", "小型臺指期貨", "微型臺指期貨")) and "外資" in joined:
+                for product in weights:
+                    if product in joined:
+                        current_product = product
+                        break
+                identity = next((cell.strip() for cell in row if cell.strip() in {"自營商", "投信", "外資"}), "")
+                if current_product and identity == "外資":
                     nums = [number(cell) for cell in row]
                     clean = [value for value in nums if value is not None]
-                    if clean:
-                        foreign_nets.append(clean[-1])
-                if any(product in joined for product in ("小型臺指期貨", "微型臺指期貨")):
-                    nums = [number(cell) for cell in row]
-                    clean = [value for value in nums if value is not None]
-                    if len(clean) >= 2 and clean[-2] != 0:
-                        noninst_ratios.append(safe_div(clean[-1], clean[-2], 1.0))
+                    if len(clean) >= 2:
+                        net_contracts = clean[-2]
+                        foreign_nets.append(net_contracts * weights[current_product])
+                        features[f"foreign_{product_codes[current_product]}_net"] = net_contracts
             if foreign_nets:
                 features["foreign_futures_net"] = sum(foreign_nets)
                 features["foreign_futures_net_ratio"] = sum(foreign_nets) / max(sum(abs(v) for v in foreign_nets), 1.0)
-            if noninst_ratios:
-                features["noninst_short_long_ratio"] = sum(noninst_ratios) / len(noninst_ratios)
             message = "" if foreign_nets else "回傳成功，但找不到臺指期外資未平倉淨額"
             as_of = _page_date(tables, trade_date)
             statuses.append(SourceStatus("TAIFEX三大法人期貨", "ready" if foreign_nets else "partial", as_of.isoformat(), message, url))
@@ -172,7 +189,13 @@ class DerivativesCollector:
     def _options(self, zones: dict, statuses: list[SourceStatus], spot: float | None, trade_date: date) -> None:
         url = self.sources["taifex_options"]
         try:
-            tables = parse_tables(self.client.get_text(url))
+            query_date = trade_date.strftime("%Y/%m/%d")
+            html = self.client.post_form_text(url, {
+                "queryType": "2", "marketCode": "0", "MarketCode": "0",
+                "dateaddcnt": "", "commodity_id": "TXO", "commodity_idt": "TXO",
+                "commodity_id2": "", "commodity_id2t": "", "queryDate": query_date,
+            })
+            tables = parse_tables(html)
             records: list[dict[str, Any]] = []
             side = None
             for table in tables:
