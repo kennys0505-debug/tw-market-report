@@ -1,10 +1,10 @@
 {
   "trade_date": "2026-07-30",
   "report_mode": "close",
-  "generated_at": "2026-07-31T09:54:19.944997+08:00",
+  "generated_at": "2026-07-31T11:53:52.457214+08:00",
   "domestic_market_state": "盤整",
   "overnight_risk_state": "中性",
-  "composite_score": 55.23,
+  "composite_score": 56.1,
   "confidence": "中",
   "model_exposure_range": [
     40,
@@ -13,7 +13,7 @@
   "shadow_mode": true,
   "module_scores": {
     "capital_flow": 58.75,
-    "futures": 61.67,
+    "futures": 67.5,
     "leverage_lending": 50.0,
     "options_volatility": 50.0,
     "overseas": 71.0,
@@ -22,34 +22,32 @@
   },
   "module_coverage": {
     "capital_flow": 1.0,
-    "futures": 0.667,
-    "leverage_lending": 0.0,
-    "options_volatility": 0.667,
+    "futures": 1.0,
+    "leverage_lending": 1.0,
+    "options_volatility": 1.0,
     "overseas": 1.0,
-    "trend_breadth": 0.429,
+    "trend_breadth": 1.0,
     "valuation": 1.0
   },
   "module_observed_coverage": {
     "capital_flow": 1.0,
-    "futures": 0.667,
-    "leverage_lending": 0.0,
-    "options_volatility": 0.667,
+    "futures": 1.0,
+    "leverage_lending": 1.0,
+    "options_volatility": 1.0,
     "overseas": 1.0,
-    "trend_breadth": 0.429,
+    "trend_breadth": 1.0,
     "valuation": 1.0
   },
-  "imputed_score_features": [
-    "above_ma20_ratio",
-    "borrowed_sell_5d_change",
-    "margin_20d_change",
-    "margin_price_divergence",
-    "margin_stress_proxy",
-    "noninst_short_long_ratio",
-    "otc_ma20_gap",
-    "taiex_ma20_gap",
-    "taiex_ma60_gap",
-    "taiwan_vix_change_5d"
-  ],
+  "module_history_coverage": {
+    "capital_flow": 0.05,
+    "futures": 0.025,
+    "leverage_lending": 0.0,
+    "options_volatility": 0.033,
+    "overseas": 0.05,
+    "trend_breadth": 0.014,
+    "valuation": 0.05
+  },
+  "imputed_score_features": [],
   "features": {
     "taiex_close": 39933.3,
     "advance_decline_ratio": -0.521286660359508,
@@ -88,17 +86,27 @@
     "sox_return_5d": -0.08432161727936793,
     "sox_return_20d": -0.15354227027110834,
     "sox_relative_nasdaq": -0.08370454709163544,
-    "usd_twd": 32.41299819946289,
-    "usd_twd_change_5d": 0.0035294719291592003,
+    "usd_twd": 32.375999450683594,
+    "usd_twd_change_5d": 0.0023839643585221726,
     "tsm_adr_close": 403.30999755859375,
-    "tsm_adr_equivalent_twd": 2614.4972449384163,
-    "tsm_adr_premium": 0.18571303625324997,
+    "tsm_adr_equivalent_twd": 2611.5128518824467,
+    "tsm_adr_premium": 0.18435957001471515,
+    "_tpex_limit_breadth": -0.024390243902439025,
     "limit_breadth": -0.022940563086548488,
+    "limit_strength_proxy": -1.9859154836690123,
     "limit_up_percentile_5y": 0.0,
     "limit_down_percentile_5y": 0.0,
     "option_pressure_balance": 0.6644133268952197,
     "rotation_score": 0.7009946390218766,
+    "taiex_daily_return_proxy": -0.0026444098006002115,
     "volume_price_confirmation": -0.0026444098006002115,
+    "otc_daily_return_proxy": -0.023964815701292497,
+    "tpex_breadth_proxy": -0.024390243902439025,
+    "margin_daily_change_proxy": -0.025924239346102107,
+    "margin_price_divergence_proxy": -0.023279829545501896,
+    "margin_turnover_pressure_proxy": 0.4314066487151336,
+    "borrowed_balance_daily_change_proxy": 0.015325162196351716,
+    "taiwan_vix_level_proxy": 44.33,
     "taiwan_vix_percentile": 100.0,
     "market_pe_percentile": 0.0,
     "market_pb_percentile": 0.0,
@@ -110,6 +118,18 @@
     "institution_reversal": false,
     "futures_reversal": true,
     "options_reversal": true,
+    "active_feature_mode": "free_official_proxy_v1",
+    "feature_proxy_definitions": {
+      "taiex_daily_return_proxy": "取代加權指數20／60日均線；使用官方收盤價相對前一有效交易日報酬。",
+      "otc_daily_return_proxy": "取代櫃買20日均線；使用櫃買官方指數相對前一有效交易日報酬。",
+      "tpex_breadth_proxy": "取代逐股站上20日線比例；使用上櫃官方漲跌家數淨廣度。",
+      "limit_strength_proxy": "以官方漲停／跌停家數強弱比取對數，保留方向且壓縮極端值。",
+      "margin_daily_change_proxy": "取代20日融資變化；使用官方融資金額相對前一有效交易日變化。",
+      "margin_price_divergence_proxy": "融資日變化減加權指數單日報酬；不是20日背離。",
+      "borrowed_balance_daily_change_proxy": "使用官方借券餘額日變化；不是借券賣出餘額。",
+      "margin_turnover_pressure_proxy": "官方融資金額（仟元換算元）除以當日市場成交值；不是整戶維持率。",
+      "taiwan_vix_level_proxy": "取代五日變化；使用當日TAIWAN VIX水準。"
+    },
     "limit_scoring_enabled": false,
     "core_data_ready": true
   },
@@ -367,7 +387,7 @@
   "negative_drivers": [
     "Put/Call情緒（-35.0）",
     "美元兌台幣五日變化（-35.0）",
-    "上漲家數廣度（-35.0）"
+    "上市漲跌家數廣度（-35.0）"
   ],
   "reversal_stage": "反轉確認",
   "reversal_reasons": [
@@ -647,7 +667,7 @@
     },
     {
       "trade_date": "2026-07-30",
-      "composite_score": 55.225,
+      "composite_score": 56.1,
       "taiex_close": 39933.3
     }
   ],
@@ -680,7 +700,7 @@
   },
   "taiwan_vix": 44.33,
   "us_vix": 17.09,
-  "tsm_adr_premium": 0.18571303625324997,
+  "tsm_adr_premium": 0.18435957001471515,
   "sox_change": {
     "1d": 0.08188541469009358,
     "5d": -0.08432161727936793,
