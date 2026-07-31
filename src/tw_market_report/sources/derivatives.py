@@ -138,10 +138,30 @@ class DerivativesCollector:
             if not candidates:
                 raise ValueError("TX daily row not found")
             row = candidates[0]["row"]
-            settlement = number(row[9]) if len(row) > 9 else None
+            settlement = None
+            price_source = "settlement"
+            for candidate in candidates:
+                candidate_row = candidate["row"]
+                value = number(candidate_row[9]) if len(candidate_row) > 9 else None
+                plausible = value is not None and (not spot or 0.7 * spot <= value <= 1.3 * spot)
+                if plausible:
+                    row, settlement = candidate_row, value
+                    break
+            # Some responses put the after-hours table first and do not publish
+            # a settlement value there.  A last-trade fallback is allowed only
+            # when it is close to spot and is explicitly labelled.
             if settlement is None:
-                raise ValueError("TX settlement price not found")
+                for candidate in candidates:
+                    candidate_row = candidate["row"]
+                    value = number(candidate_row[5]) if len(candidate_row) > 5 else None
+                    plausible = value is not None and (not spot or 0.7 * spot <= value <= 1.3 * spot)
+                    if plausible:
+                        row, settlement, price_source = candidate_row, value, "last_trade_fallback"
+                        break
+            if settlement is None:
+                raise ValueError("TX settlement/last price failed plausibility validation")
             features["tx_settlement"] = settlement
+            features["tx_price_source"] = price_source
             if spot:
                 features["futures_basis"] = settlement - spot
                 features["futures_basis_pct"] = (settlement - spot) / spot
@@ -237,3 +257,4 @@ class DerivativesCollector:
             statuses.append(SourceStatus("TAIFEX選擇權履約價", "ready", as_of.isoformat(), url=url))
         except Exception as error:
             statuses.append(SourceStatus("TAIFEX選擇權履約價", "partial", message=str(error), url=url))
+
