@@ -30,6 +30,23 @@ def _pct_change(current: float | None, previous: float | None) -> float | None:
     return current / previous - 1.0
 
 
+def _sanitize_history_row(row: dict[str, Any]) -> dict[str, Any]:
+    """Keep usable domestic history while discarding implausible derivatives data."""
+    cleaned = dict(row)
+    features = dict(row.get("features", {}))
+    spot = row.get("taiex_close")
+    futures_price = features.get("tx_settlement")
+    try:
+        plausible = spot is not None and futures_price is not None and 0.7 <= float(futures_price) / float(spot) <= 1.3
+    except (TypeError, ValueError, ZeroDivisionError):
+        plausible = False
+    if futures_price is not None and not plausible:
+        for key in ("tx_settlement", "futures_basis", "futures_basis_pct", "annualized_basis"):
+            features.pop(key, None)
+    cleaned["features"] = features
+    return cleaned
+
+
 class ReportPipeline:
     def __init__(self, config: ReportConfig) -> None:
         self.config = config
@@ -43,7 +60,16 @@ class ReportPipeline:
         if fixture:
             history = fixture_history()
         else:
-            history = [row for row in load_history(self.history_path) if row.get("report_mode") == "close"]
+            # Features for a report may only use completed, strictly earlier
+            # trading days.  This prevents failed same-day rows and accidental
+            # future-dated rows from leaking into moving averages or reversals.
+            cutoff = trade_date.isoformat()
+            history = [
+                _sanitize_history_row(row) for row in load_history(self.history_path)
+                if row.get("report_mode") == "close"
+                and str(row.get("trade_date", "")) < cutoff
+                and row.get("taiex_close") is not None
+            ]
         if mode == "premarket" and not fixture:
             return self._premarket(trade_date, now, history)
         return self._close(trade_date, now, history, fixture)
@@ -81,26 +107,33 @@ class ReportPipeline:
         scoring_features = dict(features)
         if not limit_scoring_enabled:
             scoring_features.pop("limit_breadth", None)
-        module_scores, observed_coverage, positives, negatives = score_modules(
+        module_scores, _, positives, negatives = score_modules(
             scoring_features,
             history,
             int(self.config.raw.get("correlation_window", 252)),
             float(self.config.raw.get("correlation_threshold", 0.75)),
         )
+        # Observed coverage describes source data, not whether a validated
+        # feature is currently allowed to affect the score.  For example,
+        # limit breadth remains observed even while its backtest gate is closed.
+        observed_coverage = {}
+        for module in module_scores:
+            expected = [name for name, spec in FEATURES.items() if spec.module == module]
+            available = [name for name in expected if isinstance(features.get(name), (int, float))]
+            observed_coverage[module] = len(available) / len(expected) if expected else 0.0
         if features.get("overseas_data_stale"):
             module_scores["overseas"] = 50.0
             observed_coverage["overseas"] = 0.0
-        # Every expected indicator now participates in the calculation. Missing
-        # observations are neutral-imputed by score_modules; keep their real
-        # availability separately so the dashboard can be complete without
-        # overstating confidence.
-        coverage = {name: 1.0 for name in module_scores}
+        # Missing observations remain neutral in scoring, but the displayed
+        # coverage must describe measured data rather than imputation.
+        coverage = dict(observed_coverage)
         imputed = sorted(
             name for name in FEATURES
-            if not isinstance(scoring_features.get(name), (int, float))
+            if not isinstance(features.get(name), (int, float))
         )
         composite = sum(module_scores.get(name, 50.0) * weight for name, weight in self.config.module_weights.items())
         core_ready = any(status.name == "TWSE收盤行情" and status.status in {"ready", "fixture"} for status in statuses)
+        features["core_data_ready"] = core_ready
         if not core_ready:
             state = history[-1].get("domestic_market_state", "盤整") if history else "盤整"
             composite = float(history[-1].get("composite_score", 50.0)) if history else 50.0
@@ -134,7 +167,7 @@ class ReportPipeline:
             reversal_reasons=reasons,
             data_freshness={status.name: status.as_of or "未知" for status in statuses},
             source_status=statuses,
-            history=(history + [{"trade_date": trade_date.isoformat(), "composite_score": composite, "taiex_close": features.get("taiex_close")}])[-60:],
+            history=(history + ([{"trade_date": trade_date.isoformat(), "composite_score": composite, "taiex_close": features.get("taiex_close")}] if core_ready else []))[-60:],
         )
         return snapshot
 
@@ -211,20 +244,27 @@ class ReportPipeline:
         previous_features = history[-1].get("features", {}) if history else {}
         margin_history = [row.get("features", {}).get("margin_balance") for row in history]
         margin_clean = [float(value) for value in margin_history if value is not None]
-        if current.get("margin_balance") is not None and margin_clean:
-            prior = margin_clean[-20] if len(margin_clean) >= 20 else margin_clean[0]
+        if current.get("margin_balance") is not None and len(margin_clean) >= 20:
+            prior = margin_clean[-20]
             result["margin_20d_change"] = _pct_change(float(current["margin_balance"]), prior)
             if current_close is not None and history and history[-1].get("taiex_close"):
                 price_change = _pct_change(float(current_close), float(history[-1]["taiex_close"])) or 0.0
                 margin_change = _pct_change(float(current["margin_balance"]), margin_clean[-1]) or 0.0
                 result["margin_price_divergence"] = max(0.0, margin_change - price_change)
         if current.get("borrowed_sell_balance") is not None:
-            prior = previous_features.get("borrowed_sell_balance")
-            result["borrowed_sell_5d_change"] = _pct_change(float(current["borrowed_sell_balance"]), prior)
+            borrowed_history = [
+                row.get("features", {}).get("borrowed_sell_balance") for row in history
+                if row.get("features", {}).get("borrowed_sell_balance") is not None
+            ]
+            if len(borrowed_history) >= 5:
+                result["borrowed_sell_5d_change"] = _pct_change(
+                    float(current["borrowed_sell_balance"]), float(borrowed_history[-5])
+                )
         if current.get("taiwan_vix") is not None:
-            prior = previous_features.get("taiwan_vix")
-            result["taiwan_vix_change_5d"] = _pct_change(float(current["taiwan_vix"]), prior)
             history_vix = [row.get("features", {}).get("taiwan_vix") for row in history]
+            history_vix = [float(value) for value in history_vix if value is not None]
+            if len(history_vix) >= 5:
+                result["taiwan_vix_change_5d"] = _pct_change(float(current["taiwan_vix"]), history_vix[-5])
             result["taiwan_vix_percentile"] = percentile_rank(history_vix[-1260:], float(current["taiwan_vix"]))
         for raw_key, score_key in (
             ("market_pe_median", "market_pe_percentile"),
@@ -270,7 +310,7 @@ class ReportPipeline:
             "features": snapshot.features,
             "limits": {key: value.to_dict() for key, value in snapshot.limits.items()},
         }
-        if snapshot.report_mode == "close" and write_history:
+        if snapshot.report_mode == "close" and write_history and snapshot.features.get("core_data_ready") is True:
             upsert_history(self.history_path, compact)
         return payload
 
@@ -281,3 +321,4 @@ class ReportPipeline:
             for key in ("trade_date", "report_mode", "domestic_market_state", "overnight_risk_state", "composite_score", "reversal_stage", "model_exposure_range", "limit_up_count", "limit_down_count")
         }
         return hashlib.sha256(json.dumps(relevant, sort_keys=True).encode()).hexdigest()
+
