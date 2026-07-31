@@ -10,6 +10,19 @@ from tw_market_report.render import render_dashboard
 
 
 class PipelineTests(unittest.TestCase):
+    def test_implausible_futures_history_is_sanitized(self) -> None:
+        from tw_market_report.pipeline import _sanitize_history_row
+
+        row = {
+            "trade_date": "2026-07-29",
+            "taiex_close": 40039.18,
+            "features": {"tx_settlement": 124405, "futures_basis_pct": 2.107, "margin_balance": 1.0},
+        }
+        cleaned = _sanitize_history_row(row)
+        self.assertNotIn("tx_settlement", cleaned["features"])
+        self.assertNotIn("futures_basis_pct", cleaned["features"])
+        self.assertEqual(cleaned["features"]["margin_balance"], 1.0)
+
     def test_fixture_build_is_self_contained(self):
         raw = load_config().raw
         with tempfile.TemporaryDirectory() as directory:
@@ -28,6 +41,16 @@ class PipelineTests(unittest.TestCase):
             self.assertTrue(all(value == 1.0 for value in payload["module_coverage"].values()))
             self.assertIn("module_observed_coverage", payload)
             self.assertIn("imputed_score_features", payload)
+
+    def test_failed_core_snapshot_is_not_written_to_history(self):
+        raw = load_config().raw
+        with tempfile.TemporaryDirectory() as directory:
+            config = ReportConfig(raw=raw, root=Path(directory))
+            pipeline = ReportPipeline(config)
+            snapshot = pipeline.run("close", fixture=True)
+            snapshot.features["core_data_ready"] = False
+            pipeline.persist(snapshot, write_history=True)
+            self.assertFalse((Path(directory) / "data" / "history.jsonl").exists())
 
     def test_line_message_contains_required_limit_counts(self):
         message = line_message({
@@ -48,3 +71,4 @@ class PipelineTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
