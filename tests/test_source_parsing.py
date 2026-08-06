@@ -107,6 +107,27 @@ class SourceParsingTests(unittest.TestCase):
         self.assertEqual(features["foreign_futures_net"], -90)
         self.assertNotIn("foreign_futures_net_ratio", features)
 
+    def test_institution_positions_does_not_leak_into_other_products(self):
+        html = """
+        <table>
+          <tr><td>1</td><td>臺股期貨</td><td>自營商</td><td>1</td><td>10</td></tr>
+          <tr><td>外資</td><td>1</td><td>10</td><td>2</td><td>20</td><td>-100</td><td>-1000</td></tr>
+          <tr><td>2</td><td>微型臺指期貨</td><td>自營商</td><td>1</td><td>10</td></tr>
+          <tr><td>外資</td><td>1</td><td>10</td><td>2</td><td>20</td><td>40</td><td>400</td></tr>
+          <tr><td>3</td><td>東證期貨</td><td>自營商</td><td>1</td><td>10</td></tr>
+          <tr><td>外資</td><td>1</td><td>10</td><td>2</td><td>20</td><td>-999999</td><td>-9999990</td></tr>
+        </table>
+        """
+        collector = DerivativesCollector(
+            {"taifex_futures": "https://example.test"},
+            client=FakeClient(text_payload=html),
+        )
+        features, statuses = {}, []
+        collector._institution_positions(features, statuses, date(2026, 7, 29))
+        self.assertEqual(features["foreign_tx_net"], -100)
+        self.assertEqual(features["foreign_tmf_net"], 40)
+        self.assertEqual(features["foreign_futures_net"], -98)
+
     def test_market_open_interest_requires_all_three_contract_sizes(self):
         class OIClient:
             def post_form_text(self, _url, fields):
