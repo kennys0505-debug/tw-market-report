@@ -247,12 +247,22 @@ class DerivativesCollector:
             weights = {"臺股期貨": 1.0, "小型臺指期貨": 0.25, "微型臺指期貨": 0.05}
             product_codes = {"臺股期貨": "tx", "小型臺指期貨": "mtx", "微型臺指期貨": "tmf"}
             for row in text_rows:
-                joined = " ".join(row)
-                for product in weights:
-                    if product in joined:
-                        current_product = product
-                        break
-                identity = next((cell.strip() for cell in row if cell.strip() in {"自營商", "投信", "外資"}), "")
+                identity_index = next(
+                    (index for index, cell in enumerate(row) if cell.strip() in {"自營商", "投信", "外資"}),
+                    None,
+                )
+                # The first institution row for every product contains the
+                # product name before the identity column.  Clear the tracked
+                # product when that row belongs to another contract; otherwise
+                # later foreign rows would be misattributed to the last TX,
+                # MTX or TMF block seen above it.
+                if identity_index is not None and identity_index >= 2:
+                    product_cells = " ".join(row[:identity_index])
+                    current_product = next(
+                        (product for product in weights if product in product_cells),
+                        "",
+                    )
+                identity = row[identity_index].strip() if identity_index is not None else ""
                 if current_product and identity == "外資":
                     nums = [number(cell) for cell in row]
                     clean = [value for value in nums if value is not None]
