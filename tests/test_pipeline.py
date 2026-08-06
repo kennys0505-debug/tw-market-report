@@ -10,6 +10,13 @@ from tw_market_report.render import render_dashboard
 
 
 class PipelineTests(unittest.TestCase):
+    def test_rotation_score_is_unscaled_concentration_complement(self):
+        from tw_market_report.pipeline import _rotation_score
+
+        self.assertAlmostEqual(_rotation_score(1_000, 100), 0.9)
+        self.assertAlmostEqual(_rotation_score(1_000, 400), 0.6)
+        self.assertIsNone(_rotation_score(0, 100))
+
     def test_implausible_futures_history_is_sanitized(self) -> None:
         from tw_market_report.pipeline import _sanitize_history_row
 
@@ -42,7 +49,7 @@ class PipelineTests(unittest.TestCase):
             self.assertIn("module_observed_coverage", payload)
             self.assertIn("module_history_coverage", payload)
             self.assertIn("imputed_score_features", payload)
-            self.assertEqual(payload["features"]["active_feature_mode"], "free_official_proxy_v1")
+            self.assertEqual(payload["features"]["active_feature_mode"], "free_official_proxy_v2")
             self.assertEqual(payload["imputed_score_features"], [])
 
     def test_failed_core_snapshot_is_not_written_to_history(self):
@@ -54,6 +61,25 @@ class PipelineTests(unittest.TestCase):
             snapshot.features["core_data_ready"] = False
             pipeline.persist(snapshot, write_history=True)
             self.assertFalse((Path(directory) / "data" / "history.jsonl").exists())
+
+    def test_legacy_institutional_zeros_are_removed_and_rotation_is_migrated(self):
+        from tw_market_report.pipeline import _sanitize_history_row
+
+        row = {
+            "features": {
+                "foreign_flow_ratio": 0,
+                "trust_flow_ratio": 0,
+                "dealer_flow_ratio": 0,
+                "market_turnover": 1000,
+                "tsmc_turnover": 100,
+                "rotation_score": 0.7,
+            }
+        }
+        cleaned = _sanitize_history_row(row)
+        self.assertNotIn("foreign_flow_ratio", cleaned["features"])
+        self.assertNotIn("trust_flow_ratio", cleaned["features"])
+        self.assertNotIn("dealer_flow_ratio", cleaned["features"])
+        self.assertAlmostEqual(cleaned["features"]["rotation_score"], 0.9)
 
     def test_line_message_contains_required_limit_counts(self):
         message = line_message({
@@ -74,4 +100,3 @@ class PipelineTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
