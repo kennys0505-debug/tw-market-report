@@ -188,8 +188,17 @@ class HistoryBackfiller:
                         features, twse_stats, domestic_statuses = self.domestic.collect_historical(cursor)
                         if twse_stats is None or features.get("taiex_close") is None:
                             skipped += 1
+                            print(
+                                f"backfill skip date={cursor.isoformat()} reason=twse_core_missing "
+                                f"statuses={[status.to_dict() for status in domestic_statuses]}"
+                            )
                         elif tpex_stats.eligible_count == 0:
                             skipped += 1
+                            print(
+                                f"backfill skip date={cursor.isoformat()} reason=tpex_universe_missing "
+                                f"rows={len(current_rows)} previous_limits={len(previous_limits)} "
+                                f"fields={list(current_rows[0]) if current_rows else []}"
+                            )
                         else:
                             combined = combine_limit_stats([twse_stats, tpex_stats])
                             features.update(self._tpex_features(current_rows))

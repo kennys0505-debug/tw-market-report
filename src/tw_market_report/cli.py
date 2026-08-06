@@ -60,6 +60,9 @@ def main(argv: list[str] | None = None) -> int:
             print("ERROR: backfill requires --start and --end", file=sys.stderr)
             return 2
         output = Path(args.output) if args.output else None
+        if output:
+            output.parent.mkdir(parents=True, exist_ok=True)
+            output.touch(exist_ok=True)
         written, skipped = HistoryBackfiller(config, args.delay, output).run(
             date.fromisoformat(args.start),
             date.fromisoformat(args.end),
