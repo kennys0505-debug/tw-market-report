@@ -17,6 +17,8 @@ class ScoringTests(unittest.TestCase):
             "taiwan_vix_change_5d",
         }
         self.assertTrue(retired.isdisjoint(FEATURES))
+        self.assertNotIn("foreign_futures_net_ratio", FEATURES)
+        self.assertIn("foreign_futures_scheme7_score", FEATURES)
 
     def test_module_scores_are_bounded_and_cover_features(self):
         history = fixture_history()
@@ -75,4 +77,3 @@ class ScoringTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

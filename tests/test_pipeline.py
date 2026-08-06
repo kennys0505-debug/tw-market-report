@@ -10,6 +10,35 @@ from tw_market_report.render import render_dashboard
 
 
 class PipelineTests(unittest.TestCase):
+    def test_foreign_futures_scheme7_uses_approved_weights(self):
+        from tw_market_report.pipeline import _foreign_futures_scheme7
+
+        history = [
+            {"features": {"foreign_futures_net": -12000 + index * 500, "futures_market_oi": 200000}}
+            for index in range(30)
+        ]
+        result = _foreign_futures_scheme7(
+            {"foreign_futures_net": 5000, "futures_market_oi": 200000}, history
+        )
+        expected = (
+            result["foreign_futures_level_score"] * 0.4
+            + result["foreign_futures_change_score"] * 0.3
+            + result["foreign_futures_share_score"] * 0.2
+            + result["foreign_futures_persistence_score"] * 0.1
+        )
+        self.assertAlmostEqual(result["foreign_futures_scheme7_score"], expected)
+        self.assertAlmostEqual(result["foreign_futures_market_share"], 0.025)
+
+    def test_foreign_futures_scheme7_requires_true_market_oi(self):
+        from tw_market_report.pipeline import _foreign_futures_scheme7
+
+        history = [
+            {"features": {"foreign_futures_net": -12000 + index * 500}}
+            for index in range(30)
+        ]
+        result = _foreign_futures_scheme7({"foreign_futures_net": 5000}, history)
+        self.assertNotIn("foreign_futures_scheme7_score", result)
+
     def test_rotation_score_is_unscaled_concentration_complement(self):
         from tw_market_report.pipeline import _rotation_score
 

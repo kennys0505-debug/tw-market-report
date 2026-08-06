@@ -105,6 +105,26 @@ class SourceParsingTests(unittest.TestCase):
         self.assertEqual(features["foreign_tx_net"], -100)
         self.assertEqual(features["foreign_mtx_net"], 40)
         self.assertEqual(features["foreign_futures_net"], -90)
+        self.assertNotIn("foreign_futures_net_ratio", features)
+
+    def test_market_open_interest_requires_all_three_contract_sizes(self):
+        class OIClient:
+            def post_form_text(self, _url, fields):
+                product = fields["commodity_id"]
+                return f"""
+                <table><tr><td>2026/07/29</td></tr></table>
+                <table><tr><td>{product}</td><td>202608</td><td>100</td><td>110</td><td>90</td>
+                <td>105</td><td>5</td><td>5%</td><td>10</td><td>20</td><td>30</td><td>103</td><td>1000</td></tr></table>
+                """
+
+        collector = DerivativesCollector(
+            {"taifex_daily_futures": "https://example.test"},
+            client=OIClient(),
+        )
+        features, statuses = {}, []
+        collector._market_open_interest(features, statuses, date(2026, 7, 29))
+        self.assertEqual(features["futures_market_oi"], 1300)
+        self.assertEqual(statuses[0].status, "ready")
 
     def test_twse_numbered_fields_are_parsed(self):
         payload = {
