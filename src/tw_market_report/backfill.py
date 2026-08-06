@@ -306,9 +306,17 @@ class HistoryBackfiller:
         return result
 
     def _tpex_rows(self, target: date) -> list[dict[str, Any]]:
-        url = self.config.sources["tpex_historical_quotes"].format(roc_date=roc_date(target))
+        url = self.config.sources["tpex_historical_quotes"].format(
+            roc_date=roc_date(target),
+            gregorian_date=target.strftime("%Y/%m/%d"),
+        )
         payload = self.client.get_json(url)
         if isinstance(payload, dict):
+            for table in payload.get("tables") or []:
+                fields = table.get("fields") or []
+                data = table.get("data") or []
+                if fields and data and isinstance(data[0], list):
+                    return row_objects(fields, data)
             fields = payload.get("fields") or payload.get("columnNames") or []
             data = payload.get("aaData") or payload.get("data") or []
             if fields and data and isinstance(data[0], list):
