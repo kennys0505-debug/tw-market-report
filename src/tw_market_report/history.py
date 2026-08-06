@@ -46,3 +46,22 @@ def upsert_history(path: Path, row: dict[str, Any], max_rows: int = 10000) -> li
             handle.write(json.dumps(item, ensure_ascii=False, separators=(",", ":")) + "\n")
     temporary.replace(path)
     return rows
+
+
+def merge_history_files(paths: list[Path], output: Path, max_rows: int = 10000) -> list[dict[str, Any]]:
+    """Merge independently backfilled chunks using date/mode as the stable key."""
+    merged: dict[tuple[Any, Any], dict[str, Any]] = {}
+    candidates = ([output] if output.exists() else []) + paths
+    for path in candidates:
+        for row in load_history(path):
+            key = (row.get("trade_date"), row.get("report_mode"))
+            if key[0]:
+                merged[key] = row
+    rows = sorted(merged.values(), key=lambda row: (row.get("trade_date", ""), row.get("report_mode", "")))[-max_rows:]
+    output.parent.mkdir(parents=True, exist_ok=True)
+    temporary = output.with_suffix(output.suffix + ".tmp")
+    with temporary.open("w", encoding="utf-8") as handle:
+        for row in rows:
+            handle.write(json.dumps(row, ensure_ascii=False, separators=(",", ":")) + "\n")
+    temporary.replace(output)
+    return rows

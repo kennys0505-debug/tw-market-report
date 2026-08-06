@@ -10,7 +10,7 @@ from zoneinfo import ZoneInfo
 from .config import load_config
 from .backfill import HistoryBackfiller
 from .backtest import run_limit_backtest
-from .history import load_history, write_json
+from .history import load_history, merge_history_files, write_json
 from .notify import send_line
 from .pipeline import ReportPipeline
 from .render import render_dashboard
@@ -19,7 +19,8 @@ from .sources.calendar import is_taiwan_trading_day, latest_completed_trading_da
 
 def parser() -> argparse.ArgumentParser:
     result = argparse.ArgumentParser(description="Taiwan market regime report")
-    result.add_argument("command", choices=["run", "fixture", "backfill", "backtest"], help="live run, fixture build, historical backfill, or validation")
+    result.add_argument("command", choices=["run", "fixture", "backfill", "backtest", "merge-history"], help="live run, fixture build, historical backfill, merge, or validation")
+    result.add_argument("files", nargs="*", help="history chunks used by merge-history")
     result.add_argument("--mode", choices=["close", "premarket"], default="close")
     result.add_argument("--date", help="Taiwan trade date in YYYY-MM-DD")
     result.add_argument("--config", default="config/report.json")
@@ -28,12 +29,23 @@ def parser() -> argparse.ArgumentParser:
     result.add_argument("--start", help="backfill start date in YYYY-MM-DD")
     result.add_argument("--end", help="backfill end date in YYYY-MM-DD")
     result.add_argument("--delay", type=float, default=0.35, help="seconds between historical source requests")
+    result.add_argument("--output", help="alternate JSONL output path for backfill or merge-history")
+    result.add_argument("--skip-derivatives", action="store_true", help="omit TAIFEX historical requests")
+    result.add_argument("--skip-overseas", action="store_true", help="omit Cboe and Yahoo historical requests")
     return result
 
 
 def main(argv: list[str] | None = None) -> int:
     args = parser().parse_args(argv)
     config = load_config(args.config)
+    if args.command == "merge-history":
+        if not args.files:
+            print("ERROR: merge-history requires one or more input files", file=sys.stderr)
+            return 2
+        output = Path(args.output) if args.output else config.root / "data" / "history.jsonl"
+        rows = merge_history_files([Path(value) for value in args.files], output)
+        print(f"merge-history complete rows={len(rows)} output={output}")
+        return 0
     if args.command == "backtest":
         result = run_limit_backtest(load_history(config.root / "data" / "history.jsonl"))
         write_json(config.root / "data" / "backtest.json", result)
@@ -47,7 +59,13 @@ def main(argv: list[str] | None = None) -> int:
         if not args.start or not args.end:
             print("ERROR: backfill requires --start and --end", file=sys.stderr)
             return 2
-        written, skipped = HistoryBackfiller(config, args.delay).run(date.fromisoformat(args.start), date.fromisoformat(args.end))
+        output = Path(args.output) if args.output else None
+        written, skipped = HistoryBackfiller(config, args.delay, output).run(
+            date.fromisoformat(args.start),
+            date.fromisoformat(args.end),
+            include_derivatives=not args.skip_derivatives,
+            include_overseas=not args.skip_overseas,
+        )
         print(f"backfill complete written={written} skipped={skipped}")
         return 0
     requested_date = date.fromisoformat(args.date) if args.date else None
