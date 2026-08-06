@@ -23,6 +23,27 @@ from .stats import safe_div
 
 COMMON_CODE = re.compile(r"^[1-9]\d{3}$")
 YAHOO_SYMBOLS = {"sox": "^SOX", "nasdaq": "^IXIC", "tsm": "TSM", "usd_twd": "TWD=X"}
+TPEX_HISTORICAL_FIELDS = [
+    "代號",
+    "名稱",
+    "收盤",
+    "漲跌",
+    "開盤",
+    "最高",
+    "最低",
+    "均價",
+    "成交股數",
+    "成交金額(元)",
+    "成交筆數",
+    "最後買價",
+    "最後買量(千股)",
+    "最後賣價",
+    "最後賣量(千股)",
+    "發行股數",
+    "次日參考價",
+    "次日漲停價",
+    "次日跌停價",
+]
 
 
 def roc_date(value: date) -> str:
@@ -292,6 +313,11 @@ class HistoryBackfiller:
             data = payload.get("aaData") or payload.get("data") or []
             if fields and data and isinstance(data[0], list):
                 return row_objects(fields, data)
+            # The legacy historical endpoint often returns only ``aaData``.
+            # TPEx documents this 19-column order; keeping the labels here lets
+            # the rest of the parser continue to use named official fields.
+            if data and isinstance(data[0], list) and len(data[0]) >= len(TPEX_HISTORICAL_FIELDS):
+                return row_objects(TPEX_HISTORICAL_FIELDS, data)
             if data and isinstance(data[0], dict):
                 return data
         if isinstance(payload, list) and payload and isinstance(payload[0], dict):
