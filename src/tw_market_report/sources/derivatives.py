@@ -134,15 +134,19 @@ class DerivativesCollector:
                 for row in table:
                     if len(row) >= 8 and row[0].strip() in {"TX", "臺股期貨"}:
                         nums = [number(cell) for cell in row]
-                        candidates.append({"row": row, "numbers": nums})
+                        open_interest = number(row[12]) if len(row) > 12 else None
+                        candidates.append({"row": row, "numbers": nums, "open_interest": open_interest})
             if not candidates:
                 raise ValueError("TX daily row not found")
-            row = candidates[0]["row"]
+            # Prefer the contract carrying the most open interest.  This avoids
+            # selecting an illiquid deferred row merely because it appears first.
+            selected = max(candidates, key=lambda item: float(item.get("open_interest") or 0.0))
+            row = selected["row"]
             settlement = None
             price_source = "settlement"
-            for candidate in candidates:
+            for candidate in sorted(candidates, key=lambda item: float(item.get("open_interest") or 0.0), reverse=True):
                 candidate_row = candidate["row"]
-                value = number(candidate_row[9]) if len(candidate_row) > 9 else None
+                value = number(candidate_row[11]) if len(candidate_row) > 12 else number(candidate_row[9]) if len(candidate_row) > 9 else None
                 plausible = value is not None and (not spot or 0.7 * spot <= value <= 1.3 * spot)
                 if plausible:
                     row, settlement = candidate_row, value
@@ -162,6 +166,7 @@ class DerivativesCollector:
                 raise ValueError("TX settlement/last price failed plausibility validation")
             features["tx_settlement"] = settlement
             features["tx_price_source"] = price_source
+            features["tx_selected_contract"] = row[1] if len(row) > 1 else None
             if spot:
                 features["futures_basis"] = settlement - spot
                 features["futures_basis_pct"] = (settlement - spot) / spot
@@ -169,6 +174,64 @@ class DerivativesCollector:
             statuses.append(SourceStatus("TAIFEX台指期行情", "ready", as_of.isoformat(), url=url))
         except Exception as error:
             statuses.append(SourceStatus("TAIFEX台指期行情", "partial", message=str(error), url=url))
+        self._market_open_interest(features, statuses, trade_date)
+
+    def _market_open_interest(
+        self, features: dict, statuses: list[SourceStatus], trade_date: date
+    ) -> None:
+        """Collect true market OI for TX/MTX/TMF from the daily market tables."""
+        url = self.sources.get("taifex_daily_futures")
+        if not url:
+            statuses.append(SourceStatus("TAIFEX市場未平倉量", "partial", message="未設定每日行情明細來源"))
+            return
+        weights = {"TX": 1.0, "MTX": 0.25, "TMF": 0.05}
+        totals: dict[str, float] = {}
+        missing: list[str] = []
+        for product in weights:
+            try:
+                html = self.client.post_form_text(url, {
+                    "queryType": "2", "marketCode": "0", "MarketCode": "0",
+                    "dateaddcnt": "", "commodity_id": product, "commodity_idt": product,
+                    "commodity_id2": "", "commodity_id2t": "",
+                    "queryDate": trade_date.strftime("%Y/%m/%d"),
+                })
+                tables = parse_tables(html)
+                page_dates = {
+                    parsed
+                    for table in tables
+                    for row in table
+                    for cell in row
+                    if (parsed := _parse_date(cell)) is not None
+                }
+                if page_dates and max(page_dates) != trade_date:
+                    raise ValueError(f"returned {max(page_dates).isoformat()}, expected {trade_date.isoformat()}")
+                rows = [
+                    row for table in tables for row in table
+                    if len(row) > 12 and row[0].strip() == product
+                ]
+                values = [number(row[12]) for row in rows]
+                total = sum(float(value) for value in values if value is not None and value >= 0)
+                if total <= 0:
+                    raise ValueError("open-interest rows not found")
+                totals[product] = total
+                features[f"{product.lower()}_market_oi"] = total
+            except Exception:
+                missing.append(product)
+        if len(totals) == len(weights):
+            features["futures_market_oi"] = sum(totals[product] * weights[product] for product in weights)
+            statuses.append(
+                SourceStatus(
+                    "TAIFEX市場未平倉量", "ready", trade_date.isoformat(),
+                    url=url,
+                )
+            )
+        else:
+            statuses.append(
+                SourceStatus(
+                    "TAIFEX市場未平倉量", "partial", trade_date.isoformat(),
+                    f"缺少商品：{'、'.join(missing)}",
+                )
+            )
 
     def _institution_positions(self, features: dict, statuses: list[SourceStatus], trade_date: date) -> None:
         url = self.sources["taifex_futures"]
@@ -196,10 +259,13 @@ class DerivativesCollector:
                     if len(clean) >= 2:
                         net_contracts = clean[-2]
                         foreign_nets.append(net_contracts * weights[current_product])
-                        features[f"foreign_{product_codes[current_product]}_net"] = net_contracts
+                        code = product_codes[current_product]
+                        features[f"foreign_{code}_net"] = net_contracts
+                        if len(clean) >= 12:
+                            features[f"foreign_{code}_long_oi"] = clean[-6]
+                            features[f"foreign_{code}_short_oi"] = clean[-4]
             if foreign_nets:
                 features["foreign_futures_net"] = sum(foreign_nets)
-                features["foreign_futures_net_ratio"] = sum(foreign_nets) / max(sum(abs(v) for v in foreign_nets), 1.0)
             message = "" if foreign_nets else "回傳成功，但找不到臺指期外資未平倉淨額"
             as_of = _page_date(tables, trade_date)
             statuses.append(SourceStatus("TAIFEX三大法人期貨", "ready" if foreign_nets else "partial", as_of.isoformat(), message, url))
@@ -257,4 +323,3 @@ class DerivativesCollector:
             statuses.append(SourceStatus("TAIFEX選擇權履約價", "ready", as_of.isoformat(), url=url))
         except Exception as error:
             statuses.append(SourceStatus("TAIFEX選擇權履約價", "partial", message=str(error), url=url))
-
