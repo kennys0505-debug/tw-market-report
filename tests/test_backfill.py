@@ -36,6 +36,28 @@ class BackfillTests(unittest.TestCase):
         self.assertEqual(list(rows[0]), TPEX_HISTORICAL_FIELDS)
         self.assertEqual(rows[0]["次日漲停價"], "440")
 
+    def test_tpex_current_tables_response_and_gregorian_date(self):
+        captured = {}
+
+        class Client:
+            def get_json(self, url):
+                captured["url"] = url
+                return {
+                    "tables": [{
+                        "fields": ["代號", "收盤", "次日漲停價", "次日跌停價"],
+                        "data": [["6488", "400", "440", "360"]],
+                    }]
+                }
+
+        backfiller = object.__new__(HistoryBackfiller)
+        backfiller.client = Client()
+        backfiller.config = type(
+            "Config", (), {"sources": {"tpex_historical_quotes": "https://example.test?date={gregorian_date}"}}
+        )()
+        rows = backfiller._tpex_rows(date(2020, 1, 2))
+        self.assertIn("2020/01/02", captured["url"])
+        self.assertEqual(rows[0]["代號"], "6488")
+
     def test_tpex_stats_uses_previous_official_limits(self):
         filler = object.__new__(HistoryBackfiller)
         rows = [
