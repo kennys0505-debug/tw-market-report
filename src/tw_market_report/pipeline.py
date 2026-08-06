@@ -17,7 +17,7 @@ from .scoring import FEATURES, apply_overnight_overlay, classify_state, reversal
 from .sources.derivatives import DerivativesCollector
 from .sources.domestic import DomesticCollector
 from .sources.overseas import OverseasCollector
-from .stats import mean, percentile_rank, safe_div
+from .stats import mean, percentile_rank, robust_zscore, safe_div
 
 PROXY_DEFINITIONS = {
     "taiex_daily_return_proxy": "取代加權指數20／60日均線；使用官方收盤價相對前一有效交易日報酬。",
@@ -30,6 +30,7 @@ PROXY_DEFINITIONS = {
     "margin_turnover_pressure_proxy": "官方融資金額（仟元換算元）除以當日市場成交值；不是整戶維持率。",
     "taiwan_vix_level_proxy": "取代五日變化；使用當日TAIWAN VIX水準。",
     "rotation_score": "資金輪動代理＝1－台積電成交值／上市市場成交值；數值越高代表成交越不集中於台積電，不代表實際資金申購或贖回。",
+    "foreign_futures_scheme7_score": "外資期貨方案七＝部位歷史水位40%＋5日變化30%＋占全市場OI 20%＋方向持續性10%。",
 }
 
 
@@ -41,6 +42,89 @@ def _pct_change(current: float | None, previous: float | None) -> float | None:
     if current is None or previous in (None, 0):
         return None
     return current / previous - 1.0
+
+
+def _distribution_score(values: list[float], value: float) -> float:
+    """Convert a raw observation to the report's five-year 0-100 scale."""
+    clean = [float(item) for item in values if isinstance(item, (int, float))]
+    if len(clean) < 20:
+        return 50.0
+    window = clean[-1260:]
+    percentile = percentile_rank(window, value)
+    zscore = robust_zscore(window, value)
+    percentile_score = percentile if percentile is not None else 50.0
+    z_score = 50.0 + (zscore or 0.0) * (50.0 / 3.0)
+    return max(0.0, min(100.0, 0.7 * percentile_score + 0.3 * z_score))
+
+
+def _foreign_futures_scheme7(current: dict[str, Any], history: list[dict[str, Any]]) -> dict[str, float]:
+    """Build the approved level/change/share/persistence foreign-futures score."""
+    net = current.get("foreign_futures_net")
+    if not isinstance(net, (int, float)):
+        return {}
+    observations = [
+        (row.get("features", {}).get("foreign_futures_net"), row.get("features", {}).get("futures_market_oi"))
+        for row in history
+    ]
+    nets = [float(value) for value, _ in observations if isinstance(value, (int, float))]
+    level_score = _distribution_score(nets, float(net))
+
+    market_oi = current.get("futures_market_oi")
+    market_share = None
+    share_score = 50.0
+    if isinstance(market_oi, (int, float)) and float(market_oi) > 0:
+        market_share = float(net) / float(market_oi)
+        share_history = [
+            float(value) / float(oi)
+            for value, oi in observations
+            if isinstance(value, (int, float)) and isinstance(oi, (int, float)) and float(oi) > 0
+        ]
+        share_score = _distribution_score(share_history, market_share)
+
+    change_5d = None
+    change_5d_share = None
+    change_score = 50.0
+    if len(nets) >= 5:
+        change_5d = float(net) - nets[-5]
+        if isinstance(market_oi, (int, float)) and float(market_oi) > 0:
+            change_5d_share = change_5d / float(market_oi)
+            valid = [
+                (float(value), float(oi))
+                for value, oi in observations
+                if isinstance(value, (int, float)) and isinstance(oi, (int, float)) and float(oi) > 0
+            ]
+            historical_changes = [
+                (valid[index][0] - valid[index - 5][0]) / valid[index][1]
+                for index in range(5, len(valid))
+            ]
+            change_score = _distribution_score(historical_changes, change_5d_share)
+
+    persistence = 0.0
+    recent = (nets + [float(net)])[-6:]
+    if len(recent) >= 2:
+        directions = [
+            1.0 if right > left else -1.0 if right < left else 0.0
+            for left, right in zip(recent, recent[1:])
+        ]
+        persistence = mean(directions, 0.0)
+    persistence_score = 50.0 + 50.0 * persistence
+    result = {
+        "foreign_futures_level_score": level_score,
+        "foreign_futures_change_score": change_score,
+        "foreign_futures_share_score": share_score,
+        "foreign_futures_persistence_score": persistence_score,
+        "foreign_futures_persistence": persistence,
+    }
+    if market_share is not None:
+        result["foreign_futures_market_share"] = market_share
+    if change_5d is not None:
+        result["foreign_futures_change_5d"] = change_5d
+    if change_5d_share is not None:
+        result["foreign_futures_change_5d_share"] = change_5d_share
+    if market_share is not None and change_5d_share is not None:
+        scheme_score = 0.4 * level_score + 0.3 * change_score + 0.2 * share_score + 0.1 * persistence_score
+        result["foreign_futures_scheme7_score"] = max(0.0, min(100.0, scheme_score))
+    return result
 
 
 def _rotation_score(market_turnover: float | None, tsmc_turnover: float | None) -> float | None:
@@ -298,6 +382,7 @@ class ReportPipeline:
         tpex = current.get("_tpex_limit_breadth")
         if isinstance(tpex, (int, float)):
             result["tpex_breadth_proxy"] = float(tpex)
+        result.update(_foreign_futures_scheme7(current, history))
         previous_features = history[-1].get("features", {}) if history else {}
         margin_history = [row.get("features", {}).get("margin_balance") for row in history]
         margin_clean = [float(value) for value in margin_history if value is not None]

@@ -45,7 +45,9 @@ def fixture_history(sessions: int = 320) -> list[dict[str, Any]]:
             "borrowed_sell_5d_change": -daily_return * 0.8,
             "margin_stress_proxy": 1.55 + 0.12 * cycle,
             "futures_basis_pct": daily_return * 0.25,
-            "foreign_futures_net_ratio": cycle * 0.25,
+            "foreign_futures_net": cycle * 20000,
+            "futures_market_oi": 200000 + cycle * 10000,
+            "foreign_futures_scheme7_score": 50 + cycle * 25,
             "noninst_short_long_ratio": 1.0 - cycle * 0.15,
             "put_call_sentiment": 0.5 + cycle * 0.2,
             "taiwan_vix_change_5d": -daily_return * 4,
@@ -124,4 +126,3 @@ def fixture_current() -> tuple[dict[str, Any], dict[str, LimitStats], list[Sourc
         "pressure_balance": 0.08,
     }
     return features, {"twse": twse, "tpex": tpex}, statuses, zones
-

@@ -12,6 +12,7 @@ class FeatureSpec:
     direction: int = 1
     weight: float = 1.0
     label: str = ""
+    pre_scored: bool = False
 
 
 FEATURES: dict[str, FeatureSpec] = {
@@ -31,7 +32,7 @@ FEATURES: dict[str, FeatureSpec] = {
     "borrowed_balance_daily_change_proxy": FeatureSpec("leverage_lending", -1, 1.0, "借券餘額日變化（非借券賣出）"),
     "margin_turnover_pressure_proxy": FeatureSpec("leverage_lending", -1, 1.0, "融資金額／成交值壓力（免費官方代理）"),
     "futures_basis_pct": FeatureSpec("futures", 1, 1.0, "台指期正逆價差"),
-    "foreign_futures_net_ratio": FeatureSpec("futures", 1, 1.2, "外資期貨淨部位"),
+    "foreign_futures_scheme7_score": FeatureSpec("futures", 1, 1.0, "外資期貨方案七", True),
     "put_call_sentiment": FeatureSpec("options_volatility", 1, 1.0, "Put/Call情緒"),
     "taiwan_vix_level_proxy": FeatureSpec("options_volatility", -1, 1.2, "TAIWAN VIX水準（免費官方代理）"),
     "option_pressure_balance": FeatureSpec("options_volatility", 1, 0.8, "選擇權壓力平衡"),
@@ -49,6 +50,8 @@ FEATURES: dict[str, FeatureSpec] = {
 
 def _feature_score(name: str, value: float, history: list[dict[str, Any]]) -> float | None:
     spec = FEATURES[name]
+    if spec.pre_scored:
+        return max(0.0, min(100.0, value))
     series = [row.get("features", {}).get(name) for row in history]
     percentile = percentile_rank(series[-1260:], value)
     zscore = robust_zscore(series[-1260:], value)
@@ -212,4 +215,3 @@ def apply_overnight_overlay(features: dict[str, Any]) -> tuple[str, int]:
     if positive >= 2 and risk == 0:
         return "偏多", 5
     return "中性", 0
-

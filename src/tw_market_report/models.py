@@ -104,6 +104,18 @@ class MarketSnapshot:
                     "points": self.features.get("futures_basis"),
                     "percent": self.features.get("futures_basis_pct"),
                 },
+                "foreign_futures_scheme7": {
+                    "score": self.features.get("foreign_futures_scheme7_score"),
+                    "net_equivalent_contracts": self.features.get("foreign_futures_net"),
+                    "change_5d": self.features.get("foreign_futures_change_5d"),
+                    "market_oi_equivalent_contracts": self.features.get("futures_market_oi"),
+                    "market_share": self.features.get("foreign_futures_market_share"),
+                    "level_score": self.features.get("foreign_futures_level_score"),
+                    "change_score": self.features.get("foreign_futures_change_score"),
+                    "share_score": self.features.get("foreign_futures_share_score"),
+                    "persistence_score": self.features.get("foreign_futures_persistence_score"),
+                    "weights": {"level": 0.4, "change_5d": 0.3, "market_share": 0.2, "persistence": 0.1},
+                },
                 "non_institutional_position_proxy": {
                     "short_long_ratio": self.features.get("noninst_short_long_ratio"),
                     "label": "非三大法人部位代理",
@@ -128,4 +140,3 @@ class MarketSnapshot:
             }
         )
         return result
-

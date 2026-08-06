@@ -297,12 +297,26 @@ class HistoryBackfiller:
             ("taifex_pc_ratio", {"put_call_volume_ratio", "put_call_oi_ratio", "put_call_sentiment"}),
             ("taiwan_vix", {"taiwan_vix"}),
             ("taifex_daily_futures", {"tx_settlement", "tx_price_source", "futures_basis", "futures_basis_pct"}),
-            ("taifex_futures", {"foreign_tx_net", "foreign_mtx_net", "foreign_tmf_net", "foreign_futures_net", "foreign_futures_net_ratio"}),
+            ("taifex_futures", {
+                "foreign_tx_net", "foreign_mtx_net", "foreign_tmf_net", "foreign_futures_net",
+                "foreign_tx_long_oi", "foreign_tx_short_oi", "foreign_mtx_long_oi",
+                "foreign_mtx_short_oi", "foreign_tmf_long_oi", "foreign_tmf_short_oi",
+            }),
         ]
         result: dict[str, Any] = {}
         for source_key, keys in groups:
             if self._source_ready(statuses, self.config.sources[source_key], target):
                 result.update({key: features[key] for key in keys if key in features})
+        market_oi_ready = any(
+            status.name == "TAIFEX市場未平倉量"
+            and status.status == "ready"
+            and _parse_date(status.as_of) == target
+            for status in statuses
+        )
+        if market_oi_ready:
+            for key in ("tx_market_oi", "mtx_market_oi", "tmf_market_oi", "futures_market_oi"):
+                if key in features:
+                    result[key] = features[key]
         return result
 
     def _tpex_rows(self, target: date) -> list[dict[str, Any]]:
