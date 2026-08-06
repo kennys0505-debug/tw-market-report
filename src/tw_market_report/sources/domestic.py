@@ -205,11 +205,11 @@ class DomesticCollector:
                     continue
 
                 # 外資自營商已計入自營商，不能覆蓋「外資及陸資」的數值。
-                if "外資及陸資" in label and "外資自營商" not in label:
+                if label.startswith("外資及陸資"):
                     totals["foreign_flow_ratio"] = net
                 elif "投信" in label:
                     totals["trust_flow_ratio"] = net
-                elif "自營商" in label and "外資自營商" not in label:
+                elif label.startswith("自營商"):
                     if "合計" in label:
                         dealer_total = net
                     else:
