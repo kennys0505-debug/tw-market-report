@@ -1,10 +1,10 @@
 {
   "trade_date": "2026-08-05",
   "report_mode": "close",
-  "generated_at": "2026-08-05T23:56:11.284474+08:00",
+  "generated_at": "2026-08-06T14:47:21.676336+08:00",
   "domestic_market_state": "盤整",
   "overnight_risk_state": "中性",
-  "composite_score": 57.11,
+  "composite_score": 55.27,
   "confidence": "中",
   "model_exposure_range": [
     40,
@@ -15,8 +15,8 @@
     "capital_flow": 60.64,
     "futures": 44.83,
     "leverage_lending": 63.12,
-    "options_volatility": 55.56,
-    "overseas": 82.8,
+    "options_volatility": 56.04,
+    "overseas": 63.9,
     "trend_breadth": 50.67,
     "valuation": 45.66
   },
@@ -39,7 +39,7 @@
     "valuation": 1.0
   },
   "module_history_coverage": {
-    "capital_flow": 0.25,
+    "capital_flow": 0.062,
     "futures": 0.225,
     "leverage_lending": 0.2,
     "options_volatility": 0.233,
@@ -55,9 +55,10 @@
     "tsmc_turnover": 88157683613.0,
     "market_turnover": 1196273577166.0,
     "otc_close": 383.75,
-    "dealer_flow_ratio": 0.0,
-    "trust_flow_ratio": 0.0,
-    "foreign_flow_ratio": 0.0,
+    "trust_flow_ratio": 0.00941769731526609,
+    "foreign_flow_ratio": 0.0754913654767353,
+    "dealer_flow_ratio": 0.0012176705812151083,
+    "institutional_flow_parser_version": "bfi82u_v2",
     "margin_balance": 523492321.0,
     "borrowed_balance": 93186489000.0,
     "tsmc_pe": 32.33,
@@ -66,9 +67,9 @@
     "market_pe_median": 19.545,
     "market_pb_median": 1.64,
     "market_dividend_yield_median": 2.54,
-    "put_call_volume_ratio": 1.0998999999999999,
-    "put_call_oi_ratio": 1.1187,
-    "put_call_sentiment": 0.8813,
+    "put_call_volume_ratio": 1.0914,
+    "put_call_oi_ratio": 1.0977,
+    "put_call_sentiment": 0.9023000000000001,
     "taiwan_vix": 35.37,
     "tx_settlement": 44514.0,
     "tx_price_source": "last_trade_fallback",
@@ -79,25 +80,25 @@
     "foreign_tmf_net": -480100.0,
     "foreign_futures_net": -131381.4,
     "foreign_futures_net_ratio": -0.9834400873693893,
-    "us_vix": 16.5,
-    "us_vix_change_1d": 0.04035308953341743,
-    "us_vix_change_5d": -0.09390444810543663,
-    "sox_return_1d": -0.008765301411322812,
-    "sox_return_5d": 0.1555411502650439,
-    "sox_return_20d": -0.039957539037937195,
-    "sox_relative_nasdaq": 0.07178989125420188,
-    "usd_twd": 32.292999267578125,
-    "usd_twd_change_5d": -0.002187653524715283,
-    "tsm_adr_close": 414.8599853515625,
-    "tsm_adr_equivalent_twd": 2679.4146406210957,
-    "tsm_adr_premium": 0.1141017216719733,
+    "us_vix": 15.81,
+    "us_vix_change_1d": -0.041818181818181754,
+    "us_vix_change_5d": -0.2347531461761858,
+    "sox_return_1d": 0.011267759447643355,
+    "sox_return_5d": -0.03287369677075036,
+    "sox_return_20d": -0.19769904311411834,
+    "sox_relative_nasdaq": -0.07043322700389765,
+    "usd_twd": 32.236000061035156,
+    "usd_twd_change_5d": -0.002043157736241197,
+    "tsm_adr_close": 406.1099853515625,
+    "tsm_adr_equivalent_twd": 2618.272302515991,
+    "tsm_adr_premium": 0.08867871206486111,
     "_tpex_limit_breadth": 0.03673938002296211,
     "limit_breadth": 0.03808543489449305,
     "limit_strength_proxy": 3.245193133185574,
     "limit_up_percentile_5y": 40.0,
     "limit_down_percentile_5y": 40.0,
     "option_pressure_balance": -0.0420539560190433,
-    "rotation_score": 0.7789192573612276,
+    "rotation_score": 0.9263064191204092,
     "taiex_daily_return_proxy": 0.02884965311874854,
     "volume_price_confirmation": 0.02884965311874854,
     "otc_daily_return_proxy": 0.02325147321547627,
@@ -116,10 +117,10 @@
     "limit_contraction": false,
     "price_reversal": true,
     "breadth_reversal": true,
-    "institution_reversal": false,
+    "institution_reversal": true,
     "futures_reversal": false,
     "options_reversal": false,
-    "active_feature_mode": "free_official_proxy_v1",
+    "active_feature_mode": "free_official_proxy_v2",
     "feature_proxy_definitions": {
       "taiex_daily_return_proxy": "取代加權指數20／60日均線；使用官方收盤價相對前一有效交易日報酬。",
       "otc_daily_return_proxy": "取代櫃買20日均線；使用櫃買官方指數相對前一有效交易日報酬。",
@@ -129,7 +130,8 @@
       "margin_price_divergence_proxy": "融資日變化減加權指數單日報酬；不是20日背離。",
       "borrowed_balance_daily_change_proxy": "使用官方借券餘額日變化；不是借券賣出餘額。",
       "margin_turnover_pressure_proxy": "官方融資金額（仟元換算元）除以當日市場成交值；不是整戶維持率。",
-      "taiwan_vix_level_proxy": "取代五日變化；使用當日TAIWAN VIX水準。"
+      "taiwan_vix_level_proxy": "取代五日變化；使用當日TAIWAN VIX水準。",
+      "rotation_score": "資金輪動代理＝1－台積電成交值／上市市場成交值；數值越高代表成交越不集中於台積電，不代表實際資金申購或贖回。"
     },
     "limit_scoring_enabled": false,
     "core_data_ready": true
@@ -538,13 +540,13 @@
   },
   "positive_drivers": [
     "美元兌台幣五日變化（+50.0）",
-    "費半相對Nasdaq（+49.9）",
-    "費半五日變化（+48.5）"
+    "美國VIX五日變化（+44.4）",
+    "資金輪動擴散（+42.6）"
   ],
   "negative_drivers": [
     "市場淨值比分位（-24.4）",
-    "台指期正逆價差（-17.5）",
-    "櫃買指數單日趨勢（免費官方代理）（-17.5）"
+    "台積電ADR溢價（-23.3）",
+    "台指期正逆價差（-17.5）"
   ],
   "reversal_stage": "初步反轉",
   "reversal_reasons": [],
@@ -555,16 +557,16 @@
     "TWSE融資融券": "20260805",
     "TWSE借券餘額": "20260805",
     "TWSE估值": "20260805",
-    "TAIFEX Put/Call": "2026-08-05",
+    "TAIFEX Put/Call": "2026-08-06",
     "TAIWAN VIX": "2026-08-05",
     "TAIFEX台指期行情": "2026-08-05",
     "TAIFEX三大法人期貨": "2026-08-05",
     "TAIFEX選擇權履約價": "2026-08-05",
-    "Cboe VIX": "2026-08-04",
+    "Cboe VIX": "2026-08-05",
     "Yahoo ^SOX": "2026-08-05",
     "Yahoo ^IXIC": "2026-08-05",
     "Yahoo TSM": "2026-08-05",
-    "Yahoo TWD=X": "2026-08-05"
+    "Yahoo TWD=X": "2026-08-06"
   },
   "source_status": [
     {
@@ -611,9 +613,9 @@
     },
     {
       "name": "TAIFEX Put/Call",
-      "status": "ready",
-      "as_of": "2026-08-05",
-      "message": "",
+      "status": "partial",
+      "as_of": "2026-08-06",
+      "message": "最新資料為 2026-08-06，非報告交易日",
       "url": "https://www.taifex.com.tw/cht/3/pcRatio"
     },
     {
@@ -647,7 +649,7 @@
     {
       "name": "Cboe VIX",
       "status": "ready",
-      "as_of": "2026-08-04",
+      "as_of": "2026-08-05",
       "message": "",
       "url": "https://cdn.cboe.com/api/global/us_indices/daily_prices/VIX_History.csv"
     },
@@ -675,7 +677,7 @@
     {
       "name": "Yahoo TWD=X",
       "status": "ready",
-      "as_of": "2026-08-05",
+      "as_of": "2026-08-06",
       "message": "",
       "url": "https://query1.finance.yahoo.com/v8/finance/chart/TWD%3DX?range=3mo&interval=1d"
     }
@@ -699,9 +701,6 @@
         "tsmc_turnover": 151551634905.0,
         "market_turnover": 1146949453481.0,
         "otc_close": 334.24,
-        "dealer_flow_ratio": 0.0,
-        "trust_flow_ratio": 0.0,
-        "foreign_flow_ratio": 0.0,
         "margin_balance": 507011173.0,
         "borrowed_balance": 92690895000.0,
         "tsmc_pe": 29.58,
@@ -735,7 +734,7 @@
         "limit_up_percentile_5y": 75.0,
         "limit_down_percentile_5y": 75.0,
         "option_pressure_balance": 0.13694419188639217,
-        "rotation_score": 0.6035963892435547,
+        "rotation_score": 0.8678654630811848,
         "margin_20d_change": 0.0,
         "taiwan_vix_change_5d": null,
         "taiwan_vix_percentile": 50.0,
@@ -838,9 +837,6 @@
         "tsmc_turnover": 114098819878.0,
         "market_turnover": 1144783687203.0,
         "otc_close": 326.23,
-        "dealer_flow_ratio": 0.0,
-        "trust_flow_ratio": 0.0,
-        "foreign_flow_ratio": 0.0,
         "margin_balance": 493867294.0,
         "borrowed_balance": 94111398000.0,
         "tsmc_pe": 29.65,
@@ -880,7 +876,7 @@
         "limit_up_percentile_5y": 0.0,
         "limit_down_percentile_5y": 0.0,
         "option_pressure_balance": 0.6644133268952197,
-        "rotation_score": 0.7009946390218766,
+        "rotation_score": 0.9003315463406256,
         "taiex_daily_return_proxy": -0.0026444098006002115,
         "volume_price_confirmation": -0.0026444098006002115,
         "otc_daily_return_proxy": -0.023964815701292497,
@@ -1003,9 +999,6 @@
         "tsmc_turnover": 166661984712.0,
         "market_turnover": 885593103092.0,
         "otc_close": 347.85,
-        "dealer_flow_ratio": 0.0,
-        "trust_flow_ratio": 0.0,
-        "foreign_flow_ratio": 0.0,
         "margin_balance": 507462771.0,
         "borrowed_balance": 94545957000.0,
         "tsmc_pe": 32.6,
@@ -1045,7 +1038,7 @@
         "limit_up_percentile_5y": 100.0,
         "limit_down_percentile_5y": 0.0,
         "option_pressure_balance": -0.343900875881222,
-        "rotation_score": 0.4354224842195289,
+        "rotation_score": 0.8118074947398429,
         "taiex_daily_return_proxy": 0.07979430700693402,
         "volume_price_confirmation": 0.07979430700693402,
         "otc_daily_return_proxy": 0.06627226190111268,
@@ -1168,9 +1161,6 @@
         "tsmc_turnover": 83673350698.0,
         "market_turnover": 882931450894.0,
         "otc_close": 362.89,
-        "dealer_flow_ratio": 0.0,
-        "trust_flow_ratio": 0.0,
-        "foreign_flow_ratio": 0.0,
         "margin_balance": 514755393.0,
         "borrowed_balance": 94059321000.0,
         "tsmc_pe": 31.86,
@@ -1210,7 +1200,7 @@
         "limit_up_percentile_5y": 66.66666666666667,
         "limit_down_percentile_5y": 33.333333333333336,
         "option_pressure_balance": 0.03455723542116631,
-        "rotation_score": 0.7156970092753712,
+        "rotation_score": 0.9052323364251237,
         "taiex_daily_return_proxy": 0.006184173145716398,
         "volume_price_confirmation": 0.006184173145716398,
         "otc_daily_return_proxy": 0.04323702745436231,
@@ -1333,9 +1323,6 @@
         "tsmc_turnover": 95455231293.0,
         "market_turnover": 1083825845128.0,
         "otc_close": 375.03,
-        "dealer_flow_ratio": 0.0,
-        "trust_flow_ratio": 0.0,
-        "foreign_flow_ratio": 0.0,
         "margin_balance": 521134665.0,
         "borrowed_balance": 93089175000.0,
         "tsmc_pe": 31.19,
@@ -1375,7 +1362,7 @@
         "limit_up_percentile_5y": 50.0,
         "limit_down_percentile_5y": 50.0,
         "option_pressure_balance": -0.18704856787048568,
-        "rotation_score": 0.73578255661067,
+        "rotation_score": 0.9119275188702234,
         "taiex_daily_return_proxy": -0.0005935038183615404,
         "volume_price_confirmation": -0.0005935038183615404,
         "otc_daily_return_proxy": 0.03345366364463054,
@@ -1482,7 +1469,7 @@
     },
     {
       "trade_date": "2026-08-05",
-      "composite_score": 57.10758519545137,
+      "composite_score": 55.26624586875217,
       "taiex_close": 44611.6
     }
   ],
@@ -1504,7 +1491,7 @@
     "down": null
   },
   "volume_regime": 0.02884965311874854,
-  "capital_rotation": 0.7789192573612276,
+  "capital_rotation": 0.9263064191204092,
   "futures_basis": {
     "points": -97.59999999999854,
     "percent": -0.0021877717902966617
@@ -1514,12 +1501,12 @@
     "label": "非三大法人部位代理"
   },
   "taiwan_vix": 35.37,
-  "us_vix": 16.5,
-  "tsm_adr_premium": 0.1141017216719733,
+  "us_vix": 15.81,
+  "tsm_adr_premium": 0.08867871206486111,
   "sox_change": {
-    "1d": -0.008765301411322812,
-    "5d": 0.1555411502650439,
-    "20d": -0.039957539037937195
+    "1d": 0.011267759447643355,
+    "5d": -0.03287369677075036,
+    "20d": -0.19769904311411834
   },
   "margin_stress": {
     "proxy": null,
