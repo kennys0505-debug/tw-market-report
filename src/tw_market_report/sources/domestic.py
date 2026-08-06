@@ -179,17 +179,62 @@ class DomesticCollector:
         url = self.sources["twse_institutional"].format(date=ymd)
         try:
             payload = self.client.get_json(url)
-            fields = payload.get("fields", [])
-            rows = row_objects(fields, payload.get("data", []))
-            total_turnover = float(features.get("market_turnover") or 1.0)
-            mapping = {"外資": "foreign_flow_ratio", "投信": "trust_flow_ratio", "自營商": "dealer_flow_ratio"}
+            if str(payload.get("stat", "")).upper() not in {"OK", ""}:
+                raise SourceError(str(payload.get("stat")))
+            rows = _all_rows(payload)
+            total_turnover = number(features.get("market_turnover"))
+            if total_turnover is None or total_turnover <= 0:
+                raise SourceError("無法取得上市市場成交值，法人買賣超占比不能計算")
+
+            totals: dict[str, float] = {}
+            dealer_parts: list[float] = []
+            dealer_total: float | None = None
             for row in rows:
-                label = str(next(iter(row.values()), ""))
-                net = number(find_field(row, "買賣超"), 0) or 0
-                for needle, key in mapping.items():
-                    if needle in label:
-                        features[key] = net / total_turnover
-            statuses.append(SourceStatus("TWSE三大法人", "ready", ymd, url=url))
+                label = str(find_field(row, "單位名稱") or next(iter(row.values()), "")).strip()
+                net = number(
+                    find_field(row, "買賣差額")
+                    or find_field(row, "買賣超金額")
+                    or find_field(row, "買賣超")
+                )
+                if net is None:
+                    buy = number(find_field(row, "買進金額"))
+                    sell = number(find_field(row, "賣出金額"))
+                    if buy is not None and sell is not None:
+                        net = buy - sell
+                if net is None or label == "合計":
+                    continue
+
+                # 外資自營商已計入自營商，不能覆蓋「外資及陸資」的數值。
+                if "外資及陸資" in label and "外資自營商" not in label:
+                    totals["foreign_flow_ratio"] = net
+                elif "投信" in label:
+                    totals["trust_flow_ratio"] = net
+                elif "自營商" in label and "外資自營商" not in label:
+                    if "合計" in label:
+                        dealer_total = net
+                    else:
+                        dealer_parts.append(net)
+
+            if dealer_total is not None:
+                totals["dealer_flow_ratio"] = dealer_total
+            elif dealer_parts:
+                totals["dealer_flow_ratio"] = sum(dealer_parts)
+
+            for key, net in totals.items():
+                features[key] = net / total_turnover
+            features["institutional_flow_parser_version"] = "bfi82u_v2"
+
+            expected = {"foreign_flow_ratio", "trust_flow_ratio", "dealer_flow_ratio"}
+            missing = sorted(expected - totals.keys())
+            display_names = {
+                "foreign_flow_ratio": "外資及陸資",
+                "trust_flow_ratio": "投信",
+                "dealer_flow_ratio": "自營商",
+            }
+            message = "" if not missing else "回傳成功，但缺少法人欄位：" + "、".join(
+                display_names[name] for name in missing
+            )
+            statuses.append(SourceStatus("TWSE三大法人", "ready" if not missing else "partial", ymd, message, url))
         except Exception as error:
             statuses.append(SourceStatus("TWSE三大法人", "partial", ymd, str(error), url))
 
