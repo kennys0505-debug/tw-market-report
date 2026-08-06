@@ -69,6 +69,27 @@ class DomesticCollector:
         self._collect_twse(trade_date.strftime("%Y%m%d"), features, limits, statuses)
         return features, limits.get("twse"), statuses[-1]
 
+    def collect_historical(
+        self, trade_date: date
+    ) -> tuple[dict[str, Any], LimitStats | None, list[SourceStatus]]:
+        """Collect only date-addressable official TWSE datasets.
+
+        The regular collector also reads TPEx OpenAPI endpoints that describe the
+        latest session.  Using those endpoints during a historical backfill would
+        leak today's observations into old rows, so historical TPEx data is
+        handled separately by ``HistoryBackfiller``.
+        """
+        ymd = trade_date.strftime("%Y%m%d")
+        features: dict[str, Any] = {}
+        limits: dict[str, LimitStats] = {}
+        statuses: list[SourceStatus] = []
+        self._collect_twse(ymd, features, limits, statuses)
+        self._collect_institutional(ymd, features, statuses)
+        self._collect_margin(ymd, features, statuses)
+        self._collect_lending(ymd, features, statuses)
+        self._collect_valuation(ymd, features, statuses)
+        return features, limits.get("twse"), statuses
+
     def _collect_twse(self, ymd: str, features: dict, limits: dict, statuses: list[SourceStatus]) -> None:
         url = self.sources["twse_mi_index"].format(date=ymd)
         try:
