@@ -3,13 +3,38 @@ import unittest
 from datetime import date
 from pathlib import Path
 
-from tw_market_report.backfill import HistoricalOverseasCache, HistoryBackfiller, roc_date
+from tw_market_report.backfill import (
+    TPEX_HISTORICAL_FIELDS,
+    HistoricalOverseasCache,
+    HistoryBackfiller,
+    roc_date,
+)
 from tw_market_report.history import load_history, merge_history_files, upsert_history
 
 
 class BackfillTests(unittest.TestCase):
     def test_roc_date(self):
         self.assertEqual(roc_date(date(2026, 7, 28)), "115/07/28")
+
+    def test_tpex_legacy_aadata_without_fields(self):
+        row = [
+            "6488", "環球晶", "400", "+1", "399", "405", "398", "401",
+            "1000", "400000", "50", "399", "1", "400", "1", "1000000",
+            "400", "440", "360",
+        ]
+
+        class Client:
+            def get_json(self, _url):
+                return {"aaData": [row]}
+
+        backfiller = object.__new__(HistoryBackfiller)
+        backfiller.client = Client()
+        backfiller.config = type(
+            "Config", (), {"sources": {"tpex_historical_quotes": "https://example.test?d={roc_date}"}}
+        )()
+        rows = backfiller._tpex_rows(date(2020, 1, 2))
+        self.assertEqual(list(rows[0]), TPEX_HISTORICAL_FIELDS)
+        self.assertEqual(rows[0]["次日漲停價"], "440")
 
     def test_tpex_stats_uses_previous_official_limits(self):
         filler = object.__new__(HistoryBackfiller)
