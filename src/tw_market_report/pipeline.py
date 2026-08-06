@@ -29,6 +29,7 @@ PROXY_DEFINITIONS = {
     "borrowed_balance_daily_change_proxy": "使用官方借券餘額日變化；不是借券賣出餘額。",
     "margin_turnover_pressure_proxy": "官方融資金額（仟元換算元）除以當日市場成交值；不是整戶維持率。",
     "taiwan_vix_level_proxy": "取代五日變化；使用當日TAIWAN VIX水準。",
+    "rotation_score": "資金輪動代理＝1－台積電成交值／上市市場成交值；數值越高代表成交越不集中於台積電，不代表實際資金申購或贖回。",
 }
 
 
@@ -42,10 +43,32 @@ def _pct_change(current: float | None, previous: float | None) -> float | None:
     return current / previous - 1.0
 
 
+def _rotation_score(market_turnover: float | None, tsmc_turnover: float | None) -> float | None:
+    """Return an unscaled TSMC concentration complement for historical ranking.
+
+    The scoring layer already converts this value to a rolling percentile and
+    robust z-score.  A fixed multiplier would not add information and could
+    collapse all observations above an arbitrary concentration threshold.
+    """
+    if market_turnover is None or tsmc_turnover is None or market_turnover <= 0 or tsmc_turnover < 0:
+        return None
+    concentration = safe_div(float(tsmc_turnover), float(market_turnover))
+    return max(0.0, min(1.0, 1.0 - concentration))
+
+
 def _sanitize_history_row(row: dict[str, Any]) -> dict[str, Any]:
     """Keep usable domestic history while discarding implausible derivatives data."""
     cleaned = dict(row)
     features = dict(row.get("features", {}))
+    # Rows produced by the old BFI82U parser mistook missing columns for zero
+    # and could let the foreign-dealer row overwrite foreign institutions.
+    # Do not use those values as calibration history for the corrected parser.
+    if features.get("institutional_flow_parser_version") != "bfi82u_v2":
+        for key in ("foreign_flow_ratio", "trust_flow_ratio", "dealer_flow_ratio"):
+            features.pop(key, None)
+    rotation = _rotation_score(features.get("market_turnover"), features.get("tsmc_turnover"))
+    if rotation is not None:
+        features["rotation_score"] = rotation
     spot = row.get("taiex_close")
     futures_price = features.get("tx_settlement")
     try:
@@ -108,7 +131,7 @@ class ReportPipeline:
         for limit_stats in limits.values():
             attach_limit_percentiles(limit_stats, history)
         features.update(self._engineer_features(features, limits["combined"], history, zones))
-        features["active_feature_mode"] = "free_official_proxy_v1"
+        features["active_feature_mode"] = "free_official_proxy_v2"
         features["feature_proxy_definitions"] = PROXY_DEFINITIONS
         analogs: list[dict[str, Any]] = []
         post_returns: dict[str, Any] = {}
@@ -243,9 +266,9 @@ class ReportPipeline:
             "limit_down_percentile_5y": limits.down_percentile_5y,
             "option_pressure_balance": zones.get("pressure_balance"),
         }
-        if current.get("market_turnover") and current.get("tsmc_turnover"):
-            concentration = safe_div(float(current["tsmc_turnover"]), float(current["market_turnover"]))
-            result["rotation_score"] = max(0.0, min(1.0, 1.0 - concentration * 3.0))
+        rotation = _rotation_score(current.get("market_turnover"), current.get("tsmc_turnover"))
+        if rotation is not None:
+            result["rotation_score"] = rotation
         closes = [float(row["taiex_close"]) for row in history if row.get("taiex_close") is not None]
         current_close = current.get("taiex_close")
         if current_close is not None:
@@ -374,4 +397,3 @@ class ReportPipeline:
             for key in ("trade_date", "report_mode", "domestic_market_state", "overnight_risk_state", "composite_score", "reversal_stage", "model_exposure_range", "limit_up_count", "limit_down_count")
         }
         return hashlib.sha256(json.dumps(relevant, sort_keys=True).encode()).hexdigest()
-
