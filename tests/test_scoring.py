@@ -1,7 +1,7 @@
 import unittest
 
 from tw_market_report.fixture import fixture_history
-from tw_market_report.scoring import FEATURES, apply_overnight_overlay, classify_state, reversal_stage, score_modules
+from tw_market_report.scoring import FEATURES, apply_overnight_overlay, classify_state, module_calculation_notes, reversal_stage, score_modules
 
 
 class ScoringTests(unittest.TestCase):
@@ -44,6 +44,15 @@ class ScoringTests(unittest.TestCase):
         self.assertEqual(scores["futures"], 50.0)
         self.assertEqual(positive, [])
         self.assertEqual(negative, [])
+
+    def test_module_calculation_notes_disclose_observed_and_imputed_inputs(self):
+        features = {"futures_basis_pct": -0.003}
+        scores, _, _, _ = score_modules(features, [])
+        notes = module_calculation_notes(features, [], scores)
+        self.assertIn("1/2項實測", notes["futures"])
+        self.assertIn("台指期正逆價差", notes["futures"])
+        self.assertIn("缺1項以50分補齊", notes["futures"])
+        self.assertIn("模組合成50.0分", notes["futures"])
 
     def test_turn_state_requires_market_confirmation(self):
         modules = {name: 65 for name in ["a", "b", "c", "d", "e", "f", "g"]}
