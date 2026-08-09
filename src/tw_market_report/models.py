@@ -58,6 +58,7 @@ class MarketSnapshot:
     module_coverage: dict[str, float] = field(default_factory=dict)
     module_observed_coverage: dict[str, float] = field(default_factory=dict)
     module_history_coverage: dict[str, float] = field(default_factory=dict)
+    module_calculation_notes: dict[str, str] = field(default_factory=dict)
     imputed_score_features: list[str] = field(default_factory=list)
     features: dict[str, float | str | None] = field(default_factory=dict)
     limits: dict[str, LimitStats] = field(default_factory=dict)

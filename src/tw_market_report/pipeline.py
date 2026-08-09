@@ -13,7 +13,7 @@ from .fixture import fixture_current, fixture_history
 from .history import load_history, load_json, upsert_history, write_json
 from .limits import attach_limit_percentiles, combine_limit_stats, historical_analogs
 from .models import LimitStats, MarketSnapshot, SourceStatus
-from .scoring import FEATURES, apply_overnight_overlay, classify_state, reversal_stage, score_modules
+from .scoring import FEATURES, apply_overnight_overlay, classify_state, module_calculation_notes, reversal_stage, score_modules
 from .sources.derivatives import DerivativesCollector
 from .sources.domestic import DomesticCollector
 from .sources.overseas import OverseasCollector
@@ -235,6 +235,13 @@ class ReportPipeline:
             int(self.config.raw.get("correlation_window", 252)),
             float(self.config.raw.get("correlation_threshold", 0.75)),
         )
+        calculation_notes = module_calculation_notes(
+            scoring_features,
+            history,
+            module_scores,
+            int(self.config.raw.get("correlation_window", 252)),
+            float(self.config.raw.get("correlation_threshold", 0.75)),
+        )
         # Observed coverage describes source data, not whether a validated
         # feature is currently allowed to affect the score.  For example,
         # limit breadth remains observed even while its backtest gate is closed.
@@ -287,6 +294,7 @@ class ReportPipeline:
             module_coverage={key: round(value, 3) for key, value in coverage.items()},
             module_observed_coverage={key: round(value, 3) for key, value in observed_coverage.items()},
             module_history_coverage={key: round(value, 3) for key, value in history_coverage.items()},
+            module_calculation_notes=calculation_notes,
             imputed_score_features=imputed,
             features=features,
             limits=limits,
@@ -326,6 +334,7 @@ class ReportPipeline:
             module_coverage=base_data.get("module_coverage", {}),
             module_observed_coverage=base_data.get("module_observed_coverage", base_data.get("module_coverage", {})),
             module_history_coverage=base_data.get("module_history_coverage", {}),
+            module_calculation_notes=base_data.get("module_calculation_notes", {}),
             imputed_score_features=base_data.get("imputed_score_features", []),
             features={**base_data.get("features", {}), **overseas, "overnight_exposure_adjustment": adjustment},
             limits={key: LimitStats(**value) for key, value in base_data.get("limits", {}).items()},

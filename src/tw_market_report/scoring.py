@@ -120,6 +120,72 @@ def score_modules(
     return scores, coverage, positive, negative
 
 
+def _display_feature_value(name: str, value: float) -> str:
+    """Format an observed value compactly for the dashboard explanation."""
+    if name == "foreign_futures_scheme7_score":
+        return f"{value:.1f}分"
+    if name.endswith("_percentile"):
+        return f"{value:.1f}百分位"
+    if name == "taiwan_vix_level_proxy":
+        return f"{value:.2f}"
+    if name in {"advance_decline_ratio", "tpex_breadth_proxy", "limit_strength_proxy", "put_call_sentiment", "option_pressure_balance"}:
+        return f"{value:+.3f}"
+    if name == "rotation_score":
+        return f"{value:.1%}"
+    if name.endswith("_ratio") or name.endswith("_pct") or name.endswith("_return_5d") or name.endswith("_change_5d") or name in {
+        "taiex_daily_return_proxy",
+        "otc_daily_return_proxy",
+        "volume_price_confirmation",
+        "limit_breadth",
+        "sox_relative_nasdaq",
+        "tsm_adr_premium",
+        "drawdown_52w",
+    }:
+        return f"{value:+.2%}"
+    return f"{value:.3g}"
+
+
+def module_calculation_notes(
+    current_features: dict[str, Any],
+    history: list[dict[str, Any]],
+    module_scores: dict[str, float],
+    correlation_window: int = 252,
+    correlation_threshold: float = 0.75,
+) -> dict[str, str]:
+    """Describe the observations, transforms and imputations behind each score."""
+    notes: dict[str, str] = {}
+    modules = sorted({spec.module for spec in FEATURES.values()})
+    for module in modules:
+        expected = [name for name, spec in FEATURES.items() if spec.module == module]
+        available = [name for name in expected if isinstance(current_features.get(name), (int, float))]
+        ranked: list[tuple[float, str]] = []
+        for name in available:
+            value = float(current_features[name])
+            feature_score = _feature_score(name, value, history)
+            if feature_score is None:
+                continue
+            label = FEATURES[name].label.split("（", 1)[0]
+            detail = f"{label} {_display_feature_value(name, value)}→{feature_score:.1f}分"
+            ranked.append((abs(feature_score - 50.0), detail))
+        ranked.sort(key=lambda item: item[0], reverse=True)
+        shown = [detail for _, detail in ranked[:3]]
+        hidden_count = max(0, len(ranked) - len(shown))
+        missing_count = len(expected) - len(available)
+        parts = [f"{len(available)}/{len(expected)}項實測"]
+        if shown:
+            parts.append("、".join(shown))
+        if hidden_count:
+            parts.append(f"另{hidden_count}項已納入")
+        if missing_count:
+            parts.append(f"缺{missing_count}項以50分補齊")
+        groups = _correlation_groups(available, history, correlation_window, correlation_threshold)
+        if any(len(group) > 1 for group in groups):
+            parts.append("高相關項先合併")
+        parts.append(f"模組合成{module_scores.get(module, 50.0):.1f}分")
+        notes[module] = "；".join(parts) + "。"
+    return notes
+
+
 STATE_ORDER = {"強空": 0, "轉空": 1, "盤整": 2, "轉多": 3, "強多": 4}
 
 
