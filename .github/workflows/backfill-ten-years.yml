@@ -114,11 +114,24 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/history.jsonl data/backtest.json
-          if git diff --cached --quiet; then
-            echo "No history changes"
-          else
+          cp data/history.jsonl "$RUNNER_TEMP/backfill-history.jsonl"
+          for attempt in 1 2 3 4 5; do
+            git fetch origin main
+            git reset --hard origin/main
+            tw-market-report merge-history \
+              --output data/history.jsonl \
+              "$RUNNER_TEMP/backfill-history.jsonl"
+            tw-market-report backtest
+            git add data/history.jsonl data/backtest.json
+            if git diff --cached --quiet; then
+              echo "No history changes"
+              exit 0
+            fi
             git commit -m "data: backfill ten-year free history"
-            git pull --rebase
-            git push
-          fi
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            echo "Main changed during persistence; retrying ($attempt/5)"
+          done
+          echo "Unable to persist history after 5 attempts" >&2
+          exit 1
