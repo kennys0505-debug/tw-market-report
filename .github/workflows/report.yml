@@ -2,8 +2,10 @@ name: Taiwan market report
 
 on:
   schedule:
-    - cron: "15 0 * * 1-5" # 08:15 Asia/Taipei
-    - cron: "0 14 * * 1-5" # 22:00 Asia/Taipei
+    # Start a few minutes before the delivery target and avoid GitHub's busiest
+    # :00/:15 schedule slots, where scheduled workflows can be delayed.
+    - cron: "7 0 * * 1-5" # target: about 08:15 Asia/Taipei
+    - cron: "53 13 * * 1-5" # target: about 22:00 Asia/Taipei
   workflow_dispatch:
     inputs:
       mode:
@@ -19,12 +21,15 @@ permissions:
   id-token: write
 
 concurrency:
-  group: market-report-${{ github.event.schedule || inputs.mode }}
-  cancel-in-progress: false
+  # Scheduled and manual runs of the same report mode share a group. A new run
+  # replaces a stale queued/run instance instead of waiting behind it forever.
+  group: market-report-${{ github.event_name == 'workflow_dispatch' && inputs.mode || (github.event.schedule == '7 0 * * 1-5' && 'premarket' || 'close') }}
+  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -49,7 +54,7 @@ jobs:
         run: |
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
             MODE="${{ inputs.mode }}"
-          elif [[ "${{ github.event.schedule }}" == "15 0 * * 1-5" ]]; then
+          elif [[ "${{ github.event.schedule }}" == "7 0 * * 1-5" ]]; then
             MODE="premarket"
           else
             MODE="close"
