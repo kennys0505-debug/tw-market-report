@@ -39,12 +39,12 @@
         "max_adverse_excursion": -0.015349429451461947
       },
       "10": {
-        "samples": 100,
-        "average_return": 0.014720578123530514,
-        "median_return": 0.015393321089087642,
-        "up_probability": 0.67,
-        "max_favorable_excursion": 0.03246873845993859,
-        "max_adverse_excursion": -0.024482211243081538
+        "samples": 101,
+        "average_return": 0.016054148159701843,
+        "median_return": 0.0154137471030249,
+        "up_probability": 0.6732673267326733,
+        "max_favorable_excursion": 0.0336265841363435,
+        "max_adverse_excursion": -0.024265995387215387
       },
       "20": {
         "samples": 97,
@@ -73,12 +73,12 @@
         "max_adverse_excursion": -0.016765785241594923
       },
       "10": {
-        "samples": 96,
-        "average_return": 0.013857795358899923,
-        "median_return": 0.017848113096483598,
-        "up_probability": 0.7291666666666666,
-        "max_favorable_excursion": 0.0292091443721193,
-        "max_adverse_excursion": -0.026783037701054353
+        "samples": 97,
+        "average_return": 0.015255252641559044,
+        "median_return": 0.017981488018806724,
+        "up_probability": 0.7319587628865979,
+        "max_favorable_excursion": 0.030448340324745228,
+        "max_adverse_excursion": -0.026534185867029055
       },
       "20": {
         "samples": 90,
@@ -107,12 +107,12 @@
         "max_adverse_excursion": -0.012515730895265417
       },
       "10": {
-        "samples": 93,
-        "average_return": 0.018222261495396717,
-        "median_return": 0.020346447886446573,
-        "up_probability": 0.7204301075268817,
-        "max_favorable_excursion": 0.031245664822837277,
-        "max_adverse_excursion": -0.019219272943173847
+        "samples": 94,
+        "average_return": 0.019617887987752436,
+        "median_return": 0.02060828412527871,
+        "up_probability": 0.723404255319149,
+        "max_favorable_excursion": 0.03250274447128406,
+        "max_adverse_excursion": -0.019042944611869873
       },
       "20": {
         "samples": 88,
