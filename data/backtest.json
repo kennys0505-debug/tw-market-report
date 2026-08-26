@@ -115,12 +115,12 @@
         "max_adverse_excursion": -0.01719688027952876
       },
       "20": {
-        "samples": 91,
-        "average_return": 0.03226551273999914,
-        "median_return": 0.02510141619345574,
-        "up_probability": 0.7252747252747253,
-        "max_favorable_excursion": 0.0488113174161833,
-        "max_adverse_excursion": -0.023455873687888956
+        "samples": 92,
+        "average_return": 0.032297246552469974,
+        "median_return": 0.02539470528603671,
+        "up_probability": 0.7282608695652174,
+        "max_favorable_excursion": 0.04887544934080079,
+        "max_adverse_excursion": -0.024122834706621864
       }
     }
   }
