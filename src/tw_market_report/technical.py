@@ -59,14 +59,22 @@ def _weighted(parts: list[tuple[float | None, float]]) -> tuple[float, float]:
     )
 
 
-def _series(history: list[dict[str, Any]], market: str) -> tuple[list[float], list[float]]:
+def _series(history: list[dict[str, Any]], market: str, current: dict[str, Any]) -> tuple[list[float], list[float]]:
     closes: list[float] = []
     turnovers: list[float] = []
+    if market == "otc":
+        for row in current.get("otc_history", []):
+            numeric_close = _number(row.get("close")) if isinstance(row, dict) else None
+            if numeric_close is not None:
+                closes.append(numeric_close)
+    official_otc_history = market == "otc" and bool(closes)
     for row in history:
         features = row.get("features", {})
         close = row.get("taiex_close") if market == "taiex" else features.get("otc_close")
-        turnover = features.get("market_turnover" if market == "taiex" else "otc_turnover")
-        numeric_close = _number(close)
+        turnover = features.get("market_turnover") if market == "taiex" else (
+            features.get("otc_turnover") or features.get("tpex_market_turnover")
+        )
+        numeric_close = None if official_otc_history else _number(close)
         if numeric_close is not None:
             closes.append(numeric_close)
         numeric_turnover = _number(turnover)
@@ -79,7 +87,7 @@ def _index_analysis(market: str, current: dict[str, Any], history: list[dict[str
     label = "加權指數" if market == "taiex" else "櫃買指數"
     close_key = "taiex_close" if market == "taiex" else "otc_close"
     turnover_key = "market_turnover" if market == "taiex" else "otc_turnover"
-    closes, turnovers = _series(history, market)
+    closes, turnovers = _series(history, market, current)
     close = _number(current.get(close_key))
     if close is None:
         return {
