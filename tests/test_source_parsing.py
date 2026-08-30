@@ -22,6 +22,23 @@ class FakeClient:
 
 
 class SourceParsingTests(unittest.TestCase):
+    def test_tpex_index_history_populates_otc_ohlc_and_prior_closes(self):
+        rows = [
+            {"Date": f"2026/07/{day:02d}", "Open": str(200 + day), "High": str(202 + day),
+             "Low": str(199 + day), "Close": str(201 + day)}
+            for day in range(1, 30)
+        ]
+        collector = DomesticCollector(
+            {"tpex_index_history": "https://example.test/tpex_index"},
+            client=FakeClient(json_payload=rows),
+        )
+        features, statuses = {}, []
+        collector._collect_tpex_index_history("20260729", features, statuses)
+        self.assertEqual(features["otc_close"], 230)
+        self.assertEqual(features["otc_open"], 229)
+        self.assertEqual(len(features["otc_history"]), 28)
+        self.assertEqual(statuses[0].status, "ready")
+
     def test_html_table_preserves_input_value(self):
         tables = parse_tables(
             '<table><tr><td>2026/07/29</td><td><input value="18.42" readonly></td></tr></table>'

@@ -50,6 +50,26 @@ class TechnicalAnalysisTests(unittest.TestCase):
         self.assertLess(result["score"], 40)
         self.assertIn(result["state"], {"轉空", "強空"})
 
+    def test_otc_uses_official_history_and_backfill_turnover_alias(self):
+        history = trend_history(True, 25)
+        for row in history:
+            row["features"].pop("otc_close")
+            row["features"]["tpex_market_turnover"] = row["features"].pop("otc_turnover")
+        otc_history = [
+            {"date": f"2026{i + 1:04d}", "close": 220.0 + i}
+            for i in range(80)
+        ]
+        current = {
+            "taiex_close": history[-1]["taiex_close"] * 1.002,
+            "otc_close": 301.0,
+            "otc_turnover": 90_000_000_000,
+            "otc_history": otc_history,
+        }
+        otc = technical_analysis(current, history)["otc"]
+        self.assertGreaterEqual(otc["coverage"], 0.8)
+        self.assertIsNotNone(otc["moving_averages"]["60"])
+        self.assertIsNotNone(otc["volume_ratio_20d"])
+
     def test_auxiliary_data_cannot_move_score_more_than_ten_points(self):
         weights = {"trend_breadth": 0.25, "capital_flow": 0.20, "futures": 0.15}
         score, adjustment = auxiliary_adjustment(
