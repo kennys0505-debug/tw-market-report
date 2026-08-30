@@ -160,6 +160,9 @@ class DomesticCollector:
             features["otc_close"] = number(
                 find_field(merged, "櫃買", "指數") or find_field(merged, "收盤", "指數") or find_field(merged, "收市")
             )
+            features["otc_turnover"] = number(
+                find_field(merged, "成交", "金額") or find_field(merged, "成交值")
+            )
             up = int(number(find_field(merged, "上漲", "家數") or find_field(merged, "上漲"), 0) or 0)
             down = int(number(find_field(merged, "下跌", "家數") or find_field(merged, "下跌"), 0) or 0)
             flat = int(number(find_field(merged, "平盤", "家數") or find_field(merged, "平盤"), 0) or 0)
