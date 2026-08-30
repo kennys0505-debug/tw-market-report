@@ -21,6 +21,25 @@ def _count_pair(value: Any) -> tuple[int, int]:
     return int(match.group(1).replace(",", "")), int(match.group(2).replace(",", ""))
 
 
+def _field_alias(row: dict[str, Any], *aliases: str) -> Any:
+    normalized = {re.sub(r"[\s_\-]", "", str(key)).lower(): value for key, value in row.items()}
+    for alias in aliases:
+        needle = re.sub(r"[\s_\-]", "", alias).lower()
+        for key, value in normalized.items():
+            if key == needle or needle in key:
+                return value
+    return None
+
+
+def _tpex_date_key(value: Any) -> str | None:
+    digits = re.sub(r"\D", "", str(value or ""))
+    if len(digits) == 8 and digits.startswith("20"):
+        return digits
+    if len(digits) == 7:
+        return f"{int(digits[:3]) + 1911:04d}{digits[3:]}"
+    return None
+
+
 def _tables(payload: Any) -> list[dict[str, Any]]:
     """Return every fields/data pair used by TWSE's old and new JSON shapes."""
     if not isinstance(payload, dict):
@@ -198,6 +217,67 @@ class DomesticCollector:
             statuses.append(SourceStatus("TPEx市場現況", "ready" if eligible else "partial", ymd, message, url))
         except Exception as error:
             statuses.append(SourceStatus("TPEx市場現況", "partial", ymd, str(error), url))
+        self._collect_tpex_index_history(ymd, features, statuses)
+        self._collect_tpex_turnover(ymd, features, statuses)
+
+    def _collect_tpex_index_history(self, ymd: str, features: dict, statuses: list[SourceStatus]) -> None:
+        url = self.sources.get("tpex_index_history")
+        if not url:
+            return
+        try:
+            payload = self.client.get_json(url)
+            rows = payload if isinstance(payload, list) else payload.get("data", [])
+            parsed: list[dict[str, Any]] = []
+            for row in rows:
+                if not isinstance(row, dict):
+                    continue
+                day = _tpex_date_key(_field_alias(row, "Date", "日期"))
+                close = number(_field_alias(row, "Close", "收盤", "收市指數"))
+                if day is None or close is None:
+                    continue
+                parsed.append({
+                    "date": day,
+                    "close": close,
+                    "open": number(_field_alias(row, "Open", "開盤", "開市指數")),
+                    "high": number(_field_alias(row, "High", "最高")),
+                    "low": number(_field_alias(row, "Low", "最低")),
+                })
+            parsed.sort(key=lambda row: row["date"])
+            current = next((row for row in reversed(parsed) if row["date"] == ymd), None)
+            prior = [row for row in parsed if row["date"] < ymd][-260:]
+            if current:
+                features["otc_close"] = current["close"]
+                for source, target in (("open", "otc_open"), ("high", "otc_high"), ("low", "otc_low")):
+                    if current[source] is not None:
+                        features[target] = current[source]
+            if prior:
+                features["otc_history"] = prior
+            if not current or len(prior) < 20:
+                raise SourceError(f"櫃買指數歷史不足：當日={bool(current)}、前期={len(prior)}")
+            statuses.append(SourceStatus("TPEx櫃買指數歷史", "ready", ymd, url=url))
+        except Exception as error:
+            statuses.append(SourceStatus("TPEx櫃買指數歷史", "partial", ymd, str(error), url))
+
+    def _collect_tpex_turnover(self, ymd: str, features: dict, statuses: list[SourceStatus]) -> None:
+        if features.get("otc_turnover") is not None:
+            return
+        url = self.sources.get("tpex_quotes")
+        if not url:
+            return
+        try:
+            payload = self.client.get_json(url)
+            rows = payload if isinstance(payload, list) else payload.get("data", [])
+            amounts = [
+                number(_field_alias(row, "TransactionAmount", "成交金額", "成交值"))
+                for row in rows if isinstance(row, dict)
+            ]
+            clean = [value for value in amounts if value is not None]
+            if not clean:
+                raise SourceError("找不到上櫃個股成交金額欄位")
+            features["otc_turnover"] = sum(clean)
+            statuses.append(SourceStatus("TPEx上櫃成交值", "ready", ymd, url=url))
+        except Exception as error:
+            statuses.append(SourceStatus("TPEx上櫃成交值", "partial", ymd, str(error), url))
 
     def _collect_institutional(self, ymd: str, features: dict, statuses: list[SourceStatus]) -> None:
         url = self.sources["twse_institutional"].format(date=ymd)
