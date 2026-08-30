@@ -1,14 +1,109 @@
 {
   "trade_date": "2026-08-28",
   "report_mode": "close",
-  "generated_at": "2026-08-29T07:13:45.637286+08:00",
-  "domestic_market_state": "盤整",
+  "generated_at": "2026-08-30T21:10:57.397313+08:00",
+  "domestic_market_state": "轉多",
   "overnight_risk_state": "中性",
-  "composite_score": 57.33,
-  "confidence": "高",
+  "composite_score": 74.2,
+  "technical_score": 71.4,
+  "technical_state": "轉多",
+  "technical_analysis": {
+    "score": 71.4,
+    "state": "轉多",
+    "stage": "初步轉折",
+    "synchrony": "尚未同步",
+    "coverage": 0.5,
+    "taiex": {
+      "market": "taiex",
+      "label": "加權指數",
+      "close": 46331.45,
+      "score": 84.4,
+      "signal": "強多",
+      "coverage": 0.9,
+      "components": {
+        "trend": 98.0,
+        "structure": 95.7,
+        "momentum": 71.2,
+        "volume": 78.7,
+        "candlestick_volatility": 50.0
+      },
+      "moving_averages": {
+        "20": 44954.87,
+        "60": 44232.97,
+        "120": 37510.98,
+        "240": 30851.15
+      },
+      "rsi14": 68.4,
+      "roc5": 0.024481534149015882,
+      "roc20": 0.16022091838140073,
+      "volume_ratio_20d": 1.15,
+      "confirmation_level": 45975.22,
+      "invalidation_level": 44719.35,
+      "reasons": [
+        "收盤站上20日線",
+        "收盤站上60日線",
+        "RSI14 68.4",
+        "成交值為20日均量1.15倍"
+      ]
+    },
+    "otc": {
+      "market": "otc",
+      "label": "櫃買指數",
+      "close": 402.83,
+      "score": 54.1,
+      "signal": "盤整",
+      "coverage": 0.1,
+      "components": {
+        "trend": 50.0,
+        "structure": 50.0,
+        "momentum": 70.4,
+        "volume": 50.0,
+        "candlestick_volatility": 50.0
+      },
+      "moving_averages": {
+        "20": null,
+        "60": null,
+        "120": null,
+        "240": null
+      },
+      "rsi14": 72.1,
+      "roc5": 0.03300338496256017,
+      "roc20": null,
+      "volume_ratio_20d": null,
+      "confirmation_level": 406.12,
+      "invalidation_level": 384.79,
+      "reasons": [
+        "RSI14 72.1"
+      ]
+    },
+    "method": "加權指數4/7＋櫃買指數3/7；趨勢30%、結構25%、動能20%、量價15%、K線與波動10%"
+  },
+  "auxiliary_score": 57.01,
+  "auxiliary_adjustment": 2.8,
+  "exposure_details": {
+    "technical_range": [
+      60,
+      80
+    ],
+    "risk_adjusted_range": [
+      39,
+      39
+    ],
+    "center": 39,
+    "cash_reserve": 61,
+    "gross_exposure": 39,
+    "leverage_multiple": 1.0,
+    "annualized_volatility_20d": 0.3104,
+    "volatility_cap": 39,
+    "restrictions": [
+      "加權與櫃買尚未同向",
+      "技術資料覆蓋不足80%"
+    ]
+  },
+  "confidence": "低",
   "model_exposure_range": [
-    40,
-    60
+    39,
+    39
   ],
   "shadow_mode": true,
   "module_scores": {
@@ -16,7 +111,7 @@
     "futures": 47.25,
     "leverage_lending": 43.34,
     "options_volatility": 71.96,
-    "overseas": 59.64,
+    "overseas": 56.17,
     "trend_breadth": 56.91,
     "valuation": 58.62
   },
@@ -52,7 +147,7 @@
     "futures": "2/2項實測；外資期貨方案七 23.7分→23.7分、台指期正逆價差 +0.06%→70.8分；模組合成47.3分。",
     "leverage_lending": "4/4項實測；融資金額／成交值壓力 0.532→82.4分、借券餘額日變化 0.00501→22.6分、融資餘額日變化 0.013→28.2分；另1項已納入；模組合成43.3分。",
     "options_volatility": "3/3項實測；TAIWAN VIX水準 25.00→100.0分、Put/Call情緒 +0.986→84.9分、選擇權壓力平衡 -0.195→31.0分；模組合成72.0分。",
-    "overseas": "5/5項實測；費半相對Nasdaq -3.15%→13.7分、美元兌台幣五日變化 -0.66%→83.1分、美國VIX五日變化 -9.37%→74.1分；另2項已納入；高相關項先合併；模組合成59.6分。",
+    "overseas": "5/5項實測；費半相對Nasdaq -3.15%→13.7分、美元兌台幣五日變化 -0.61%→81.7分、費半五日變化 -2.31%→29.9分；另2項已納入；高相關項先合併；模組合成56.2分。",
     "trend_breadth": "6/7項實測；單日量價確認 +0.89%→73.2分、加權指數單日趨勢 +0.77%→67.8分、上市漲跌家數廣度 -0.234→33.1分；另3項已納入；缺1項以50分補齊；模組合成56.9分。",
     "valuation": "4/4項實測；市場本益比分位 49.0百分位→88.5分、市場淨值比分位 81.3百分位→17.3分、距52週高點 -1.63%→82.2分；另1項已納入；模組合成58.6分。"
   },
@@ -64,6 +159,7 @@
     "tsmc_turnover": 36465015980.0,
     "market_turnover": 1065131736201.0,
     "otc_close": 402.83,
+    "otc_turnover": null,
     "trust_flow_ratio": -0.00018452731556100214,
     "foreign_flow_ratio": 0.03920087982348939,
     "dealer_flow_ratio": 0.004009551137995648,
@@ -99,15 +195,15 @@
     "foreign_tmf_long_oi": 19978.0,
     "foreign_tmf_short_oi": 0.0,
     "foreign_futures_net": -81835.6,
-    "us_vix": 14.51,
-    "us_vix_change_1d": -0.04602235371466146,
-    "us_vix_change_5d": -0.09369144284821995,
-    "sox_return_1d": -0.03471653874773961,
-    "sox_return_5d": -0.02305787680545035,
-    "sox_return_20d": 0.01402006087435348,
-    "sox_relative_nasdaq": -0.03153606560261801,
+    "us_vix": 14.43,
+    "us_vix_change_1d": -0.005513439007580945,
+    "us_vix_change_5d": -0.046265697290152064,
+    "sox_return_1d": -0.03471670312217734,
+    "sox_return_5d": -0.023058043165197106,
+    "sox_return_20d": 0.014019888200746289,
+    "sox_relative_nasdaq": -0.031536082757581574,
     "usd_twd": 31.628000259399414,
-    "usd_twd_change_5d": -0.006605266012953526,
+    "usd_twd_change_5d": -0.006096418863391184,
     "tsm_adr_close": 417.5199890136719,
     "tsm_adr_equivalent_twd": 2641.064464165771,
     "tsm_adr_premium": 0.09134895213461602,
@@ -778,9 +874,11 @@
     "市場淨值比分位（-32.7）",
     "借券餘額日變化（非借券賣出）（-27.4）"
   ],
-  "reversal_stage": "反轉確認",
+  "reversal_stage": "初步轉折",
   "reversal_reasons": [
-    "TAIWAN VIX進入極端區"
+    "收盤站上20日線",
+    "收盤站上60日線",
+    "RSI14 72.1"
   ],
   "data_freshness": {
     "TWSE收盤行情": "20260828",
@@ -795,7 +893,7 @@
     "TAIFEX市場未平倉量": "2026-08-28",
     "TAIFEX三大法人期貨": "2026-08-28",
     "TAIFEX選擇權履約價": "2026-08-28",
-    "Cboe VIX": "2026-08-27",
+    "Cboe VIX": "2026-08-28",
     "Yahoo ^SOX": "2026-08-28",
     "Yahoo ^IXIC": "2026-08-28",
     "Yahoo TSM": "2026-08-28",
@@ -889,7 +987,7 @@
     {
       "name": "Cboe VIX",
       "status": "ready",
-      "as_of": "2026-08-27",
+      "as_of": "2026-08-28",
       "message": "",
       "url": "https://cdn.cboe.com/api/global/us_indices/daily_prices/VIX_History.csv"
     },
@@ -15629,7 +15727,7 @@
     },
     {
       "trade_date": "2026-08-28",
-      "composite_score": 57.32991169961234,
+      "composite_score": 74.2,
       "taiex_close": 46331.45
     }
   ],
@@ -15678,12 +15776,12 @@
     "label": "非三大法人部位代理"
   },
   "taiwan_vix": 25.0,
-  "us_vix": 14.51,
+  "us_vix": 14.43,
   "tsm_adr_premium": 0.09134895213461602,
   "sox_change": {
-    "1d": -0.03471653874773961,
-    "5d": -0.02305787680545035,
-    "20d": 0.01402006087435348
+    "1d": -0.03471670312217734,
+    "5d": -0.023058043165197106,
+    "20d": 0.014019888200746289
   },
   "margin_stress": {
     "proxy": null,
