@@ -11,6 +11,7 @@ def fixture_history(sessions: int = 320) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     current = date(2025, 4, 1)
     index_value = 20500.0
+    otc_value = 245.0
     for i in range(sessions):
         while current.weekday() >= 5:
             current += timedelta(days=1)
@@ -18,11 +19,15 @@ def fixture_history(sessions: int = 320) -> list[dict[str, Any]]:
         shock = -0.045 if i in {75, 76, 210} else 0.0
         daily_return = 0.0005 + 0.004 * math.sin(i / 7.0) + shock
         index_value *= 1.0 + daily_return
+        otc_value *= 1.0 + daily_return * 1.1
         down_ratio = max(0.0, 0.003 - daily_return * 0.3 + (0.05 if shock else 0.0))
         up_ratio = max(0.0, 0.004 + daily_return * 0.35)
         features = {
             "taiex_daily_return_proxy": daily_return,
             "otc_daily_return_proxy": daily_return * 1.1,
+            "otc_close": round(otc_value, 2),
+            "market_turnover": 320_000_000_000 * (1.0 + 0.25 * abs(cycle)),
+            "otc_turnover": 85_000_000_000 * (1.0 + 0.30 * abs(cycle)),
             "tpex_breadth_proxy": max(-1.0, min(1.0, daily_return * 35)),
             "limit_strength_proxy": math.log((up_ratio + 1 / 1800) / (down_ratio + 1 / 1800)),
             "taiex_ma20_gap": 0.02 * cycle + daily_return,
@@ -90,6 +95,8 @@ def fixture_current() -> tuple[dict[str, Any], dict[str, LimitStats], list[Sourc
         {
             "taiex_close": latest["taiex_close"],
             "otc_close": 286.4,
+            "market_turnover": latest["features"]["market_turnover"],
+            "otc_turnover": latest["features"]["otc_turnover"],
             "tsmc_close": 1165.0,
             "taiwan_vix": 24.8,
             "us_vix": 18.6,

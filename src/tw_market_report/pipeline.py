@@ -18,6 +18,7 @@ from .sources.derivatives import DerivativesCollector
 from .sources.domestic import DomesticCollector
 from .sources.overseas import OverseasCollector
 from .stats import mean, percentile_rank, robust_zscore, safe_div
+from .technical import auxiliary_adjustment, exposure_for_score, technical_analysis
 
 PROXY_DEFINITIONS = {
     "taiex_daily_return_proxy": "取代加權指數20／60日均線；使用官方收盤價相對前一有效交易日報酬。",
@@ -269,26 +270,45 @@ class ReportPipeline:
             name for name in FEATURES
             if not isinstance(features.get(name), (int, float))
         )
-        composite = sum(module_scores.get(name, 50.0) * weight for name, weight in self.config.module_weights.items())
+        technical = technical_analysis(features, history)
+        auxiliary, adjustment = auxiliary_adjustment(module_scores, self.config.module_weights)
+        composite = max(0.0, min(100.0, float(technical["score"]) + adjustment))
         core_ready = any(status.name == "TWSE收盤行情" and status.status in {"ready", "fixture"} for status in statuses)
         features["core_data_ready"] = core_ready
         if not core_ready:
             state = history[-1].get("domestic_market_state", "盤整") if history else "盤整"
             composite = float(history[-1].get("composite_score", 50.0)) if history else 50.0
         else:
-            state = classify_state(composite, module_scores, history, features)
+            state = str(technical["state"])
         reversal, reasons = reversal_stage(features, state, history)
+        if core_ready:
+            reversal = str(technical["stage"])
+            reasons = list(technical.get("taiex", {}).get("reasons", []))[:2] + list(technical.get("otc", {}).get("reasons", []))[:2]
         weighted_coverage = sum(observed_coverage.get(name, 0.0) * weight for name, weight in self.config.module_weights.items())
         alignment = max(sum(score >= 55 for score in module_scores.values()), sum(score <= 45 for score in module_scores.values()))
-        confidence = "高" if weighted_coverage >= 0.85 and alignment >= 5 else "中" if weighted_coverage >= 0.60 else "低"
+        technical_coverage = float(technical.get("coverage", 0.0))
+        confidence = (
+            "高"
+            if weighted_coverage >= 0.75 and technical_coverage >= 0.85 and technical.get("synchrony") == "同向確認"
+            else "中"
+            if weighted_coverage >= 0.60 and technical_coverage >= 0.65
+            else "低"
+        )
+        exposure = exposure_for_score(str(state), composite, technical, history + ([{"taiex_close": features.get("taiex_close")}] if core_ready else []))
         snapshot = MarketSnapshot(
             trade_date=trade_date.isoformat(),
             report_mode="close",
             generated_at=now.isoformat(),
             domestic_market_state=str(state),
             composite_score=round(composite, 2),
+            technical_score=float(technical["score"]),
+            technical_state=str(technical["state"]),
+            technical_analysis=technical,
+            auxiliary_score=auxiliary,
+            auxiliary_adjustment=adjustment,
+            exposure_details=exposure,
             confidence=confidence,
-            model_exposure_range=list(self.config.exposure_ranges.get(str(state), [40, 60])),
+            model_exposure_range=list(exposure["risk_adjusted_range"]),
             shadow_mode=self.config.shadow_mode,
             module_scores={key: round(value, 2) for key, value in module_scores.items()},
             module_coverage={key: round(value, 3) for key, value in coverage.items()},
@@ -319,7 +339,14 @@ class ReportPipeline:
         overseas, statuses = OverseasCollector(self.config.sources).collect(tsmc_close)
         risk_state, adjustment = apply_overnight_overlay(overseas)
         base_range = list(base_data.get("model_exposure_range", [40, 60]))
-        adjusted = [max(0, min(100, value + adjustment)) for value in base_range]
+        adjusted = [max(0, min(150, value + adjustment)) for value in base_range]
+        exposure_details = dict(base_data.get("exposure_details", {}))
+        exposure_details["risk_adjusted_range"] = adjusted
+        exposure_details["center"] = round(sum(adjusted) / 2.0)
+        exposure_details["gross_exposure"] = exposure_details["center"]
+        exposure_details["cash_reserve"] = max(0, 100 - min(exposure_details["center"], 100))
+        exposure_details["leverage_multiple"] = round(max(1.0, exposure_details["center"] / 100.0), 2)
+        exposure_details["overnight_adjustment"] = adjustment
         snapshot = MarketSnapshot(
             trade_date=trade_date.isoformat(),
             report_mode="premarket",
@@ -327,6 +354,12 @@ class ReportPipeline:
             domestic_market_state=base_data.get("domestic_market_state", "盤整"),
             overnight_risk_state=risk_state,
             composite_score=float(base_data.get("composite_score", 50.0)),
+            technical_score=float(base_data.get("technical_score", 50.0)),
+            technical_state=base_data.get("technical_state", "盤整"),
+            technical_analysis=base_data.get("technical_analysis", {}),
+            auxiliary_score=float(base_data.get("auxiliary_score", 50.0)),
+            auxiliary_adjustment=float(base_data.get("auxiliary_adjustment", 0.0)),
+            exposure_details=exposure_details,
             confidence=base_data.get("confidence", "低"),
             model_exposure_range=adjusted,
             shadow_mode=bool(base_data.get("shadow_mode", True)),
@@ -475,6 +508,8 @@ class ReportPipeline:
             "limit_up_ratio": payload.get("limit_up_ratio"),
             "limit_down_ratio": payload.get("limit_down_ratio"),
             "composite_score": snapshot.composite_score,
+            "technical_score": snapshot.technical_score,
+            "technical_state": snapshot.technical_state,
             "domestic_market_state": snapshot.domestic_market_state,
             "reversal_stage": snapshot.reversal_stage,
             "features": snapshot.features,
@@ -488,6 +523,6 @@ class ReportPipeline:
     def digest(payload: dict[str, Any]) -> str:
         relevant = {
             key: payload.get(key)
-            for key in ("trade_date", "report_mode", "domestic_market_state", "overnight_risk_state", "composite_score", "reversal_stage", "model_exposure_range", "limit_up_count", "limit_down_count")
+            for key in ("trade_date", "report_mode", "domestic_market_state", "overnight_risk_state", "composite_score", "technical_score", "technical_state", "reversal_stage", "model_exposure_range", "limit_up_count", "limit_down_count")
         }
         return hashlib.sha256(json.dumps(relevant, sort_keys=True).encode()).hexdigest()

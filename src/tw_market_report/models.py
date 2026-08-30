@@ -51,6 +51,12 @@ class MarketSnapshot:
     domestic_market_state: str = "盤整"
     overnight_risk_state: str = "中性"
     composite_score: float = 50.0
+    technical_score: float = 50.0
+    technical_state: str = "盤整"
+    technical_analysis: dict[str, Any] = field(default_factory=dict)
+    auxiliary_score: float = 50.0
+    auxiliary_adjustment: float = 0.0
+    exposure_details: dict[str, Any] = field(default_factory=dict)
     confidence: str = "低"
     model_exposure_range: list[int] = field(default_factory=lambda: [40, 60])
     shadow_mode: bool = True
