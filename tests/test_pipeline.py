@@ -83,6 +83,11 @@ class PipelineTests(unittest.TestCase):
             self.assertIn("imputed_score_features", payload)
             self.assertEqual(payload["features"]["active_feature_mode"], "free_official_proxy_v2")
             self.assertEqual(payload["imputed_score_features"], [])
+            self.assertIn("technical_analysis", payload)
+            self.assertIn("taiex", payload["technical_analysis"])
+            self.assertIn("otc", payload["technical_analysis"])
+            self.assertIn("exposure_details", payload)
+            self.assertIn("技術多空轉折", html)
 
     def test_failed_core_snapshot_is_not_written_to_history(self):
         raw = load_config().raw
