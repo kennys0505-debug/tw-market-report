@@ -1,3 +1,4 @@
+import json
 import unittest
 from datetime import date
 
@@ -22,6 +23,32 @@ class FakeClient:
 
 
 class SourceParsingTests(unittest.TestCase):
+    def test_tpex_monthly_index_extends_history_for_long_moving_averages(self):
+        class MonthlyClient:
+            def get_json(self, _url):
+                return [{"Date": "2026/07/29", "Open": "230", "High": "232", "Low": "229", "Close": "231"}]
+
+            def post_form_text(self, _url, fields):
+                year, month, _ = map(int, fields["date"].split("/"))
+                fields_list = ["Date", "Open", "High", "Low", "Close", "Change"]
+                data = [
+                    [f"{year:04d}/{month:02d}/{day:02d}", "200", "202", "199", str(200 + day / 10), "0.1"]
+                    for day in range(1, 21)
+                ]
+                return json.dumps({"tables": [{"fields": fields_list, "data": data}]})
+
+        collector = DomesticCollector(
+            {
+                "tpex_index_history": "https://example.test/openapi",
+                "tpex_index_monthly": "https://example.test/monthly",
+            },
+            client=MonthlyClient(),
+        )
+        features, statuses = {}, []
+        collector._collect_tpex_index_history("20260729", features, statuses)
+        self.assertGreaterEqual(len(features["otc_history"]), 240)
+        self.assertEqual(statuses[0].status, "ready")
+
     def test_tpex_index_history_populates_otc_ohlc_and_prior_closes(self):
         rows = [
             {"Date": f"2026/07/{day:02d}", "Open": str(200 + day), "High": str(202 + day),
