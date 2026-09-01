@@ -47,6 +47,8 @@ class HttpClient:
         if urllib.parse.urlparse(url).hostname == "www.tpex.org.tw":
             headers.update({
                 "Referer": "https://www.tpex.org.tw/zh-tw/mainboard/trading/info/mi-index.html",
+                "Origin": "https://www.tpex.org.tw",
+                "X-Requested-With": "XMLHttpRequest",
                 "Sec-Fetch-Dest": "empty",
                 "Sec-Fetch-Mode": "cors",
                 "Sec-Fetch-Site": "same-origin",

@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import re
 import statistics
+import urllib.parse
 from datetime import date
 from typing import Any
 
@@ -241,21 +242,31 @@ class DomesticCollector:
             payload = self.client.get_json(url)
             rows = _object_rows(payload)
             monthly_url = self.sources.get("tpex_index_monthly")
+            monthly_row_count = 0
+            monthly_errors: list[str] = []
             if monthly_url:
                 target_year, target_month = int(ymd[:4]), int(ymd[4:6])
                 for offset in range(13):
                     month_index = target_year * 12 + target_month - 1 - offset
                     year, month_zero = divmod(month_index, 12)
                     try:
-                        text = self.client.post_form_text(monthly_url, {
+                        fields = {
                             "response": "json",
                             "date": f"{year:04d}/{month_zero + 1:02d}/01",
-                        })
-                        rows.extend(_object_rows(json.loads(text)))
-                    except Exception:
+                        }
+                        try:
+                            month_payload = json.loads(self.client.post_form_text(monthly_url, fields))
+                        except Exception:
+                            query = urllib.parse.urlencode(fields)
+                            month_payload = self.client.get_json(f"{monthly_url}?{query}")
+                        month_rows = _object_rows(month_payload)
+                        monthly_row_count += len(month_rows)
+                        rows.extend(month_rows)
+                    except Exception as error:
                         # The current OpenAPI rows remain a valid fallback.  A
                         # missing month lowers coverage naturally; it is never
                         # replaced with fabricated prices.
+                        monthly_errors.append(str(error))
                         continue
             parsed: list[dict[str, Any]] = []
             for row in rows:
@@ -285,7 +296,14 @@ class DomesticCollector:
                 features["otc_history"] = prior
             if not current or len(prior) < 20:
                 raise SourceError(f"櫃買指數歷史不足：當日={bool(current)}、前期={len(prior)}")
-            statuses.append(SourceStatus("TPEx櫃買指數歷史", "ready", ymd, url=url))
+            complete = len(prior) >= 240
+            message = "" if complete else (
+                f"長均線歷史尚未完整：{len(prior)}/240；月資料列={monthly_row_count}"
+                + (f"；最近錯誤={monthly_errors[-1]}" if monthly_errors else "")
+            )
+            statuses.append(SourceStatus(
+                "TPEx櫃買指數歷史", "ready" if complete else "partial", ymd, message, url
+            ))
         except Exception as error:
             statuses.append(SourceStatus("TPEx櫃買指數歷史", "partial", ymd, str(error), url))
 
