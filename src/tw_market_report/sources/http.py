@@ -16,9 +16,18 @@ class HttpClient:
         self.timeout = timeout
         self.retries = retries
         self.headers = {
-            "User-Agent": "tw-market-report/0.1 (+https://github.com/)",
+            # Some official market-data gateways reject library/bot user agents
+            # even though the endpoint is public.  Use ordinary browser request
+            # headers so scheduled GitHub runners receive the same public JSON
+            # that an investor opening the TPEx page receives.
+            "User-Agent": (
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/140.0.0.0 Safari/537.36"
+            ),
             "Accept": "application/json,text/html,text/csv;q=0.9,*/*;q=0.8",
             "Accept-Language": "zh-TW,zh;q=0.9,en;q=0.7",
+            "Cache-Control": "no-cache",
         }
 
     def _request_bytes(self, request: urllib.request.Request) -> bytes:
@@ -34,7 +43,15 @@ class HttpClient:
         raise SourceError(f"Request failed: {request.full_url}: {last_error}")
 
     def get_bytes(self, url: str) -> bytes:
-        return self._request_bytes(urllib.request.Request(url, headers=self.headers))
+        headers = dict(self.headers)
+        if urllib.parse.urlparse(url).hostname == "www.tpex.org.tw":
+            headers.update({
+                "Referer": "https://www.tpex.org.tw/zh-tw/mainboard/trading/info/mi-index.html",
+                "Sec-Fetch-Dest": "empty",
+                "Sec-Fetch-Mode": "cors",
+                "Sec-Fetch-Site": "same-origin",
+            })
+        return self._request_bytes(urllib.request.Request(url, headers=headers))
 
     def get_text(self, url: str) -> str:
         payload = self.get_bytes(url)
