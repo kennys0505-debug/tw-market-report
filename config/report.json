@@ -38,6 +38,7 @@
     "twse_valuation": "https://www.twse.com.tw/exchangeReport/BWIBBU_d?response=json&date={date}&selectType=ALL",
     "tpex_quotes": "https://www.tpex.org.tw/openapi/v1/tpex_mainboard_quotes",
     "tpex_index_history": "https://www.tpex.org.tw/openapi/v1/tpex_index",
+    "tpex_index_monthly": "https://www.tpex.org.tw/www/zh-tw/indexInfo/inx",
     "tpex_historical_quotes": "https://www.tpex.org.tw/www/zh-tw/afterTrading/dailyQuotes?response=json&date={gregorian_date}",
     "tpex_highlight": "https://www.tpex.org.tw/openapi/v1/tpex_mainborad_highlight",
     "tpex_margin": "https://www.tpex.org.tw/openapi/v1/tpex_mainboard_margin_balance",
