@@ -1,10 +1,10 @@
 {
   "trade_date": "2026-08-31",
   "report_mode": "close",
-  "generated_at": "2026-09-01T09:01:11.774781+08:00",
+  "generated_at": "2026-09-01T09:18:17.247482+08:00",
   "domestic_market_state": "強多",
   "overnight_risk_state": "中性",
-  "composite_score": 71.21,
+  "composite_score": 71.27,
   "technical_score": 72.9,
   "technical_state": "強多",
   "technical_analysis": {
@@ -80,8 +80,8 @@
     },
     "method": "加權指數4/7＋櫃買指數3/7；趨勢30%、結構25%、動能20%、量價15%、K線與波動10%"
   },
-  "auxiliary_score": 45.77,
-  "auxiliary_adjustment": -1.69,
+  "auxiliary_score": 45.93,
+  "auxiliary_adjustment": -1.63,
   "exposure_details": {
     "technical_range": [
       80,
@@ -113,7 +113,7 @@
     "futures": 26.99,
     "leverage_lending": 43.37,
     "options_volatility": 55.87,
-    "overseas": 62.16,
+    "overseas": 63.35,
     "trend_breadth": 35.71,
     "valuation": 64.35
   },
@@ -149,7 +149,7 @@
     "futures": "2/2項實測；外資期貨方案七 24.0分→24.0分、台指期正逆價差 -0.33%→30.0分；模組合成27.0分。",
     "leverage_lending": "4/4項實測；融資金額／成交值壓力 0.443→96.5分、借券餘額日變化 0.00758→7.7分、融資與指數單日背離 0.00914→19.5分；另1項已納入；模組合成43.4分。",
     "options_volatility": "3/3項實測；TAIWAN VIX水準 1.00→100.0分、選擇權壓力平衡 -0.393→12.5分、Put/Call情緒 +0.961→55.2分；模組合成55.9分。",
-    "overseas": "5/5項實測；美元兌台幣五日變化 -0.45%→76.3分、美國VIX五日變化 -5.87%→65.1分、費半相對Nasdaq -0.52%→40.2分；另2項已納入；高相關項先合併；模組合成62.2分。",
+    "overseas": "5/5項實測；美元兌台幣五日變化 -0.61%→81.7分、美國VIX五日變化 -5.87%→65.1分、費半相對Nasdaq -0.52%→40.2分；另2項已納入；高相關項先合併；模組合成63.4分。",
     "trend_breadth": "6/7項實測；單日量價確認 -0.59%→22.9分、漲跌停強弱 +1.099→24.1分、加權指數單日趨勢 -0.44%→27.9分；另3項已納入；缺1項以50分補齊；模組合成35.7分。",
     "valuation": "4/4項實測；市場本益比分位 48.2百分位→89.1分、距52週高點 -2.06%→76.1分、市場淨值比分位 78.4百分位→42.7分；另1項已納入；模組合成64.3分。"
   },
@@ -349,11 +349,11 @@
     "sox_return_5d": 0.009794204248047889,
     "sox_return_20d": 0.009159927338453944,
     "sox_relative_nasdaq": -0.005244147164089608,
-    "usd_twd": 31.67799949645996,
-    "usd_twd_change_5d": -0.004525202840847786,
+    "usd_twd": 31.618999481201172,
+    "usd_twd_change_5d": -0.006066917886039969,
     "tsm_adr_close": 415.32000732421875,
-    "tsm_adr_equivalent_twd": 2631.3013965772698,
-    "tsm_adr_premium": 0.09409621479304353,
+    "tsm_adr_equivalent_twd": 2626.400619223388,
+    "tsm_adr_premium": 0.09205846953155428,
     "_tpex_limit_breadth": 0.012805587892898719,
     "limit_breadth": 0.008277289187790998,
     "limit_strength_proxy": 1.0986122886681098,
@@ -1066,9 +1066,9 @@
     },
     {
       "name": "TPEx櫃買指數歷史",
-      "status": "ready",
+      "status": "partial",
       "as_of": "20260831",
-      "message": "",
+      "message": "長均線歷史尚未完整：20/240；月資料列=263",
       "url": "https://www.tpex.org.tw/openapi/v1/tpex_index"
     },
     {
@@ -15819,7 +15819,7 @@
     },
     {
       "trade_date": "2026-08-31",
-      "composite_score": 71.21000000000001,
+      "composite_score": 71.27000000000001,
       "taiex_close": 46128.47
     }
   ],
@@ -15869,7 +15869,7 @@
   },
   "taiwan_vix": 1.0,
   "us_vix": 14.92,
-  "tsm_adr_premium": 0.09409621479304353,
+  "tsm_adr_premium": 0.09205846953155428,
   "sox_change": {
     "1d": 0.0057011824334103345,
     "5d": 0.009794204248047889,
