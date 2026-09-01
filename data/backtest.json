@@ -81,12 +81,12 @@
         "max_adverse_excursion": -0.024890282269162664
       },
       "20": {
-        "samples": 98,
-        "average_return": 0.03356079042986498,
-        "median_return": 0.024301281261115637,
-        "up_probability": 0.7551020408163265,
-        "max_favorable_excursion": 0.050945950516177306,
-        "max_adverse_excursion": -0.02956637133377229
+        "samples": 99,
+        "average_return": 0.033926599766422316,
+        "median_return": 0.025037857977505684,
+        "up_probability": 0.7575757575757576,
+        "max_favorable_excursion": 0.05118370122234849,
+        "max_adverse_excursion": -0.029211286784976816
       }
     },
     "5d": {
@@ -115,12 +115,12 @@
         "max_adverse_excursion": -0.01719688027952876
       },
       "20": {
-        "samples": 95,
-        "average_return": 0.035594527134547235,
-        "median_return": 0.027432490791311936,
-        "up_probability": 0.7368421052631579,
-        "max_favorable_excursion": 0.05170915410333036,
-        "max_adverse_excursion": -0.022971508701121517
+        "samples": 96,
+        "average_return": 0.035950583255531555,
+        "median_return": 0.0280830800757238,
+        "up_probability": 0.7395833333333334,
+        "max_favorable_excursion": 0.05194638448170321,
+        "max_adverse_excursion": -0.022674024245932966
       }
     }
   }

@@ -1,18 +1,18 @@
 {
   "trade_date": "2026-08-31",
   "report_mode": "close",
-  "generated_at": "2026-09-01T03:42:49.852239+08:00",
-  "domestic_market_state": "強多",
+  "generated_at": "2026-09-01T08:50:13.969972+08:00",
+  "domestic_market_state": "轉多",
   "overnight_risk_state": "中性",
-  "composite_score": 70.86,
-  "technical_score": 72.9,
-  "technical_state": "強多",
+  "composite_score": 70.92,
+  "technical_score": 72.6,
+  "technical_state": "轉多",
   "technical_analysis": {
-    "score": 72.9,
-    "state": "強多",
-    "stage": "觀察",
+    "score": 72.6,
+    "state": "轉多",
+    "stage": "初步轉折",
     "synchrony": "尚未同步",
-    "coverage": 0.748,
+    "coverage": 0.9,
     "taiex": {
       "market": "taiex",
       "label": "加權指數",
@@ -49,62 +49,40 @@
     "otc": {
       "market": "otc",
       "label": "櫃買指數",
-      "close": 401.7,
-      "score": 73.4,
-      "signal": "轉多",
-      "coverage": 0.596,
-      "components": {
-        "trend": 100.0,
-        "structure": 85.8,
-        "momentum": 65.1,
-        "volume": 13.4,
-        "candlestick_volatility": 69.6
-      },
-      "moving_averages": {
-        "20": 392.7,
-        "60": null,
-        "120": null,
-        "240": null
-      },
-      "rsi14": 58.0,
-      "roc5": 0.04040404040404022,
-      "roc20": 0.1069470087354294,
-      "volume_ratio_20d": 1.46,
-      "confirmation_level": 402.83,
-      "invalidation_level": 384.79,
+      "score": 50.0,
+      "signal": "資料不足",
+      "coverage": 0.0,
+      "components": {},
       "reasons": [
-        "收盤站上20日線",
-        "RSI14 58.0",
-        "成交值為20日均量1.46倍"
+        "缺少櫃買指數收盤價"
       ]
     },
     "method": "加權指數4/7＋櫃買指數3/7；趨勢30%、結構25%、動能20%、量價15%、K線與波動10%"
   },
-  "auxiliary_score": 44.91,
-  "auxiliary_adjustment": -2.04,
+  "auxiliary_score": 45.8,
+  "auxiliary_adjustment": -1.68,
   "exposure_details": {
     "technical_range": [
-      80,
-      120
+      60,
+      80
     ],
     "risk_adjusted_range": [
-      72,
+      60,
       72
     ],
-    "center": 72,
-    "cash_reserve": 28,
-    "gross_exposure": 72,
+    "center": 66,
+    "cash_reserve": 34,
+    "gross_exposure": 66,
     "leverage_multiple": 1.0,
     "annualized_volatility_20d": 0.1677,
     "volatility_cap": 72,
     "restrictions": [
-      "加權與櫃買尚未同向",
-      "技術資料覆蓋不足80%"
+      "加權與櫃買尚未同向"
     ]
   },
   "confidence": "中",
   "model_exposure_range": [
-    72,
+    60,
     72
   ],
   "shadow_mode": true,
@@ -113,8 +91,8 @@
     "futures": 26.99,
     "leverage_lending": 43.37,
     "options_volatility": 55.87,
-    "overseas": 55.65,
-    "trend_breadth": 35.71,
+    "overseas": 62.37,
+    "trend_breadth": 28.23,
     "valuation": 64.35
   },
   "module_coverage": {
@@ -123,7 +101,7 @@
     "leverage_lending": 1.0,
     "options_volatility": 1.0,
     "overseas": 1.0,
-    "trend_breadth": 1.0,
+    "trend_breadth": 0.857,
     "valuation": 1.0
   },
   "module_observed_coverage": {
@@ -132,7 +110,7 @@
     "leverage_lending": 1.0,
     "options_volatility": 1.0,
     "overseas": 1.0,
-    "trend_breadth": 1.0,
+    "trend_breadth": 0.857,
     "valuation": 1.0
   },
   "module_history_coverage": {
@@ -148,165 +126,20 @@
     "capital_flow": "4/4項實測；投信買賣超占成交值 -0.31%→22.3分、資金輪動擴散 93.9%→64.3分、自營商買賣超占成交值 -0.58%→42.8分；另1項已納入；模組合成43.8分。",
     "futures": "2/2項實測；外資期貨方案七 24.0分→24.0分、台指期正逆價差 -0.33%→30.0分；模組合成27.0分。",
     "leverage_lending": "4/4項實測；融資金額／成交值壓力 0.443→96.5分、借券餘額日變化 0.00758→7.7分、融資與指數單日背離 0.00914→19.5分；另1項已納入；模組合成43.4分。",
-    "options_volatility": "3/3項實測；TAIWAN VIX水準 24.46→100.0分、選擇權壓力平衡 -0.393→12.5分、Put/Call情緒 +0.961→55.2分；模組合成55.9分。",
-    "overseas": "5/5項實測；費半相對Nasdaq -2.52%→18.3分、美元兌台幣五日變化 -0.43%→75.5分、費半五日變化 -1.91%→32.5分；另2項已納入；高相關項先合併；模組合成55.7分。",
-    "trend_breadth": "6/7項實測；單日量價確認 -0.59%→22.9分、漲跌停強弱 +1.099→24.1分、加權指數單日趨勢 -0.44%→27.9分；另3項已納入；缺1項以50分補齊；模組合成35.7分。",
+    "options_volatility": "3/3項實測；TAIWAN VIX水準 1.00→100.0分、選擇權壓力平衡 -0.393→12.5分、Put/Call情緒 +0.961→55.2分；模組合成55.9分。",
+    "overseas": "5/5項實測；美元兌台幣五日變化 -0.48%→77.2分、美國VIX五日變化 -5.87%→65.1分、費半相對Nasdaq -0.52%→40.2分；另2項已納入；高相關項先合併；模組合成62.4分。",
+    "trend_breadth": "5/7項實測；漲跌停強弱 +0.539→8.4分、上櫃漲跌家數廣度 +0.000→10.0分、單日量價確認 -0.59%→22.9分；另2項已納入；缺2項以50分補齊；模組合成28.2分。",
     "valuation": "4/4項實測；市場本益比分位 48.2百分位→89.1分、距52週高點 -2.06%→76.1分、市場淨值比分位 78.4百分位→42.7分；另1項已納入；模組合成64.3分。"
   },
-  "imputed_score_features": [],
+  "imputed_score_features": [
+    "otc_daily_return_proxy"
+  ],
   "features": {
     "taiex_close": 46128.47,
     "advance_decline_ratio": -0.30353817504655495,
     "tsmc_close": 2405.0,
     "tsmc_turnover": 78563954428.0,
     "market_turnover": 1285667300208.0,
-    "otc_close": 401.7,
-    "otc_turnover": 314316745750.0,
-    "otc_open": 401.75,
-    "otc_high": 401.75,
-    "otc_low": 393.34,
-    "otc_history": [
-      {
-        "date": "20260803",
-        "close": 362.89,
-        "open": 349.29,
-        "high": 365.82,
-        "low": 349.14
-      },
-      {
-        "date": "20260804",
-        "close": 375.03,
-        "open": 364.8,
-        "high": 376.61,
-        "low": 364.8
-      },
-      {
-        "date": "20260805",
-        "close": 383.75,
-        "open": 378.69,
-        "high": 390.96,
-        "low": 378.69
-      },
-      {
-        "date": "20260806",
-        "close": 391.37,
-        "open": 383.72,
-        "high": 391.96,
-        "low": 378.5
-      },
-      {
-        "date": "20260807",
-        "close": 384.19,
-        "open": 391.77,
-        "high": 394.28,
-        "low": 382.71
-      },
-      {
-        "date": "20260810",
-        "close": 391.61,
-        "open": 386.32,
-        "high": 396.92,
-        "low": 386.32
-      },
-      {
-        "date": "20260811",
-        "close": 391.68,
-        "open": 390.93,
-        "high": 393.12,
-        "low": 386.09
-      },
-      {
-        "date": "20260812",
-        "close": 402.02,
-        "open": 392.0,
-        "high": 402.12,
-        "low": 392.0
-      },
-      {
-        "date": "20260813",
-        "close": 406.12,
-        "open": 403.76,
-        "high": 411.25,
-        "low": 403.76
-      },
-      {
-        "date": "20260814",
-        "close": 400.95,
-        "open": 406.45,
-        "high": 409.29,
-        "low": 399.48
-      },
-      {
-        "date": "20260817",
-        "close": 398.32,
-        "open": 400.91,
-        "high": 401.03,
-        "low": 395.19
-      },
-      {
-        "date": "20260818",
-        "close": 390.83,
-        "open": 398.61,
-        "high": 400.81,
-        "low": 389.92
-      },
-      {
-        "date": "20260819",
-        "close": 384.79,
-        "open": 387.57,
-        "high": 389.78,
-        "low": 379.93
-      },
-      {
-        "date": "20260820",
-        "close": 389.96,
-        "open": 386.94,
-        "high": 392.69,
-        "low": 383.94
-      },
-      {
-        "date": "20260821",
-        "close": 387.27,
-        "open": 390.13,
-        "high": 390.99,
-        "low": 384.93
-      },
-      {
-        "date": "20260824",
-        "close": 386.1,
-        "open": 388.0,
-        "high": 394.35,
-        "low": 386.1
-      },
-      {
-        "date": "20260825",
-        "close": 389.41,
-        "open": 384.87,
-        "high": 389.41,
-        "low": 377.51
-      },
-      {
-        "date": "20260826",
-        "close": 395.66,
-        "open": 389.13,
-        "high": 395.97,
-        "low": 389.13
-      },
-      {
-        "date": "20260827",
-        "close": 400.38,
-        "open": 397.48,
-        "high": 401.75,
-        "low": 395.73
-      },
-      {
-        "date": "20260828",
-        "close": 402.83,
-        "open": 401.38,
-        "high": 406.24,
-        "low": 399.31
-      }
-    ],
     "trust_flow_ratio": -0.0031115609126504155,
     "foreign_flow_ratio": -0.011194454319302943,
     "dealer_flow_ratio": -0.005796956653400326,
@@ -322,7 +155,7 @@
     "put_call_volume_ratio": 1.1835,
     "put_call_oi_ratio": 0.9612,
     "put_call_sentiment": 0.9612,
-    "taiwan_vix": 24.46,
+    "taiwan_vix": 1.0,
     "tx_settlement": 45977.0,
     "tx_price_source": "settlement",
     "tx_selected_contract": "202609",
@@ -342,23 +175,23 @@
     "foreign_tmf_long_oi": 17753.0,
     "foreign_tmf_short_oi": 644.0,
     "foreign_futures_net": -82053.05,
-    "us_vix": 14.43,
-    "us_vix_change_1d": -0.005513439007580945,
-    "us_vix_change_5d": -0.046265697290152064,
-    "sox_return_1d": -0.030786345941455462,
-    "sox_return_5d": -0.01908021525953074,
-    "sox_return_20d": 0.018148686825849802,
-    "sox_relative_nasdaq": -0.025212158839830745,
-    "usd_twd": 31.68400001525879,
-    "usd_twd_change_5d": -0.004336637737966775,
-    "tsm_adr_close": 415.2449951171875,
-    "tsm_adr_equivalent_twd": 2631.324486325821,
-    "tsm_adr_premium": 0.09410581552009178,
-    "_tpex_limit_breadth": 0.012805587892898719,
-    "limit_breadth": 0.008277289187790998,
-    "limit_strength_proxy": 1.0986122886681098,
-    "limit_up_percentile_5y": 54.84126984126984,
-    "limit_down_percentile_5y": 84.84126984126983,
+    "us_vix": 14.92,
+    "us_vix_change_1d": 0.033957033957033866,
+    "us_vix_change_5d": -0.0586750788643533,
+    "sox_return_1d": 0.0057011824334103345,
+    "sox_return_5d": 0.009794204248047889,
+    "sox_return_20d": 0.009159927338453944,
+    "sox_relative_nasdaq": -0.005244147164089608,
+    "usd_twd": 31.667999267578125,
+    "usd_twd_change_5d": -0.0048394580329662595,
+    "tsm_adr_close": 415.32000732421875,
+    "tsm_adr_equivalent_twd": 2630.47073755078,
+    "tsm_adr_premium": 0.09375082642444088,
+    "_tpex_limit_breadth": 0.0,
+    "limit_breadth": 0.004655493482309125,
+    "limit_strength_proxy": 0.5389965007326869,
+    "limit_up_percentile_5y": 45.55555555555556,
+    "limit_down_percentile_5y": 91.78571428571429,
     "option_pressure_balance": -0.3930244664237376,
     "rotation_score": 0.9388924689806689,
     "taiex_ma20_gap": 0.022683894440268304,
@@ -367,8 +200,7 @@
     "taiex_ma240_gap": 0.490533794776858,
     "taiex_daily_return_proxy": -0.004381041387653384,
     "volume_price_confirmation": -0.005945665113092346,
-    "otc_daily_return_proxy": -0.0028051535387135784,
-    "tpex_breadth_proxy": 0.012805587892898719,
+    "tpex_breadth_proxy": 0.0,
     "foreign_futures_level_score": 5.7663956271786105,
     "foreign_futures_change_score": 57.105831754781676,
     "foreign_futures_share_score": 2.7499999999999996,
@@ -384,9 +216,9 @@
     "margin_20d_change": 0.1229925495362103,
     "margin_price_divergence": 0.009140353646451937,
     "borrowed_balance_daily_change_proxy": 0.0075807823767855,
-    "taiwan_vix_level_proxy": 24.46,
-    "taiwan_vix_change_5d": -0.1808439383791024,
-    "taiwan_vix_percentile": 98.4920634920635,
+    "taiwan_vix_level_proxy": 1.0,
+    "taiwan_vix_change_5d": -0.9665103817816477,
+    "taiwan_vix_percentile": 49.24603174603175,
     "market_pe_percentile": 48.171701112877585,
     "market_pb_percentile": 78.4181240063593,
     "dividend_yield_percentile": 6.677265500794912,
@@ -439,45 +271,45 @@
     },
     "tpex": {
       "market": "tpex",
-      "eligible_count": 859,
-      "limit_up_count": 12,
-      "limit_down_count": 1,
+      "eligible_count": 0,
+      "limit_up_count": 0,
+      "limit_down_count": 0,
       "intraday_up_touch_count": null,
       "intraday_down_touch_count": null,
-      "limit_up_ratio": 0.013969732246798603,
-      "limit_down_ratio": 0.0011641443538998836,
-      "limit_breadth": 0.012805587892898719,
-      "strength_ratio": 6.5,
-      "up_percentile_1y": 55.55555555555556,
-      "down_percentile_1y": 49.007936507936506,
-      "up_percentile_5y": 56.82539682539682,
-      "down_percentile_5y": 35.91269841269841,
-      "up_percentile_full": 58.96341463414634,
-      "down_percentile_full": 33.99390243902439,
-      "up_historical_rank": 674,
-      "down_historical_rank": 1082,
+      "limit_up_ratio": 0.0,
+      "limit_down_ratio": 0.0,
+      "limit_breadth": 0.0,
+      "strength_ratio": 1.0,
+      "up_percentile_1y": 4.761904761904762,
+      "down_percentile_1y": 21.428571428571427,
+      "up_percentile_5y": 2.4206349206349205,
+      "down_percentile_5y": 17.341269841269842,
+      "up_percentile_full": 2.0121951219512195,
+      "down_percentile_full": 16.524390243902438,
+      "up_historical_rank": 1575,
+      "down_historical_rank": 1099,
       "universe_verified": false,
-      "calculation_method": "official_market_highlight"
+      "calculation_method": "unverified"
     },
     "combined": {
       "market": "combined",
-      "eligible_count": 1933,
-      "limit_up_count": 23,
-      "limit_down_count": 7,
+      "eligible_count": 1074,
+      "limit_up_count": 11,
+      "limit_down_count": 6,
       "intraday_up_touch_count": null,
       "intraday_down_touch_count": null,
-      "limit_up_ratio": 0.01189860320744956,
-      "limit_down_ratio": 0.0036213140196585617,
-      "limit_breadth": 0.008277289187790998,
-      "strength_ratio": 3.0,
-      "up_percentile_1y": 43.25396825396825,
-      "down_percentile_1y": 86.9047619047619,
-      "up_percentile_5y": 54.84126984126984,
-      "down_percentile_5y": 84.84126984126983,
-      "up_percentile_full": 59.75609756097561,
-      "down_percentile_full": 86.03658536585365,
-      "up_historical_rank": 661,
-      "down_historical_rank": 230,
+      "limit_up_ratio": 0.010242085661080074,
+      "limit_down_ratio": 0.00558659217877095,
+      "limit_breadth": 0.004655493482309125,
+      "strength_ratio": 1.7142857142857142,
+      "up_percentile_1y": 34.12698412698413,
+      "down_percentile_1y": 91.26984126984127,
+      "up_percentile_5y": 45.55555555555556,
+      "down_percentile_5y": 91.78571428571429,
+      "up_percentile_full": 50.30487804878049,
+      "down_percentile_full": 92.89634146341463,
+      "up_historical_rank": 816,
+      "down_historical_rank": 117,
       "universe_verified": false,
       "calculation_method": "combined_mixed_scope"
     }
@@ -615,263 +447,263 @@
     },
     {
       "market": "tpex",
-      "trade_date": "2023-03-24",
-      "limit_up_count": 11,
-      "limit_down_count": 1,
-      "limit_up_ratio": 0.013836477987421384,
-      "limit_down_ratio": 0.0012578616352201257,
-      "distance": 0.000227,
-      "return_1d": -0.005302644724688554,
-      "return_5d": -0.006530440410438154,
-      "return_10d": -0.006908078694540354,
-      "return_20d": -0.03161919483245057
+      "trade_date": "2017-03-23",
+      "limit_up_count": 0,
+      "limit_down_count": 0,
+      "limit_up_ratio": 0.0,
+      "limit_down_ratio": 0.0,
+      "distance": 0.0,
+      "return_1d": -0.0027953606679864684,
+      "return_5d": -0.012005147652642156,
+      "return_10d": -0.009900571357220112,
+      "return_20d": -0.0074808121046365805
     },
     {
       "market": "tpex",
-      "trade_date": "2023-10-19",
-      "limit_up_count": 11,
-      "limit_down_count": 1,
-      "limit_up_ratio": 0.013836477987421384,
-      "limit_down_ratio": 0.0012578616352201257,
-      "distance": 0.000227,
-      "return_1d": -0.01223930618201352,
-      "return_5d": -0.02517332989722676,
-      "return_10d": 0.01751077176857585,
-      "return_20d": 0.0540044114259457
+      "trade_date": "2017-12-29",
+      "limit_up_count": 0,
+      "limit_down_count": 0,
+      "limit_up_ratio": 0.0,
+      "limit_down_ratio": 0.0,
+      "distance": 0.0,
+      "return_1d": 0.0063770452679072775,
+      "return_5d": 0.025640664257539747,
+      "return_10d": 0.032251669194182764,
+      "return_20d": 0.04077099576617571
     },
     {
       "market": "tpex",
-      "trade_date": "2017-12-21",
-      "limit_up_count": 10,
-      "limit_down_count": 1,
-      "limit_up_ratio": 0.01394700139470014,
-      "limit_down_ratio": 0.001394700139470014,
-      "distance": 0.000253,
-      "return_1d": 0.004604837271915185,
-      "return_5d": 0.01467160264544587,
-      "return_10d": 0.04068845654053743,
-      "return_20d": 0.07285176714205499
+      "trade_date": "2018-01-15",
+      "limit_up_count": 0,
+      "limit_down_count": 0,
+      "limit_up_ratio": 0.0,
+      "limit_down_ratio": 0.0,
+      "distance": 0.0,
+      "return_1d": 0.0027198938328689692,
+      "return_5d": 0.025113382151472408,
+      "return_10d": 0.02423261116196973,
+      "return_20d": -0.04885038849758716
     },
     {
       "market": "tpex",
-      "trade_date": "2017-11-24",
-      "limit_up_count": 10,
-      "limit_down_count": 1,
-      "limit_up_ratio": 0.014005602240896359,
-      "limit_down_ratio": 0.0014005602240896359,
-      "distance": 0.000272,
-      "return_1d": -0.009504251392792984,
-      "return_5d": -0.023375520195612842,
-      "return_10d": -0.041962983538924026,
-      "return_20d": -0.029188996958750102
+      "trade_date": "2018-04-02",
+      "limit_up_count": 0,
+      "limit_down_count": 0,
+      "limit_up_ratio": 0.0,
+      "limit_down_ratio": 0.0,
+      "distance": 0.0,
+      "return_1d": 0.00048308868167312724,
+      "return_5d": 0.0070828515457459496,
+      "return_10d": -0.0100006704462694,
+      "return_20d": -0.02602433628115397
     },
     {
       "market": "tpex",
-      "trade_date": "2017-05-24",
-      "limit_up_count": 10,
-      "limit_down_count": 1,
-      "limit_up_ratio": 0.013888888888888888,
-      "limit_down_ratio": 0.001388888888888889,
-      "distance": 0.000306,
-      "return_1d": 0.006378665965780073,
-      "return_5d": 0.018161327383761305,
-      "return_10d": 0.008335971614090276,
-      "return_20d": 0.0465571929489208
+      "trade_date": "2018-11-16",
+      "limit_up_count": 0,
+      "limit_down_count": 0,
+      "limit_up_ratio": 0.0,
+      "limit_down_ratio": 0.0,
+      "distance": 0.0,
+      "return_1d": 0.0032254475563662233,
+      "return_5d": -0.013247811339897941,
+      "return_10d": 0.009282348125821072,
+      "return_20d": -0.0009757999569259823
     },
     {
       "market": "tpex",
-      "trade_date": "2024-01-25",
-      "limit_up_count": 11,
-      "limit_down_count": 1,
-      "limit_up_ratio": 0.01373283395755306,
-      "limit_down_ratio": 0.0012484394506866417,
-      "distance": 0.000321,
-      "return_1d": -0.0004216052996730557,
-      "return_5d": -0.0019169432004896292,
-      "return_10d": 0.03517154725256666,
-      "return_20d": 0.10620287491487357
+      "trade_date": "2020-01-16",
+      "limit_up_count": 0,
+      "limit_down_count": 0,
+      "limit_up_ratio": 0.0,
+      "limit_down_ratio": 0.0,
+      "distance": 0.0,
+      "return_1d": 0.001935869355337294,
+      "return_5d": -0.059005065911545085,
+      "return_10d": -0.040843860037308666,
+      "return_20d": -0.0440924079281142
     },
     {
       "market": "tpex",
-      "trade_date": "2018-08-31",
-      "limit_up_count": 10,
-      "limit_down_count": 1,
-      "limit_up_ratio": 0.013869625520110958,
-      "limit_down_ratio": 0.0013869625520110957,
-      "distance": 0.000323,
-      "return_1d": -0.009013064062169618,
-      "return_5d": -0.028167180950005255,
-      "return_10d": -0.018679602383960825,
-      "return_20d": -0.049423623049293486
+      "trade_date": "2022-01-21",
+      "limit_up_count": 0,
+      "limit_down_count": 0,
+      "limit_up_ratio": 0.0,
+      "limit_down_ratio": 0.0,
+      "distance": 0.0,
+      "return_1d": 0.005013603883950779,
+      "return_5d": 0.0037576888481674064,
+      "return_10d": 0.0029336342762009693,
+      "return_20d": 0.0019609705407475087
     },
     {
       "market": "tpex",
-      "trade_date": "2022-03-28",
-      "limit_up_count": 11,
-      "limit_down_count": 1,
-      "limit_up_ratio": 0.014175257731958763,
-      "limit_down_ratio": 0.001288659793814433,
-      "distance": 0.00033,
-      "return_1d": 0.0016352730392277248,
-      "return_5d": 0.000142123206550826,
-      "return_10d": -0.012463463205785619,
-      "return_20d": -0.06944402428994034
+      "trade_date": "2022-08-29",
+      "limit_up_count": 0,
+      "limit_down_count": 0,
+      "limit_up_ratio": 0.0,
+      "limit_down_ratio": 0.0,
+      "distance": 0.0,
+      "return_1d": 0.0018383793854961361,
+      "return_5d": -0.017760057992026068,
+      "return_10d": -0.00212914347197779,
+      "return_20d": -0.09782268616438627
     },
     {
       "market": "tpex",
-      "trade_date": "2022-03-11",
-      "limit_up_count": 11,
-      "limit_down_count": 1,
-      "limit_up_ratio": 0.014304291287386216,
-      "limit_down_ratio": 0.0013003901170351106,
-      "distance": 0.000471,
-      "return_1d": -9.846658565382249e-05,
-      "return_5d": 0.011108189292164283,
-      "return_10d": 0.02387583016019934,
-      "return_20d": -0.015860650087982875
+      "trade_date": "2022-10-26",
+      "limit_up_count": 0,
+      "limit_down_count": 0,
+      "limit_up_ratio": 0.0,
+      "limit_down_ratio": 0.0,
+      "distance": 0.0,
+      "return_1d": 0.015501549605037468,
+      "return_5d": 0.02023324600029075,
+      "return_10d": 0.10044033136801267,
+      "return_20d": 0.16100651659000476
     },
     {
       "market": "tpex",
-      "trade_date": "2024-03-28",
-      "limit_up_count": 11,
-      "limit_down_count": 1,
-      "limit_up_ratio": 0.013563501849568433,
-      "limit_down_ratio": 0.0012330456226880395,
-      "distance": 0.000475,
-      "return_1d": 0.007341207303483754,
-      "return_5d": 0.03062459825627717,
-      "return_10d": -0.0012925289937979478,
-      "return_20d": 0.060453526782501266
+      "trade_date": "2022-11-02",
+      "limit_up_count": 0,
+      "limit_down_count": 0,
+      "limit_up_ratio": 0.0,
+      "limit_down_ratio": 0.0,
+      "distance": 0.0,
+      "return_1d": -0.008669353145798864,
+      "return_5d": 0.03080799714812854,
+      "return_10d": 0.10954514330730047,
+      "return_20d": 0.146000395414716
     },
     {
       "market": "combined",
-      "trade_date": "2020-11-11",
-      "limit_up_count": 21,
-      "limit_down_count": 6,
-      "limit_up_ratio": 0.0123094958968347,
-      "limit_down_ratio": 0.0035169988276670576,
-      "distance": 0.000515,
-      "return_1d": -0.003047008073327251,
-      "return_5d": 0.03853812982622018,
-      "return_10d": 0.035939765604323215,
-      "return_20d": 0.08505005583542369
-    },
-    {
-      "market": "combined",
-      "trade_date": "2020-12-04",
-      "limit_up_count": 21,
-      "limit_down_count": 6,
-      "limit_up_ratio": 0.012360211889346674,
-      "limit_down_ratio": 0.003531489111241907,
-      "distance": 0.000551,
-      "return_1d": 0.008785460967815961,
-      "return_5d": 0.005562379886275837,
-      "return_10d": 0.017868110531514603,
-      "return_20d": 0.07117454593828088
-    },
-    {
-      "market": "combined",
-      "trade_date": "2020-01-13",
-      "limit_up_count": 20,
-      "limit_down_count": 5,
-      "limit_up_ratio": 0.011883541295306001,
-      "limit_down_ratio": 0.0029708853238265003,
-      "distance": 0.000665,
-      "return_1d": 0.005480698266880912,
-      "return_5d": -0.057100306932311495,
-      "return_10d": -0.0300278534055618,
-      "return_20d": -0.03205783337818713
-    },
-    {
-      "market": "combined",
-      "trade_date": "2023-07-07",
-      "limit_up_count": 21,
-      "limit_down_count": 5,
-      "limit_up_ratio": 0.011904761904761904,
-      "limit_down_ratio": 0.002834467120181406,
-      "distance": 0.000793,
-      "return_1d": -0.0006847009249163483,
-      "return_5d": 0.03717547966570267,
-      "return_10d": 0.02199264171538884,
-      "return_20d": 0.01991033478334714
-    },
-    {
-      "market": "combined",
-      "trade_date": "2024-11-08",
-      "limit_up_count": 21,
-      "limit_down_count": 6,
-      "limit_up_ratio": 0.011419249592169658,
-      "limit_down_ratio": 0.0032626427406199023,
-      "distance": 0.000838,
-      "return_1d": -0.0010295539293084799,
-      "return_5d": -0.02993518268107731,
-      "return_10d": -0.012675613242653205,
-      "return_20d": -0.014170058533855667
-    },
-    {
-      "market": "combined",
-      "trade_date": "2018-03-14",
-      "limit_up_count": 19,
-      "limit_down_count": 5,
-      "limit_up_ratio": 0.011606597434331093,
-      "limit_down_ratio": 0.0030543677458766036,
-      "distance": 0.000859,
-      "return_1d": -0.001843497481610168,
-      "return_5d": -0.00251204841105912,
-      "return_10d": -0.015684675870565545,
-      "return_20d": -0.02068612530347491
-    },
-    {
-      "market": "combined",
-      "trade_date": "2018-06-25",
-      "limit_up_count": 19,
-      "limit_down_count": 5,
-      "limit_up_ratio": 0.011543134872417983,
-      "limit_down_ratio": 0.003037667071688943,
-      "distance": 0.000939,
-      "return_1d": -0.004106073725763548,
-      "return_5d": -0.0007898791633212943,
-      "return_10d": -0.0027413998661284245,
-      "return_20d": 0.01936965417755232
-    },
-    {
-      "market": "combined",
-      "trade_date": "2018-03-22",
+      "trade_date": "2023-08-04",
       "limit_up_count": 18,
-      "limit_down_count": 6,
-      "limit_up_ratio": 0.01094224924012158,
-      "limit_down_ratio": 0.00364741641337386,
-      "distance": 0.000982,
-      "return_1d": -0.016583014108873084,
-      "return_5d": -0.014530467460911689,
-      "return_10d": -0.0028911923124450567,
-      "return_20d": -0.0405121281065326
+      "limit_down_count": 10,
+      "limit_up_ratio": 0.010192525481313703,
+      "limit_down_ratio": 0.0056625141562853904,
+      "distance": 0.000125,
+      "return_1d": 0.009043154465057546,
+      "return_5d": -0.02671743941941429,
+      "return_10d": -0.024108152137775063,
+      "return_20d": -0.013330816068697682
     },
     {
       "market": "combined",
-      "trade_date": "2017-05-15",
+      "trade_date": "2017-05-08",
+      "limit_up_count": 16,
+      "limit_down_count": 9,
+      "limit_up_ratio": 0.009993753903810118,
+      "limit_down_ratio": 0.005621486570893191,
+      "distance": 0.000283,
+      "return_1d": -0.0021907469370299193,
+      "return_5d": 0.010019874713829147,
+      "return_10d": 0.006038894060228062,
+      "return_20d": 0.02903519585398384
+    },
+    {
+      "market": "combined",
+      "trade_date": "2026-06-23",
       "limit_up_count": 20,
-      "limit_down_count": 5,
-      "limit_up_ratio": 0.012368583797155226,
-      "limit_down_ratio": 0.0030921459492888066,
-      "distance": 0.000999,
-      "return_1d": -0.0005310446934387869,
-      "return_5d": -0.003941487443233971,
-      "return_10d": 0.005041437427392381,
-      "return_20d": 0.011947011105110983
+      "limit_down_count": 10,
+      "limit_up_ratio": 0.010319917440660475,
+      "limit_down_ratio": 0.005159958720330237,
+      "distance": 0.000504,
+      "return_1d": -0.017948584573673654,
+      "return_5d": -0.011555254545319471,
+      "return_10d": -0.09404074041441046,
+      "return_20d": -0.05284534289866494
     },
     {
       "market": "combined",
-      "trade_date": "2018-05-11",
-      "limit_up_count": 18,
-      "limit_down_count": 6,
-      "limit_up_ratio": 0.01090909090909091,
-      "limit_down_ratio": 0.0036363636363636364,
-      "distance": 0.001005,
-      "return_1d": 0.008602097066206849,
-      "return_5d": -0.002591403612493992,
-      "return_10d": 0.007672912188805947,
-      "return_20d": 0.02739115460199759
+      "trade_date": "2018-05-17",
+      "limit_up_count": 16,
+      "limit_down_count": 9,
+      "limit_up_ratio": 0.009696969696969697,
+      "limit_down_ratio": 0.005454545454545455,
+      "distance": 0.000677,
+      "return_1d": -0.00027414178391527155,
+      "return_5d": 0.009518350423350697,
+      "return_10d": 0.0037982944135073193,
+      "return_20d": 0.01663034518788864
+    },
+    {
+      "market": "combined",
+      "trade_date": "2017-12-08",
+      "limit_up_count": 17,
+      "limit_down_count": 8,
+      "limit_up_ratio": 0.010578718108276292,
+      "limit_down_ratio": 0.004978220286247666,
+      "distance": 0.000945,
+      "return_1d": 0.007161527202647955,
+      "return_5d": 0.008926184436011564,
+      "return_10d": 0.013333500022118194,
+      "return_20d": 0.04964793405278756
+    },
+    {
+      "market": "combined",
+      "trade_date": "2023-06-27",
+      "limit_up_count": 19,
+      "limit_down_count": 9,
+      "limit_up_ratio": 0.01080773606370876,
+      "limit_down_ratio": 0.005119453924914676,
+      "distance": 0.001033,
+      "return_1d": 0.0028262839074129076,
+      "return_5d": 0.009979334316285504,
+      "return_10d": 0.004389533334517415,
+      "return_20d": 0.01626312330129842
+    },
+    {
+      "market": "combined",
+      "trade_date": "2022-04-26",
+      "limit_up_count": 17,
+      "limit_down_count": 8,
+      "limit_up_ratio": 0.009843659525188187,
+      "limit_down_ratio": 0.004632310364794441,
+      "distance": 0.001353,
+      "return_1d": -0.020513325791433834,
+      "return_5d": -0.0047438267469880335,
+      "return_10d": -0.038362754952150246,
+      "return_20d": -0.03248824406916517
+    },
+    {
+      "market": "combined",
+      "trade_date": "2017-08-11",
+      "limit_up_count": 15,
+      "limit_down_count": 8,
+      "limit_up_ratio": 0.00933997509339975,
+      "limit_down_ratio": 0.0049813200498132005,
+      "distance": 0.001507,
+      "return_1d": -0.010096257637055461,
+      "return_5d": -0.0007977098756288825,
+      "return_10d": 0.018000749305150165,
+      "return_20d": 0.027143433850586263
+    },
+    {
+      "market": "combined",
+      "trade_date": "2026-06-11",
+      "limit_up_count": 20,
+      "limit_down_count": 8,
+      "limit_up_ratio": 0.010298661174047374,
+      "limit_down_ratio": 0.004119464469618949,
+      "distance": 0.001524,
+      "return_1d": 0.05208709448507576,
+      "return_5d": 0.09156985973868514,
+      "return_10d": 0.07895649215540579,
+      "return_20d": -0.0720815509626308
+    },
+    {
+      "market": "combined",
+      "trade_date": "2022-05-11",
+      "limit_up_count": 20,
+      "limit_down_count": 10,
+      "limit_up_ratio": 0.011594202898550725,
+      "limit_down_ratio": 0.005797101449275362,
+      "distance": 0.001563,
+      "return_1d": -0.024338617727450162,
+      "return_5d": 0.018156032799687694,
+      "return_10d": 0.0061088637251074385,
+      "return_20d": 0.028355798516204622
     }
   ],
   "post_analog_returns": {
@@ -908,61 +740,61 @@
     "tpex": {
       "1d": {
         "sample_count": 10,
-        "average": -0.0016619354666584818,
-        "median": -0.0002600359426634391,
-        "positive_rate": 0.4,
-        "worst": -0.01223930618201352
+        "average": 0.002563016375485194,
+        "median": 0.0023278815941031317,
+        "positive_rate": 0.8,
+        "worst": -0.008669353145798864
       },
       "5d": {
         "sample_count": 10,
-        "average": -0.0010455573869573187,
-        "median": -0.0008874099969694016,
-        "positive_rate": 0.5,
-        "worst": -0.028167180950005255
+        "average": 0.0010617747055233552,
+        "median": 0.005420270196956678,
+        "positive_rate": 0.6,
+        "worst": -0.059005065911545085
       },
       "10d": {
         "sample_count": 10,
-        "average": 0.004427592051896079,
-        "median": 0.003521721310146164,
-        "positive_rate": 0.5,
-        "worst": -0.041962983538924026
+        "average": 0.02158114921207117,
+        "median": 0.0061079912010110204,
+        "positive_rate": 0.6,
+        "worst": -0.040843860037308666
       },
       "20d": {
         "sample_count": 10,
-        "average": 0.014453328399587895,
-        "median": 0.015348271430468963,
-        "positive_rate": 0.5,
-        "worst": -0.06944402428994034
+        "average": 0.01244924473788398,
+        "median": -0.004228306030781281,
+        "positive_rate": 0.4,
+        "worst": -0.09782268616438627
       }
     },
     "combined": {
       "1d": {
         "sample_count": 10,
-        "average": -0.0004956636636333945,
-        "median": -0.0008571274271124141,
-        "positive_rate": 0.3,
-        "worst": -0.016583014108873084
+        "average": -0.00042436143903641367,
+        "median": -0.0012324443604725954,
+        "positive_rate": 0.4,
+        "worst": -0.024338617727450162
       },
       "5d": {
         "sample_count": 10,
-        "average": -0.0030124786326210184,
-        "median": -0.002551726011776556,
-        "positive_rate": 0.3,
-        "worst": -0.057100306932311495
+        "average": 0.010435540584049907,
+        "median": 0.00922226742968113,
+        "positive_rate": 0.6,
+        "worst": -0.02671743941941429
       },
       "10d": {
         "sample_count": 10,
-        "average": 0.0024494132770070953,
-        "median": 0.0011500187806319784,
-        "positive_rate": 0.5,
-        "worst": -0.0300278534055618
+        "average": -0.002588532048830139,
+        "median": 0.005214213697372738,
+        "positive_rate": 0.7,
+        "worst": -0.09404074041441046
       },
       "20d": {
         "sample_count": 10,
-        "average": 0.01274166111196623,
-        "median": 0.01565833264133165,
+        "average": -0.00036701232364092504,
+        "median": 0.01644673424459353,
         "positive_rate": 0.6,
-        "worst": -0.0405121281065326
+        "worst": -0.0720815509626308
       }
     }
   },
@@ -1018,15 +850,14 @@
   ],
   "negative_drivers": [
     "借券餘額日變化（非借券賣出）（-42.3）",
-    "選擇權壓力平衡（-37.5）",
-    "費半相對Nasdaq（-31.7）"
+    "漲跌停強弱（免費官方代理）（-41.6）",
+    "上櫃漲跌家數廣度（免費官方代理）（-40.0）"
   ],
-  "reversal_stage": "觀察",
+  "reversal_stage": "初步轉折",
   "reversal_reasons": [
     "收盤站上20日線",
     "收盤站上60日線",
-    "收盤站上20日線",
-    "RSI14 58.0"
+    "缺少櫃買指數收盤價"
   ],
   "data_freshness": {
     "TWSE收盤行情": "20260831",
@@ -1043,11 +874,11 @@
     "TAIFEX市場未平倉量": "2026-08-31",
     "TAIFEX三大法人期貨": "2026-08-31",
     "TAIFEX選擇權履約價": "2026-08-31",
-    "Cboe VIX": "2026-08-28",
+    "Cboe VIX": "2026-08-31",
     "Yahoo ^SOX": "2026-08-31",
     "Yahoo ^IXIC": "2026-08-31",
     "Yahoo TSM": "2026-08-31",
-    "Yahoo TWD=X": "2026-08-31"
+    "Yahoo TWD=X": "2026-09-01"
   },
   "source_status": [
     {
@@ -1059,23 +890,23 @@
     },
     {
       "name": "TPEx市場現況",
-      "status": "ready",
+      "status": "partial",
       "as_of": "20260831",
-      "message": "",
+      "message": "Request failed: https://www.tpex.org.tw/openapi/v1/tpex_mainborad_highlight: HTTP Error 403: Forbidden",
       "url": "https://www.tpex.org.tw/openapi/v1/tpex_mainborad_highlight"
     },
     {
       "name": "TPEx櫃買指數歷史",
-      "status": "ready",
+      "status": "partial",
       "as_of": "20260831",
-      "message": "",
+      "message": "Request failed: https://www.tpex.org.tw/openapi/v1/tpex_index: HTTP Error 403: Forbidden",
       "url": "https://www.tpex.org.tw/openapi/v1/tpex_index"
     },
     {
       "name": "TPEx上櫃成交值",
-      "status": "ready",
+      "status": "partial",
       "as_of": "20260831",
-      "message": "",
+      "message": "Request failed: https://www.tpex.org.tw/openapi/v1/tpex_mainboard_quotes: HTTP Error 403: Forbidden",
       "url": "https://www.tpex.org.tw/openapi/v1/tpex_mainboard_quotes"
     },
     {
@@ -1151,7 +982,7 @@
     {
       "name": "Cboe VIX",
       "status": "ready",
-      "as_of": "2026-08-28",
+      "as_of": "2026-08-31",
       "message": "",
       "url": "https://cdn.cboe.com/api/global/us_indices/daily_prices/VIX_History.csv"
     },
@@ -1179,7 +1010,7 @@
     {
       "name": "Yahoo TWD=X",
       "status": "ready",
-      "as_of": "2026-08-31",
+      "as_of": "2026-09-01",
       "message": "",
       "url": "https://query1.finance.yahoo.com/v8/finance/chart/TWD%3DX?range=3mo&interval=1d"
     }
@@ -15819,23 +15650,23 @@
     },
     {
       "trade_date": "2026-08-31",
-      "composite_score": 70.86,
+      "composite_score": 70.91999999999999,
       "taiex_close": 46128.47
     }
   ],
-  "limit_up_count": 23,
-  "limit_down_count": 7,
-  "limit_up_ratio": 0.01189860320744956,
-  "limit_down_ratio": 0.0036213140196585617,
-  "limit_breadth": 0.008277289187790998,
-  "limit_up_percentile_1y": 43.25396825396825,
-  "limit_down_percentile_1y": 86.9047619047619,
-  "limit_up_percentile_5y": 54.84126984126984,
-  "limit_down_percentile_5y": 84.84126984126983,
-  "limit_up_percentile_full": 59.75609756097561,
-  "limit_down_percentile_full": 86.03658536585365,
-  "limit_up_historical_rank": 661,
-  "limit_down_historical_rank": 230,
+  "limit_up_count": 11,
+  "limit_down_count": 6,
+  "limit_up_ratio": 0.010242085661080074,
+  "limit_down_ratio": 0.00558659217877095,
+  "limit_breadth": 0.004655493482309125,
+  "limit_up_percentile_1y": 34.12698412698413,
+  "limit_down_percentile_1y": 91.26984126984127,
+  "limit_up_percentile_5y": 45.55555555555556,
+  "limit_down_percentile_5y": 91.78571428571429,
+  "limit_up_percentile_full": 50.30487804878049,
+  "limit_down_percentile_full": 92.89634146341463,
+  "limit_up_historical_rank": 816,
+  "limit_down_historical_rank": 117,
   "intraday_limit_touch_counts": {
     "up": null,
     "down": null
@@ -15867,13 +15698,13 @@
     "short_long_ratio": null,
     "label": "非三大法人部位代理"
   },
-  "taiwan_vix": 24.46,
-  "us_vix": 14.43,
-  "tsm_adr_premium": 0.09410581552009178,
+  "taiwan_vix": 1.0,
+  "us_vix": 14.92,
+  "tsm_adr_premium": 0.09375082642444088,
   "sox_change": {
-    "1d": -0.030786345941455462,
-    "5d": -0.01908021525953074,
-    "20d": 0.018148686825849802
+    "1d": 0.0057011824334103345,
+    "5d": 0.009794204248047889,
+    "20d": 0.009159927338453944
   },
   "margin_stress": {
     "proxy": null,
