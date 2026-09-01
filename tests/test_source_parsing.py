@@ -30,7 +30,8 @@ class SourceParsingTests(unittest.TestCase):
 
             def post_form_text(self, _url, fields):
                 year, month, _ = map(int, fields["date"].split("/"))
-                fields_list = ["Date", "Open", "High", "Low", "Close", "Change"]
+                # Match the official TPEx monthly endpoint's Chinese field names.
+                fields_list = ["日期", "開市", "最高", "最低", "收市", "漲/跌"]
                 data = [
                     [f"{year:04d}/{month:02d}/{day:02d}", "200", "202", "199", str(200 + day / 10), "0.1"]
                     for day in range(1, 21)
