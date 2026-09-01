@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import re
 import statistics
 from datetime import date
@@ -61,6 +62,18 @@ def _all_rows(payload: Any) -> list[dict[str, Any]]:
         for table in _tables(payload)
         for row in row_objects(table.get("fields") or [], table.get("data") or [])
     ]
+
+
+def _object_rows(payload: Any) -> list[dict[str, Any]]:
+    if isinstance(payload, list):
+        return [row for row in payload if isinstance(row, dict)]
+    if not isinstance(payload, dict):
+        return []
+    result = _all_rows(payload)
+    direct = payload.get("data") or payload.get("aaData") or []
+    if direct and isinstance(direct[0], dict):
+        result.extend(row for row in direct if isinstance(row, dict))
+    return result
 
 
 class DomesticCollector:
@@ -226,7 +239,24 @@ class DomesticCollector:
             return
         try:
             payload = self.client.get_json(url)
-            rows = payload if isinstance(payload, list) else payload.get("data", [])
+            rows = _object_rows(payload)
+            monthly_url = self.sources.get("tpex_index_monthly")
+            if monthly_url:
+                target_year, target_month = int(ymd[:4]), int(ymd[4:6])
+                for offset in range(13):
+                    month_index = target_year * 12 + target_month - 1 - offset
+                    year, month_zero = divmod(month_index, 12)
+                    try:
+                        text = self.client.post_form_text(monthly_url, {
+                            "response": "json",
+                            "date": f"{year:04d}/{month_zero + 1:02d}/01",
+                        })
+                        rows.extend(_object_rows(json.loads(text)))
+                    except Exception:
+                        # The current OpenAPI rows remain a valid fallback.  A
+                        # missing month lowers coverage naturally; it is never
+                        # replaced with fabricated prices.
+                        continue
             parsed: list[dict[str, Any]] = []
             for row in rows:
                 if not isinstance(row, dict):
@@ -242,6 +272,7 @@ class DomesticCollector:
                     "high": number(_field_alias(row, "High", "最高")),
                     "low": number(_field_alias(row, "Low", "最低")),
                 })
+            parsed = list({row["date"]: row for row in parsed}.values())
             parsed.sort(key=lambda row: row["date"])
             current = next((row for row in reversed(parsed) if row["date"] == ymd), None)
             prior = [row for row in parsed if row["date"] < ymd][-260:]

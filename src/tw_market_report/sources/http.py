@@ -42,7 +42,7 @@ class HttpClient:
                     time.sleep(1.5 * (attempt + 1))
         raise SourceError(f"Request failed: {request.full_url}: {last_error}")
 
-    def get_bytes(self, url: str) -> bytes:
+    def _headers_for(self, url: str) -> dict[str, str]:
         headers = dict(self.headers)
         if urllib.parse.urlparse(url).hostname == "www.tpex.org.tw":
             headers.update({
@@ -51,7 +51,10 @@ class HttpClient:
                 "Sec-Fetch-Mode": "cors",
                 "Sec-Fetch-Site": "same-origin",
             })
-        return self._request_bytes(urllib.request.Request(url, headers=headers))
+        return headers
+
+    def get_bytes(self, url: str) -> bytes:
+        return self._request_bytes(urllib.request.Request(url, headers=self._headers_for(url)))
 
     def get_text(self, url: str) -> str:
         payload = self.get_bytes(url)
@@ -70,7 +73,7 @@ class HttpClient:
 
     def post_form_text(self, url: str, fields: dict[str, str]) -> str:
         data = urllib.parse.urlencode(fields).encode("utf-8")
-        headers = {**self.headers, "Content-Type": "application/x-www-form-urlencoded"}
+        headers = {**self._headers_for(url), "Content-Type": "application/x-www-form-urlencoded"}
         payload = self._request_bytes(urllib.request.Request(url, data=data, headers=headers, method="POST"))
         for encoding in ("utf-8-sig", "utf-8", "big5"):
             try:
