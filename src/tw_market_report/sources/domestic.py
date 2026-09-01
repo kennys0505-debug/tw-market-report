@@ -273,13 +273,13 @@ class DomesticCollector:
                 if not isinstance(row, dict):
                     continue
                 day = _tpex_date_key(_field_alias(row, "Date", "日期"))
-                close = number(_field_alias(row, "Close", "收盤", "收市指數"))
+                close = number(_field_alias(row, "Close", "收盤", "收市", "收市指數"))
                 if day is None or close is None:
                     continue
                 parsed.append({
                     "date": day,
                     "close": close,
-                    "open": number(_field_alias(row, "Open", "開盤", "開市指數")),
+                    "open": number(_field_alias(row, "Open", "開盤", "開市", "開市指數")),
                     "high": number(_field_alias(row, "High", "最高")),
                     "low": number(_field_alias(row, "Low", "最低")),
                 })
