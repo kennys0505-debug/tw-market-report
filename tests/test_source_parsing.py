@@ -64,7 +64,7 @@ class SourceParsingTests(unittest.TestCase):
         self.assertEqual(features["otc_close"], 230)
         self.assertEqual(features["otc_open"], 229)
         self.assertEqual(len(features["otc_history"]), 28)
-        self.assertEqual(statuses[0].status, "ready")
+        self.assertEqual(statuses[0].status, "partial")
 
     def test_html_table_preserves_input_value(self):
         tables = parse_tables(
