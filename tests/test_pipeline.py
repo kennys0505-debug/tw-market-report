@@ -88,6 +88,9 @@ class PipelineTests(unittest.TestCase):
             self.assertIn("otc", payload["technical_analysis"])
             self.assertIn("exposure_details", payload)
             self.assertIn("技術多空轉折", html)
+            self.assertIn("加權／OTC K線多空圖", html)
+            self.assertIn('id="taiex-price-chart"', html)
+            self.assertIn("chart", payload["technical_analysis"]["taiex"])
 
     def test_failed_core_snapshot_is_not_written_to_history(self):
         raw = load_config().raw

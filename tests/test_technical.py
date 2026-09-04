@@ -37,6 +37,9 @@ class TechnicalAnalysisTests(unittest.TestCase):
         self.assertIn(result["state"], {"轉多", "強多"})
         self.assertEqual(result["synchrony"], "同向確認")
         self.assertIsNotNone(result["taiex"]["confirmation_level"])
+        self.assertEqual(len(result["taiex"]["chart"]), 100)
+        self.assertIsNotNone(result["taiex"]["chart"][-1]["ma60"])
+        self.assertEqual(result["taiex"]["chart"][-1]["current_signal"], result["taiex"]["signal"])
 
     def test_two_indices_confirm_downtrend(self):
         history = trend_history(False)
@@ -69,6 +72,7 @@ class TechnicalAnalysisTests(unittest.TestCase):
         self.assertGreaterEqual(otc["coverage"], 0.8)
         self.assertIsNotNone(otc["moving_averages"]["60"])
         self.assertIsNotNone(otc["volume_ratio_20d"])
+        self.assertTrue(otc["chart"])
 
     def test_auxiliary_data_cannot_move_score_more_than_ten_points(self):
         weights = {"trend_breadth": 0.25, "capital_flow": 0.20, "futures": 0.15}

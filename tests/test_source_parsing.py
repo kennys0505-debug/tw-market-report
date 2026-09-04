@@ -4,6 +4,7 @@ from datetime import date
 
 from tw_market_report.sources.derivatives import DerivativesCollector
 from tw_market_report.sources.domestic import DomesticCollector
+from tw_market_report.sources.overseas import OverseasCollector
 from tw_market_report.sources.parsing import parse_tables
 
 
@@ -23,6 +24,26 @@ class FakeClient:
 
 
 class SourceParsingTests(unittest.TestCase):
+    def test_yahoo_price_rows_preserve_ohlc_for_index_chart(self):
+        payload = {
+            "chart": {"result": [{
+                "timestamp": [1788134400],
+                "indicators": {"quote": [{
+                    "open": [46000.0], "high": [46500.0], "low": [45800.0], "close": [46300.0]
+                }]},
+            }]}
+        }
+        collector = OverseasCollector(
+            {"yahoo_chart": "https://example.test/{symbol}"},
+            client=FakeClient(json_payload=payload),
+        )
+        rows, as_of = collector._yahoo_prices("^TWII")
+        self.assertEqual(rows[0]["open"], 46000.0)
+        self.assertEqual(rows[0]["high"], 46500.0)
+        self.assertEqual(rows[0]["low"], 45800.0)
+        self.assertEqual(rows[0]["close"], 46300.0)
+        self.assertIsNotNone(as_of)
+
     def test_tpex_monthly_index_extends_history_for_long_moving_averages(self):
         class MonthlyClient:
             def get_json(self, _url):
