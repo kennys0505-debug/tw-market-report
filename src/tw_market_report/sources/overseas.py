@@ -43,7 +43,15 @@ def _business_days_late(as_of: date, today: date) -> int:
 
 
 class OverseasCollector:
-    SYMBOLS = {"sox": "^SOX", "nasdaq": "^IXIC", "tsm": "TSM", "usd_twd": "TWD=X"}
+    SYMBOLS = {
+        "sox": "^SOX",
+        "nasdaq": "^IXIC",
+        "tsm": "TSM",
+        "usd_twd": "TWD=X",
+        # Chart enrichment only.  The market state still uses the official
+        # TWSE close collected by DomesticCollector.
+        "taiex": "^TWII",
+    }
 
     def __init__(self, sources: dict[str, str], client: HttpClient | None = None) -> None:
         self.sources = sources
@@ -56,8 +64,11 @@ class OverseasCollector:
         series: dict[str, tuple[list[float], str | None]] = {}
         for name, symbol in self.SYMBOLS.items():
             try:
-                closes, as_of = self._yahoo(symbol)
+                price_rows, as_of = self._yahoo_prices(symbol)
+                closes = [float(row["close"]) for row in price_rows]
                 series[name] = (closes, as_of)
+                if name == "taiex":
+                    features["taiex_price_history"] = price_rows
                 statuses.append(SourceStatus(f"Yahoo {symbol}", "ready", as_of, url=self._yahoo_url(symbol)))
             except Exception as error:
                 statuses.append(SourceStatus(f"Yahoo {symbol}", "partial", message=str(error), url=self._yahoo_url(symbol)))
@@ -107,15 +118,32 @@ class OverseasCollector:
     def _yahoo_url(self, symbol: str) -> str:
         return self.sources["yahoo_chart"].format(symbol=urllib.parse.quote(symbol, safe=""))
 
-    def _yahoo(self, symbol: str) -> tuple[list[float], str | None]:
+    def _yahoo_prices(self, symbol: str) -> tuple[list[dict[str, Any]], str | None]:
         payload = self.client.get_json(self._yahoo_url(symbol))
         result = payload["chart"]["result"][0]
-        closes = result["indicators"]["quote"][0]["close"]
+        quote = result["indicators"]["quote"][0]
         timestamps = result.get("timestamp", [])
-        clean = [float(value) for value in closes if value is not None]
+        rows: list[dict[str, Any]] = []
+        for index, stamp in enumerate(timestamps):
+            close = (quote.get("close") or [])[index] if index < len(quote.get("close") or []) else None
+            if close is None:
+                continue
+            row = {
+                "date": datetime.fromtimestamp(stamp, timezone.utc).date().isoformat(),
+                "close": float(close),
+            }
+            for key in ("open", "high", "low"):
+                values = quote.get(key) or []
+                value = values[index] if index < len(values) else None
+                row[key] = float(value) if value is not None else float(close)
+            rows.append(row)
         as_of = None
-        if timestamps:
-            as_of = datetime.fromtimestamp(timestamps[-1], timezone.utc).date().isoformat()
-        if not clean:
+        if rows:
+            as_of = rows[-1]["date"]
+        if not rows:
             raise ValueError(f"No close data for {symbol}")
-        return clean, as_of
+        return rows, as_of
+
+    def _yahoo(self, symbol: str) -> tuple[list[float], str | None]:
+        rows, as_of = self._yahoo_prices(symbol)
+        return [float(row["close"]) for row in rows], as_of
