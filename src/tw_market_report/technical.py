@@ -83,6 +83,81 @@ def _series(history: list[dict[str, Any]], market: str, current: dict[str, Any])
     return closes, turnovers
 
 
+def _chart_rows(
+    market: str,
+    current: dict[str, Any],
+    history: list[dict[str, Any]],
+    current_signal: str,
+) -> list[dict[str, Any]]:
+    """Build a compact, browser-ready OHLC series with moving averages.
+
+    Price rows are source-backed.  When historical OHLC is unavailable, the
+    compact history supplies close-only rows so the chart remains honest and
+    renders as a thin candle rather than inventing a daily range.
+    """
+    source_rows = current.get("taiex_price_history" if market == "taiex" else "otc_history", [])
+    rows: list[dict[str, Any]] = []
+    for raw in source_rows:
+        if not isinstance(raw, dict):
+            continue
+        close = _number(raw.get("close"))
+        if close is None:
+            continue
+        rows.append({
+            "date": str(raw.get("date") or ""),
+            "open": _number(raw.get("open")) if _number(raw.get("open")) is not None else close,
+            "high": _number(raw.get("high")) if _number(raw.get("high")) is not None else close,
+            "low": _number(raw.get("low")) if _number(raw.get("low")) is not None else close,
+            "close": close,
+        })
+    if not rows:
+        for raw in history:
+            features = raw.get("features", {})
+            close = _number(raw.get("taiex_close") if market == "taiex" else features.get("otc_close"))
+            if close is None:
+                continue
+            rows.append({
+                "date": str(raw.get("trade_date") or ""),
+                "open": close,
+                "high": close,
+                "low": close,
+                "close": close,
+            })
+    close_key = "taiex_close" if market == "taiex" else "otc_close"
+    current_close = _number(current.get(close_key))
+    current_date = str(current.get("trade_date") or "")
+    if current_close is not None and (not rows or rows[-1]["close"] != current_close):
+        rows.append({
+            "date": current_date,
+            "open": _number(current.get(f"{market}_open")) or current_close,
+            "high": _number(current.get(f"{market}_high")) or current_close,
+            "low": _number(current.get(f"{market}_low")) or current_close,
+            "close": current_close,
+        })
+    rows = list({(row["date"], row["close"]): row for row in rows}.values())
+    closes = [float(row["close"]) for row in rows]
+    last_direction: str | None = None
+    for index, row in enumerate(rows):
+        for days in (5, 20, 60):
+            value = mean(closes[index - days + 1 : index + 1]) if index + 1 >= days else None
+            row[f"ma{days}"] = round(value, 2) if value is not None else None
+        direction = None
+        if row["ma20"] is not None and row["ma60"] is not None:
+            if row["close"] > row["ma20"] >= row["ma60"]:
+                direction = "多"
+            elif row["close"] < row["ma20"] <= row["ma60"]:
+                direction = "空"
+        row["signal_event"] = None
+        if direction and last_direction and direction != last_direction:
+            row["signal_event"] = "轉多" if direction == "多" else "轉空"
+        if direction:
+            last_direction = direction
+    visible = rows[-100:]
+    if visible:
+        visible[-1]["current_signal"] = current_signal
+    return visible
+
+
 def _index_analysis(market: str, current: dict[str, Any], history: list[dict[str, Any]]) -> dict[str, Any]:
     label = "加權指數" if market == "taiex" else "櫃買指數"
     close_key = "taiex_close" if market == "taiex" else "otc_close"
@@ -241,6 +316,7 @@ def _index_analysis(market: str, current: dict[str, Any], history: list[dict[str
         "confirmation_level": round(confirmation, 2) if confirmation is not None else None,
         "invalidation_level": round(invalidation, 2) if invalidation is not None else None,
         "reasons": reasons,
+        "chart": _chart_rows(market, current, history, signal),
     }
 
 

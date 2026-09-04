@@ -216,6 +216,7 @@ class ReportPipeline:
         for limit_stats in limits.values():
             attach_limit_percentiles(limit_stats, history)
         features.update(self._engineer_features(features, limits["combined"], history, zones))
+        features["trade_date"] = trade_date.isoformat()
         features["active_feature_mode"] = "free_official_proxy_v2"
         features["feature_proxy_definitions"] = PROXY_DEFINITIONS
         analogs: list[dict[str, Any]] = []
