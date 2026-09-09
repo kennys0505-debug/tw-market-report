@@ -24,6 +24,24 @@ class FakeClient:
 
 
 class SourceParsingTests(unittest.TestCase):
+    def test_twse_official_index_ohlc_populates_candlestick_fields(self):
+        payload = {
+            "stat": "OK",
+            "fields": ["日期", "開盤指數", "最高指數", "最低指數", "收盤指數"],
+            "data": [["115/09/09", "47,142.74", "47,548.26", "47,060.78", "47,183.36"]],
+        }
+        collector = DomesticCollector(
+            {"twse_taiex_history": "https://example.test?date={date}"},
+            client=FakeClient(json_payload=payload),
+        )
+        features, statuses = {}, []
+        collector._collect_twse_index_ohlc("20260909", features, statuses)
+        self.assertEqual(features["taiex_open"], 47142.74)
+        self.assertEqual(features["taiex_high"], 47548.26)
+        self.assertEqual(features["taiex_low"], 47060.78)
+        self.assertEqual(features["taiex_close"], 47183.36)
+        self.assertEqual(statuses[0].status, "ready")
+
     def test_yahoo_price_rows_preserve_ohlc_for_index_chart(self):
         payload = {
             "chart": {"result": [{
