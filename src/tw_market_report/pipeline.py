@@ -243,6 +243,7 @@ class ReportPipeline:
             module_scores,
             int(self.config.raw.get("correlation_window", 252)),
             float(self.config.raw.get("correlation_threshold", 0.75)),
+            observed_features=features,
         )
         # Observed coverage describes source data, not whether a validated
         # feature is currently allowed to affect the score.  For example,

@@ -151,13 +151,16 @@ def module_calculation_notes(
     module_scores: dict[str, float],
     correlation_window: int = 252,
     correlation_threshold: float = 0.75,
+    observed_features: dict[str, Any] | None = None,
 ) -> dict[str, str]:
     """Describe the observations, transforms and imputations behind each score."""
+    observed_features = observed_features or current_features
     notes: dict[str, str] = {}
     modules = sorted({spec.module for spec in FEATURES.values()})
     for module in modules:
         expected = [name for name, spec in FEATURES.items() if spec.module == module]
         available = [name for name in expected if isinstance(current_features.get(name), (int, float))]
+        observed = [name for name in expected if isinstance(observed_features.get(name), (int, float))]
         ranked: list[tuple[float, str]] = []
         for name in available:
             value = float(current_features[name])
@@ -170,12 +173,15 @@ def module_calculation_notes(
         ranked.sort(key=lambda item: item[0], reverse=True)
         shown = [detail for _, detail in ranked[:3]]
         hidden_count = max(0, len(ranked) - len(shown))
-        missing_count = len(expected) - len(available)
-        parts = [f"{len(available)}/{len(expected)}項實測"]
+        missing_count = len(expected) - len(observed)
+        excluded_count = len(set(observed) - set(available))
+        parts = [f"{len(observed)}/{len(expected)}項實測"]
         if shown:
             parts.append("、".join(shown))
         if hidden_count:
             parts.append(f"另{hidden_count}項已納入")
+        if excluded_count:
+            parts.append(f"{excluded_count}項因驗證閘門未計分")
         if missing_count:
             parts.append(f"缺{missing_count}項以50分補齊")
         groups = _correlation_groups(available, history, correlation_window, correlation_threshold)
