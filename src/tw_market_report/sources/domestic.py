@@ -88,6 +88,7 @@ class DomesticCollector:
         limits: dict[str, LimitStats] = {}
         statuses: list[SourceStatus] = []
         self._collect_twse(ymd, features, limits, statuses)
+        self._collect_twse_index_ohlc(ymd, features, statuses)
         self._collect_tpex(ymd, features, limits, statuses)
         self._collect_institutional(ymd, features, statuses)
         self._collect_margin(ymd, features, statuses)
@@ -180,6 +181,40 @@ class DomesticCollector:
             statuses.append(SourceStatus("TWSE收盤行情", "ready", ymd, url=url))
         except Exception as error:
             statuses.append(SourceStatus("TWSE收盤行情", "blocked", ymd, str(error), url))
+
+    def _collect_twse_index_ohlc(self, ymd: str, features: dict, statuses: list[SourceStatus]) -> None:
+        """Add official TAIEX open/high/low values for candlestick analysis."""
+        url_template = self.sources.get("twse_taiex_history")
+        if not url_template:
+            return
+        url = url_template.format(date=ymd)
+        try:
+            payload = self.client.get_json(url)
+            if str(payload.get("stat", "")).upper() not in {"OK", ""}:
+                raise SourceError(str(payload.get("stat")))
+            rows = _object_rows(payload)
+            current = next(
+                (
+                    row for row in reversed(rows)
+                    if _tpex_date_key(_field_alias(row, "日期", "Date")) == ymd
+                ),
+                None,
+            )
+            if current is None:
+                raise SourceError("找不到指定交易日的加權指數開高低收")
+            values = {
+                "taiex_open": number(_field_alias(current, "開盤指數", "Open")),
+                "taiex_high": number(_field_alias(current, "最高指數", "High")),
+                "taiex_low": number(_field_alias(current, "最低指數", "Low")),
+                "taiex_close": number(_field_alias(current, "收盤指數", "Close")),
+            }
+            missing = [name for name, value in values.items() if value is None]
+            if missing:
+                raise SourceError("加權指數開高低收欄位不完整：" + "、".join(missing))
+            features.update(values)
+            statuses.append(SourceStatus("TWSE加權指數開高低收", "ready", ymd, url=url))
+        except Exception as error:
+            statuses.append(SourceStatus("TWSE加權指數開高低收", "partial", ymd, str(error), url))
 
     def _collect_tpex(self, ymd: str, features: dict, limits: dict, statuses: list[SourceStatus]) -> None:
         url = self.sources["tpex_highlight"]
