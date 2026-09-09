@@ -54,6 +54,15 @@ class ScoringTests(unittest.TestCase):
         self.assertIn("缺1項以50分補齊", notes["futures"])
         self.assertIn("模組合成50.0分", notes["futures"])
 
+    def test_module_calculation_notes_distinguish_observed_gated_feature(self):
+        scored = {"advance_decline_ratio": 0.1}
+        observed = {**scored, "limit_breadth": 0.02}
+        scores, _, _, _ = score_modules(scored, [])
+        notes = module_calculation_notes(scored, [], scores, observed_features=observed)
+        self.assertIn("2/7項實測", notes["trend_breadth"])
+        self.assertIn("1項因驗證閘門未計分", notes["trend_breadth"])
+        self.assertIn("缺5項以50分補齊", notes["trend_breadth"])
+
     def test_turn_state_requires_market_confirmation(self):
         modules = {name: 65 for name in ["a", "b", "c", "d", "e", "f", "g"]}
         history = [{"composite_score": 62, "domestic_market_state": "盤整"}]
