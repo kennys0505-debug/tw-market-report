@@ -32,6 +32,7 @@
   "sources": {
     "twse_calendar": "https://openapi.twse.com.tw/v1/holidaySchedule/holidaySchedule?queryYear={roc_year}",
     "twse_mi_index": "https://www.twse.com.tw/exchangeReport/MI_INDEX?response=json&type=ALLBUT0999&date={date}",
+    "twse_taiex_history": "https://www.twse.com.tw/rwd/zh/TAIEX/MI_5MINS_HIST?date={date}&response=json",
     "twse_margin": "https://www.twse.com.tw/exchangeReport/MI_MARGN?response=json&selectType=MS&date={date}",
     "twse_institutional": "https://www.twse.com.tw/fund/BFI82U?response=json&dayDate={date}&type=day",
     "twse_lending": "https://www.twse.com.tw/rwd/zh/lending/TWT72U?response=json&date={date}",
