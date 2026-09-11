@@ -1,4 +1,5 @@
 import unittest
+from datetime import date, timedelta
 
 from tw_market_report.technical import auxiliary_adjustment, exposure_for_score, technical_analysis
 
@@ -12,7 +13,7 @@ def trend_history(up: bool = True, sessions: int = 180):
         taiex *= 1.0 + step
         otc *= 1.0 + step * 1.1
         rows.append({
-            "trade_date": f"2026-01-{index + 1:02d}",
+            "trade_date": (date(2025, 1, 1) + timedelta(days=index)).isoformat(),
             "taiex_close": taiex,
             "features": {
                 "otc_close": otc,
@@ -59,7 +60,7 @@ class TechnicalAnalysisTests(unittest.TestCase):
             row["features"].pop("otc_close")
             row["features"]["tpex_market_turnover"] = row["features"].pop("otc_turnover")
         otc_history = [
-            {"date": f"2026{i + 1:04d}", "close": 220.0 + i}
+            {"date": (date(2026, 1, 1) + timedelta(days=i)).strftime('%Y%m%d'), "close": 220.0 + i}
             for i in range(80)
         ]
         current = {

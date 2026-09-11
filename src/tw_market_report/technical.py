@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import math
+from datetime import date
 from typing import Any
 
 from .stats import mean
@@ -96,45 +97,43 @@ def _chart_rows(
     renders as a thin candle rather than inventing a daily range.
     """
     source_rows = current.get("taiex_price_history" if market == "taiex" else "otc_history", [])
-    rows: list[dict[str, Any]] = []
-    for raw in source_rows:
-        if not isinstance(raw, dict):
-            continue
+    by_date: dict[str, dict[str, Any]] = {}
+    def normalized(value):
+        text = str(value or "").replace("/", "-")
+        if len(text) == 8 and text.isdigit():
+            text = f"{text[:4]}-{text[4:6]}-{text[6:]}"
+        try:
+            return date.fromisoformat(text).isoformat()
+        except ValueError:
+            return None
+    current_date = normalized(current.get("trade_date"))
+    def add(raw, day):
+        day = normalized(day)
         close = _number(raw.get("close"))
-        if close is None:
-            continue
-        rows.append({
-            "date": str(raw.get("date") or ""),
-            "open": _number(raw.get("open")) if _number(raw.get("open")) is not None else close,
-            "high": _number(raw.get("high")) if _number(raw.get("high")) is not None else close,
-            "low": _number(raw.get("low")) if _number(raw.get("low")) is not None else close,
-            "close": close,
-        })
-    if not rows:
-        for raw in history:
-            features = raw.get("features", {})
-            close = _number(raw.get("taiex_close") if market == "taiex" else features.get("otc_close"))
-            if close is None:
-                continue
-            rows.append({
-                "date": str(raw.get("trade_date") or ""),
-                "open": close,
-                "high": close,
-                "low": close,
-                "close": close,
-            })
+        if not day or close is None or (current_date and day > current_date):
+            return
+        ohlc = {k: _number(raw.get(k)) for k in ("open", "high", "low")}
+        full = all(v is not None for v in ohlc.values())
+        full = full and ohlc['low'] <= min(ohlc['open'], close) <= max(ohlc['open'], close) <= ohlc['high']
+        by_date[day] = {"date": day, "close": close,
+                        **{k: v if full else close for k, v in ohlc.items()},
+                        "price_kind": "ohlc" if full else "close_only"}
+    # Older observed closes supply MA warmup. Source OHLC wins on overlaps.
+    for raw in history:
+        features = raw.get("features", {})
+        add({"close": raw.get("taiex_close") if market == "taiex" else features.get("otc_close")}, raw.get("trade_date"))
+    for raw in source_rows:
+        if isinstance(raw, dict):
+            add(raw, raw.get("date"))
     close_key = "taiex_close" if market == "taiex" else "otc_close"
     current_close = _number(current.get(close_key))
-    current_date = str(current.get("trade_date") or "")
-    if current_close is not None and (not rows or rows[-1]["close"] != current_close):
-        rows.append({
-            "date": current_date,
-            "open": _number(current.get(f"{market}_open")) or current_close,
-            "high": _number(current.get(f"{market}_high")) or current_close,
-            "low": _number(current.get(f"{market}_low")) or current_close,
-            "close": current_close,
-        })
-    rows = list({(row["date"], row["close"]): row for row in rows}.values())
+    if current_close is not None and current_date:
+        raw = {"close": current_close, **{k: current.get(f"{market}_{k}") for k in ("open", "high", "low")}}
+        existing = by_date.get(current_date)
+        if existing and existing['close'] == current_close:
+            raw = {**existing, **{k: v for k, v in raw.items() if v is not None}}
+        add(raw, current_date)
+    rows = [by_date[day] for day in sorted(by_date)]
     closes = [float(row["close"]) for row in rows]
     last_direction: str | None = None
     for index, row in enumerate(rows):
@@ -148,8 +147,22 @@ def _chart_rows(
             elif row["close"] < row["ma20"] <= row["ma60"]:
                 direction = "空"
         row["signal_event"] = None
+        row["signal_events"] = []
+        # Short-term crossover is distinct from a confirmed medium-term regime.
+        if index and row['ma20'] is not None and rows[index-1]['ma20'] is not None:
+            previous = rows[index-1]
+            old_gap = previous['ma5'] - previous['ma20']
+            gap = row['ma5'] - row['ma20']
+            if gap > 0 and old_gap <= 0:
+                row['signal_events'].append({'label': '短線轉強', 'direction': 'bull', 'kind': 'short',
+                                             'reason': 'MA5由下向上穿越MA20（收盤後確認）'})
+            elif gap < 0 and old_gap >= 0:
+                row['signal_events'].append({'label': '短線轉弱', 'direction': 'bear', 'kind': 'short',
+                                             'reason': 'MA5由上向下穿越MA20（收盤後確認）'})
         if direction and last_direction and direction != last_direction:
             row["signal_event"] = "轉多" if direction == "多" else "轉空"
+            row['signal_events'].append({'label': '中期'+row['signal_event'], 'direction': 'bull' if direction == '多' else 'bear',
+                                         'kind': 'medium', 'reason': '收盤、MA20及MA60由空方排列轉為多方排列' if direction == '多' else '收盤、MA20及MA60由多方排列轉為空方排列'})
         if direction:
             last_direction = direction
     visible = rows[-100:]
@@ -317,6 +330,7 @@ def _index_analysis(market: str, current: dict[str, Any], history: list[dict[str
         "invalidation_level": round(invalidation, 2) if invalidation is not None else None,
         "reasons": reasons,
         "chart": _chart_rows(market, current, history, signal),
+        "chart_version": 2,
     }
 
 
@@ -341,7 +355,11 @@ def technical_analysis(current: dict[str, Any], history: list[dict[str, Any]]) -
         state = "轉空"
     else:
         state = "盤整"
-    if taiex["signal"] == otc["signal"]:
+    if signals <= {"強多", "轉多"} and len(signals) > 1:
+        synchrony = "兩者偏多，強弱不同"
+    elif signals <= {"強空", "轉空"} and len(signals) > 1:
+        synchrony = "兩者偏空，強弱不同"
+    elif taiex["signal"] == otc["signal"]:
         synchrony = "同向確認"
     elif signals & {"強多", "轉多"} and signals & {"強空", "轉空"}:
         synchrony = "多空分歧"
@@ -394,7 +412,8 @@ def exposure_for_score(state: str, final_score: float, analysis: dict[str, Any],
     restrictions: list[str] = []
     if analysis.get("synchrony") != "同向確認":
         risk_cap = min(risk_cap, 100.0)
-        restrictions.append("加權與櫃買尚未同向")
+        synchrony = analysis.get('synchrony', '')
+        restrictions.append(synchrony if synchrony.startswith('兩者偏') else "加權與櫃買尚未同向")
     if analysis.get("coverage", 0.0) < 0.8:
         risk_cap = min(risk_cap, 100.0)
         restrictions.append("技術資料覆蓋不足80%")

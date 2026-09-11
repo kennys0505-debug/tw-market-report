@@ -494,7 +494,9 @@ class ReportPipeline:
         return result
 
     def persist(self, snapshot: MarketSnapshot, write_history: bool = True) -> dict[str, Any]:
-        payload = snapshot.to_dict()
+        from .presentation import prepare_dashboard
+        previous = load_json(self.docs / "latest.json", {})
+        payload = prepare_dashboard(snapshot.to_dict(), previous=previous)
         self.docs.mkdir(parents=True, exist_ok=True)
         write_json(self.docs / "latest.json", payload)
         if snapshot.report_mode == "close":
