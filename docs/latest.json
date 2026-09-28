@@ -1,7 +1,7 @@
 {
   "trade_date": "2026-09-28",
-  "report_mode": "premarket",
-  "generated_at": "2026-09-28T13:15:18.136071+08:00",
+  "report_mode": "close",
+  "generated_at": "2026-09-29T04:16:33.433913+08:00",
   "domestic_market_state": "強多",
   "overnight_risk_state": "中性",
   "composite_score": 72.86,
@@ -2362,7 +2362,7 @@
           "signal_events": []
         },
         {
-          "date": "2026-09-25",
+          "date": "2026-09-28",
           "close": 412.99,
           "open": 412.99,
           "high": 412.99,
@@ -2380,8 +2380,8 @@
     },
     "method": "加權指數4/7＋櫃買指數3/7；趨勢30%、結構25%、動能20%、量價15%、K線與波動10%"
   },
-  "auxiliary_score": 53.4,
-  "auxiliary_adjustment": 1.36,
+  "auxiliary_score": 51.58,
+  "auxiliary_adjustment": 0.63,
   "exposure_details": {
     "technical_range": [
       80,
@@ -2399,8 +2399,7 @@
     "volatility_cap": 71,
     "restrictions": [
       "加權與櫃買尚未同向"
-    ],
-    "overnight_adjustment": 0
+    ]
   },
   "confidence": "低",
   "model_exposure_range": [
@@ -2413,7 +2412,7 @@
     "futures": 50.0,
     "leverage_lending": 50.0,
     "options_volatility": 61.86,
-    "overseas": 63.63,
+    "overseas": 50.0,
     "trend_breadth": 48.6,
     "valuation": 50.0
   },
@@ -2422,7 +2421,7 @@
     "futures": 0.0,
     "leverage_lending": 0.0,
     "options_volatility": 0.667,
-    "overseas": 0.8,
+    "overseas": 0.0,
     "trend_breadth": 0.571,
     "valuation": 0.0
   },
@@ -2431,7 +2430,7 @@
     "futures": 0.0,
     "leverage_lending": 0.0,
     "options_volatility": 0.667,
-    "overseas": 0.8,
+    "overseas": 0.0,
     "trend_breadth": 0.571,
     "valuation": 0.0
   },
@@ -2449,7 +2448,7 @@
     "futures": "0/2項實測；缺2項以50分補齊；模組合成50.0分。",
     "leverage_lending": "0/4項實測；缺4項以50分補齊；模組合成50.0分。",
     "options_volatility": "2/3項實測；TAIWAN VIX水準 1.00→99.0分、Put/Call情緒 +0.853→36.6分；缺1項以50分補齊；模組合成61.9分。",
-    "overseas": "4/5項實測；費半相對Nasdaq +4.37%→89.8分、費半五日變化 +6.47%→85.5分、美元兌台幣五日變化 -0.41%→74.5分；另1項已納入；缺1項以50分補齊；高相關項先合併；模組合成63.6分。",
+    "overseas": "4/5項實測；費半相對Nasdaq +1.37%→67.2分、美國VIX五日變化 +0.41%→46.7分、美元兌台幣五日變化 +0.12%→46.8分；另1項已納入；缺1項以50分補齊；高相關項先合併；模組合成49.9分。",
     "trend_breadth": "4/7項實測；上櫃漲跌家數廣度 +0.013→36.8分、櫃買指數單日趨勢 +0.00%→54.7分、漲跌停強弱 +1.872→48.7分；1項因驗證閘門未計分；缺3項以50分補齊；模組合成48.6分。",
     "valuation": "0/4項實測；缺4項以50分補齊；模組合成50.0分。"
   },
@@ -4770,13 +4769,14 @@
         "low": 47754.71875
       }
     ],
-    "sox_return_1d": 0.01411959840720578,
-    "sox_return_5d": 0.06267896840801357,
-    "sox_return_20d": 0.06621347538353084,
-    "sox_relative_nasdaq": 0.042085855533792405,
-    "usd_twd": 31.759000778198242,
-    "usd_twd_change_5d": -0.001574971327498842,
-    "tsm_adr_close": 450.6099853515625,
+    "sox_return_1d": -0.01607779675053944,
+    "sox_return_5d": 0.0025794941486381173,
+    "sox_return_20d": 0.0868012688366353,
+    "sox_relative_nasdaq": 0.01370359948540023,
+    "usd_twd": 31.777000427246094,
+    "usd_twd_change_5d": 0.0012162214299442642,
+    "tsm_adr_close": 452.8800048828125,
+    "overseas_data_stale": true,
     "_tpex_limit_breadth": 0.01264367816091954,
     "limit_breadth": 0.01264367816091954,
     "limit_strength_proxy": 1.8718021769015913,
@@ -4795,7 +4795,7 @@
     "institution_reversal": false,
     "futures_reversal": false,
     "options_reversal": false,
-    "trade_date": "2026-09-25",
+    "trade_date": "2026-09-28",
     "active_feature_mode": "free_official_proxy_v2",
     "feature_proxy_definitions": {
       "taiex_daily_return_proxy": "取代加權指數20／60日均線；使用官方收盤價相對前一有效交易日報酬。",
@@ -4811,9 +4811,7 @@
       "foreign_futures_scheme7_score": "外資期貨方案七＝部位歷史水位40%＋5日變化30%＋占全市場OI 20%＋方向持續性10%。"
     },
     "limit_scoring_enabled": false,
-    "core_data_ready": false,
-    "overseas_data_stale": true,
-    "overnight_exposure_adjustment": 0
+    "core_data_ready": false
   },
   "limits": {
     "tpex": {
@@ -5375,25 +5373,145 @@
   },
   "positive_drivers": [
     "TAIWAN VIX水準（免費官方代理）（+49.0）",
-    "費半相對Nasdaq（+39.8）",
-    "費半五日變化（+35.5）"
+    "費半相對Nasdaq（+17.2）",
+    "櫃買指數單日趨勢（免費官方代理）（+4.7）"
   ],
   "negative_drivers": [
     "Put/Call情緒（-13.4）",
     "上櫃漲跌家數廣度（免費官方代理）（-13.2）",
-    "美國VIX五日變化（-7.2）"
+    "美國VIX五日變化（-3.3）"
   ],
   "reversal_stage": "趨勢延續",
   "reversal_reasons": [],
   "data_freshness": {
+    "TWSE收盤行情": "20260928",
+    "TWSE加權指數開高低收": "20260928",
+    "TPEx市場現況": "20260928",
+    "TPEx櫃買指數歷史": "20260928",
+    "TPEx上櫃成交值": "20260928",
+    "TWSE三大法人": "20260928",
+    "TWSE融資融券": "20260928",
+    "TWSE借券餘額": "20260928",
+    "TWSE估值": "20260928",
+    "TAIFEX Put/Call": "2026-09-24",
+    "TAIWAN VIX": "2026-09-28",
+    "TAIFEX台指期行情": "未知",
+    "TAIFEX市場未平倉量": "2026-09-28",
+    "TAIFEX三大法人期貨": "2026-09-28",
+    "TAIFEX選擇權履約價": "未知",
     "Cboe VIX": "2026-09-25",
-    "Yahoo ^SOX": "2026-09-25",
-    "Yahoo ^IXIC": "2026-09-25",
-    "Yahoo TSM": "2026-09-25",
+    "Yahoo ^SOX": "2026-09-28",
+    "Yahoo ^IXIC": "2026-09-28",
+    "Yahoo TSM": "2026-09-28",
     "Yahoo TWD=X": "2026-09-28",
     "Yahoo ^TWII": "2026-09-24"
   },
   "source_status": [
+    {
+      "name": "TWSE收盤行情",
+      "status": "blocked",
+      "as_of": "20260928",
+      "message": "很抱歉，沒有符合條件的資料!",
+      "url": "https://www.twse.com.tw/exchangeReport/MI_INDEX?response=json&type=ALLBUT0999&date=20260928"
+    },
+    {
+      "name": "TWSE加權指數開高低收",
+      "status": "partial",
+      "as_of": "20260928",
+      "message": "找不到指定交易日的加權指數開高低收",
+      "url": "https://www.twse.com.tw/rwd/zh/TAIEX/MI_5MINS_HIST?date=20260928&response=json"
+    },
+    {
+      "name": "TPEx市場現況",
+      "status": "ready",
+      "as_of": "20260928",
+      "message": "",
+      "url": "https://www.tpex.org.tw/openapi/v1/tpex_mainborad_highlight"
+    },
+    {
+      "name": "TPEx櫃買指數歷史",
+      "status": "partial",
+      "as_of": "20260928",
+      "message": "櫃買指數歷史不足：當日=False、前期=260",
+      "url": "https://www.tpex.org.tw/openapi/v1/tpex_index"
+    },
+    {
+      "name": "TPEx上櫃成交值",
+      "status": "ready",
+      "as_of": "20260928",
+      "message": "",
+      "url": "https://www.tpex.org.tw/openapi/v1/tpex_mainboard_quotes"
+    },
+    {
+      "name": "TWSE三大法人",
+      "status": "partial",
+      "as_of": "20260928",
+      "message": "很抱歉，沒有符合條件的資料!",
+      "url": "https://www.twse.com.tw/fund/BFI82U?response=json&dayDate=20260928&type=day"
+    },
+    {
+      "name": "TWSE融資融券",
+      "status": "partial",
+      "as_of": "20260928",
+      "message": "回傳成功，但找不到融資金額的今日餘額欄位",
+      "url": "https://www.twse.com.tw/exchangeReport/MI_MARGN?response=json&selectType=MS&date=20260928"
+    },
+    {
+      "name": "TWSE借券餘額",
+      "status": "partial",
+      "as_of": "20260928",
+      "message": "TWT72U是借券餘額資料；回傳中找不到今日借券餘額欄位",
+      "url": "https://www.twse.com.tw/rwd/zh/lending/TWT72U?response=json&date=20260928"
+    },
+    {
+      "name": "TWSE估值",
+      "status": "partial",
+      "as_of": "20260928",
+      "message": "回傳成功，但找不到本益比欄位",
+      "url": "https://www.twse.com.tw/exchangeReport/BWIBBU_d?response=json&date=20260928&selectType=ALL"
+    },
+    {
+      "name": "TAIFEX Put/Call",
+      "status": "partial",
+      "as_of": "2026-09-24",
+      "message": "最新資料為 2026-09-24，非報告交易日",
+      "url": "https://www.taifex.com.tw/cht/3/pcRatio"
+    },
+    {
+      "name": "TAIWAN VIX",
+      "status": "ready",
+      "as_of": "2026-09-28",
+      "message": "",
+      "url": "https://www.taifex.com.tw/cht/7/vixMinNew"
+    },
+    {
+      "name": "TAIFEX台指期行情",
+      "status": "partial",
+      "as_of": null,
+      "message": "TX daily row not found",
+      "url": "https://www.taifex.com.tw/cht/3/futDailyMarketReport"
+    },
+    {
+      "name": "TAIFEX市場未平倉量",
+      "status": "partial",
+      "as_of": "2026-09-28",
+      "message": "缺少商品：TX、MTX、TMF",
+      "url": ""
+    },
+    {
+      "name": "TAIFEX三大法人期貨",
+      "status": "partial",
+      "as_of": "2026-09-28",
+      "message": "回傳成功，但找不到臺指期外資未平倉淨額",
+      "url": "https://www.taifex.com.tw/cht/3/futContractsDate"
+    },
+    {
+      "name": "TAIFEX選擇權履約價",
+      "status": "partial",
+      "as_of": null,
+      "message": "option strike/open-interest rows not found",
+      "url": "https://www.taifex.com.tw/cht/3/optDailyMarketSummary"
+    },
     {
       "name": "Cboe VIX",
       "status": "ready",
@@ -5404,21 +5522,21 @@
     {
       "name": "Yahoo ^SOX",
       "status": "ready",
-      "as_of": "2026-09-25",
+      "as_of": "2026-09-28",
       "message": "",
       "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5ESOX?range=3mo&interval=1d"
     },
     {
       "name": "Yahoo ^IXIC",
       "status": "ready",
-      "as_of": "2026-09-25",
+      "as_of": "2026-09-28",
       "message": "",
       "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5EIXIC?range=3mo&interval=1d"
     },
     {
       "name": "Yahoo TSM",
       "status": "ready",
-      "as_of": "2026-09-25",
+      "as_of": "2026-09-28",
       "message": "",
       "url": "https://query1.finance.yahoo.com/v8/finance/chart/TSM?range=3mo&interval=1d"
     },
@@ -59761,9 +59879,9 @@
   "us_vix": 14.87,
   "tsm_adr_premium": null,
   "sox_change": {
-    "1d": 0.01411959840720578,
-    "5d": 0.06267896840801357,
-    "20d": 0.06621347538353084
+    "1d": -0.01607779675053944,
+    "5d": 0.0025794941486381173,
+    "20d": 0.0868012688366353
   },
   "margin_stress": {
     "proxy": null,
@@ -59779,15 +59897,15 @@
     "status": "paused",
     "signal": "暫停判斷",
     "synchrony": "方向尚未一致",
-    "explanation": "核心行情尚未就緒；加權或櫃買技術資料覆蓋不足80%",
+    "explanation": "核心行情尚未就緒；加權或櫃買技術資料覆蓋不足80%；TWSE收盤行情資料不足或日期不符",
     "target_percent": null,
     "cash_percent": null,
     "change_text": "等待資料恢復，不產生調整建議",
     "change_pp": null,
     "adjustment_reason": "",
     "previous_generated_at": null,
-    "valid_until": "2026-09-28T22:30:00+08:00",
-    "data_date": "2026-09-25",
+    "valid_until": "2026-09-29T08:45:00+08:00",
+    "data_date": "2026-09-28",
     "exposure_note": "模型研究值，未經完整十年策略驗證；不是個人化最佳水位。",
     "leveraged": false
   }
