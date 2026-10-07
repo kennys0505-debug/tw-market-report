@@ -6,14 +6,28 @@ on:
     # :00/:15 schedule slots, where scheduled workflows can be delayed.
     - cron: "7 0 * * 1-5" # target: about 08:15 Asia/Taipei
     - cron: "53 13 * * 1-5" # target: about 22:00 Asia/Taipei
+    # Bounded backup windows; actual execution time selects the publication slot.
+    - cron: "23,53 0-2,14-18 * * *"
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/report.yml
+      - src/tw_market_report/presentation.py
+      - src/tw_market_report/scheduled_report.py
+      - tests/test_presentation.py
+      - tests/test_scheduled_report.py
   workflow_dispatch:
     inputs:
       mode:
         description: Report mode
         required: true
-        default: close
+        default: auto
         type: choice
-        options: [close, premarket, fixture]
+        options: [auto, close, premarket]
+      notify:
+        description: Send LINE notification if this slot has not been sent
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -21,10 +35,9 @@ permissions:
   id-token: write
 
 concurrency:
-  # Scheduled and manual runs of the same report mode share a group. A new run
-  # replaces a stale queued/run instance instead of waiting behind it forever.
-  group: market-report-${{ github.event_name == 'workflow_dispatch' && inputs.mode || (github.event.schedule == '7 0 * * 1-5' && 'premarket' || 'close') }}
-  cancel-in-progress: true
+  # One writer for latest.json, history and Pages across all report modes.
+  group: market-report-publication
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -36,6 +49,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
+          ref: main
           fetch-depth: 0
 
       - uses: actions/setup-python@v6
@@ -48,52 +62,47 @@ jobs:
       - name: Run tests
         run: python -m unittest discover -s tests -v
 
-      - name: Select mode
-        id: mode
-        shell: bash
-        run: |
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            MODE="${{ inputs.mode }}"
-          elif [[ "${{ github.event.schedule }}" == "7 0 * * 1-5" ]]; then
-            MODE="premarket"
-          else
-            MODE="close"
-          fi
-          echo "mode=$MODE" >> "$GITHUB_OUTPUT"
-
-      - name: Refresh limit-signal validation gate
-        if: steps.mode.outputs.mode != 'fixture'
-        run: python -m tw_market_report.cli backtest
-
-      - name: Build report
+      - name: Build or skip actual publication slot
+        id: report
         shell: bash
         env:
+          EVENT_NAME: ${{ github.event_name }}
+          EVENT_SCHEDULE: ${{ github.event.schedule }}
+          REQUESTED_MODE: ${{ inputs.mode || 'auto' }}
+          REQUESTED_NOTIFY: ${{ inputs.notify }}
           LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
           LINE_USER_ID: ${{ secrets.LINE_USER_ID }}
           REPORT_URL: ${{ vars.REPORT_URL }}
         run: |
-          if [[ "${{ steps.mode.outputs.mode }}" == "fixture" ]]; then
-            python -m tw_market_report.cli fixture
-          else
-            python -m tw_market_report.cli run --mode "${{ steps.mode.outputs.mode }}" --notify
+          ARGS=(--mode "$REQUESTED_MODE" --github-output "$GITHUB_OUTPUT")
+          if [[ "$EVENT_NAME" == "push" || "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            ARGS+=(--force)
           fi
+          if [[ "$EVENT_NAME" == "schedule" && ( "$EVENT_SCHEDULE" == "7 0 * * 1-5" || "$EVENT_SCHEDULE" == "53 13 * * 1-5" ) ]] || [[ "$EVENT_NAME" == "workflow_dispatch" && "$REQUESTED_NOTIFY" == "true" ]]; then
+            ARGS+=(--notify)
+          fi
+          # Backups and code-triggered deployments are silent.
+          python -m tw_market_report.scheduled_report "${ARGS[@]}"
 
       - name: Persist history and generated report
-        if: steps.mode.outputs.mode != 'fixture'
+        if: steps.report.outputs.changed == 'true'
         shell: bash
         run: |
           git config user.name "market-report-bot"
           git config user.email "market-report-bot@users.noreply.github.com"
           git add -A data docs
           if ! git diff --cached --quiet; then
-            git commit -m "data: update ${{ steps.mode.outputs.mode }} report [skip ci]"
-            git push
+            git commit -m "data: update ${{ steps.report.outputs.mode }} report [skip ci]"
+            git push origin HEAD:main
           fi
 
       - uses: actions/configure-pages@v5
+        if: steps.report.outputs.publish == 'true'
       - uses: actions/upload-pages-artifact@v4
+        if: steps.report.outputs.publish == 'true'
         with:
           path: docs
       - name: Deploy GitHub Pages
+        if: steps.report.outputs.publish == 'true'
         id: deployment
         uses: actions/deploy-pages@v4

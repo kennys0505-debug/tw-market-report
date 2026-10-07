@@ -72,13 +72,105 @@ class PresentationTests(unittest.TestCase):
         self.assertEqual(again['exposure_details'], p['exposure_details'])
 
     def test_refresh_deadline_preserves_weekend(self):
-        due = next_deadline(datetime(2026,9,11,22,40,tzinfo=TZ))
+        due = next_deadline(datetime(2026,9,11,22,40,tzinfo=TZ), 'close', '2026-09-11')
         self.assertEqual(due, datetime(2026,9,14,8,45,tzinfo=TZ))
 
     def test_premarket_uses_prior_close_date(self):
         p = sample(); p['report_mode'] = 'premarket'; p['trade_date'] = '2026-09-11'
         p['generated_at'] = '2026-09-11T08:15:00+08:00'
         self.assertEqual(summary(p, now=datetime(2026,9,11,8,20,tzinfo=TZ))['data_date'], '2026-09-10')
+
+    def test_deadline_is_anchored_to_report_slot_not_generation(self):
+        cases = (
+            ('close', '2026-10-06', '2026-10-06T22:00:00+08:00', '2026-10-07T08:45:00+08:00'),
+            ('close', '2026-10-06', '2026-10-06T22:40:00+08:00', '2026-10-07T08:45:00+08:00'),
+            ('close', '2026-10-06', '2026-10-07T03:08:03+08:00', '2026-10-07T08:45:00+08:00'),
+            ('close', '2026-10-06', '2026-10-07T09:00:00+08:00', '2026-10-07T08:45:00+08:00'),
+            ('close', '2026-10-06', '2026-10-08T03:00:00+08:00', '2026-10-07T08:45:00+08:00'),
+            ('close', '2026-09-11', '2026-09-11T22:00:00+08:00', '2026-09-14T08:45:00+08:00'),
+            ('close', '2026-09-11', '2026-09-12T03:00:00+08:00', '2026-09-14T08:45:00+08:00'),
+            ('premarket', '2026-10-07', '2026-10-07T08:15:00+08:00', '2026-10-07T22:30:00+08:00'),
+            ('premarket', '2026-10-07', '2026-10-07T14:12:20+08:00', '2026-10-07T22:30:00+08:00'),
+            ('premarket', '2026-10-07', '2026-10-07T23:00:00+08:00', '2026-10-07T22:30:00+08:00'),
+            ('premarket', '2026-10-07', '2026-10-08T01:00:00+08:00', '2026-10-07T22:30:00+08:00'),
+            ('premarket', '2026-09-11', '2026-09-11T08:15:00+08:00', '2026-09-11T22:30:00+08:00'),
+            # UTC generation crosses Taipei midnight; the report slot remains explicit.
+            ('close', '2026-10-07', '2026-10-07T18:00:00+00:00', '2026-10-08T08:45:00+08:00'),
+        )
+        for mode, day, generated, expected in cases:
+            with self.subTest(mode=mode, day=day, generated=generated):
+                due = next_deadline(datetime.fromisoformat(generated), mode, day)
+                self.assertEqual(due.isoformat(), expected)
+
+    def test_on_time_reports_stay_ready_until_next_publication(self):
+        for mode, day, generated, now, expected in (
+            ('premarket', '2026-10-07', '2026-10-07T08:15:00+08:00',
+             '2026-10-07T12:00:00+08:00', '2026-10-07T22:30:00+08:00'),
+            ('close', '2026-10-06', '2026-10-06T22:00:00+08:00',
+             '2026-10-06T23:00:00+08:00', '2026-10-07T08:45:00+08:00'),
+            ('close', '2026-10-06', '2026-10-07T03:08:03+08:00',
+             '2026-10-07T08:30:00+08:00', '2026-10-07T08:45:00+08:00'),
+        ):
+            with self.subTest(mode=mode, generated=generated):
+                p = sample()
+                p.update(report_mode=mode, trade_date=day, generated_at=generated)
+                p['features']['trade_date'] = '2026-10-06'
+                result = summary(p, now=datetime.fromisoformat(now))
+                self.assertEqual(result['status'], 'ready')
+                self.assertEqual(result['valid_until'], expected)
+                self.assertEqual(result['target_percent'], 67)
+
+    def test_late_reports_cannot_roll_forward_an_expired_deadline(self):
+        for mode, day, generated, expected in (
+            ('close', '2026-10-06', '2026-10-07T09:00:00+08:00', '2026-10-07T08:45:00+08:00'),
+            ('close', '2026-10-06', '2026-10-08T03:00:00+08:00', '2026-10-07T08:45:00+08:00'),
+            ('premarket', '2026-10-07', '2026-10-07T23:00:00+08:00', '2026-10-07T22:30:00+08:00'),
+            ('premarket', '2026-10-07', '2026-10-08T01:00:00+08:00', '2026-10-07T22:30:00+08:00'),
+        ):
+            with self.subTest(mode=mode, generated=generated):
+                p = sample()
+                p.update(report_mode=mode, trade_date=day, generated_at=generated)
+                p['features']['trade_date'] = '2026-10-06'
+                result = summary(p, now=datetime.fromisoformat(generated) + timedelta(minutes=1))
+                self.assertEqual(result['status'], 'paused')
+                self.assertEqual(result['valid_until'], expected)
+                self.assertIn('已超過預期更新時限', result['explanation'])
+                self.assertIsNone(result['target_percent'])
+
+    def test_rerender_does_not_renew_deadline_or_change_model_inputs(self):
+        p = sample()
+        p.update(report_mode='close', trade_date='2026-10-06', generated_at='2026-10-07T03:08:03+08:00')
+        p['features']['trade_date'] = '2026-10-06'
+        p['technical_score'] = 77.4
+        before = copy.deepcopy(p)
+        prepared = prepare_dashboard(p, now=datetime(2026,10,7,8,30,tzinfo=TZ))
+        self.assertEqual(prepared['decision_summary']['status'], 'ready')
+        again = prepare_dashboard(prepared, now=datetime(2026,10,7,8,46,tzinfo=TZ))
+        self.assertEqual(again['decision_summary']['status'], 'paused')
+        self.assertEqual(again['decision_summary']['valid_until'], prepared['decision_summary']['valid_until'])
+        self.assertIsNone(again['decision_summary']['target_percent'])
+        for key in ('generated_at', 'trade_date', 'features', 'exposure_details', 'technical_score'):
+            self.assertEqual(again[key], p[key])
+        self.assertEqual(p, before)
+
+    def test_invalid_report_mode_or_date_fails_closed(self):
+        cases = (
+            ('report_mode', None), ('report_mode', ''), ('report_mode', 'invalid'),
+            ('trade_date', None), ('trade_date', ''), ('trade_date', '2026-02-30'),
+            ('trade_date', '2026-09-11T01:00:00'), ('trade_date', 20260910),
+            ('trade_date', '2026-09-12'),  # Later than the generation date.
+        )
+        for field, value in cases:
+            with self.subTest(field=field, value=value):
+                p = sample()
+                if value is None:
+                    p.pop(field)
+                else:
+                    p[field] = value
+                result = summary(p, now=NOW)
+                self.assertEqual(result['status'], 'paused')
+                self.assertIsNone(result['valid_until'])
+                self.assertIsNone(result['target_percent'])
 
 
 class ChartEventsTests(unittest.TestCase):

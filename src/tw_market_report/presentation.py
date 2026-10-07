@@ -17,17 +17,27 @@ def finite(value):
     return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value)
 
 
-def next_deadline(generated):
-    """Conservative publication SLA, not an exchange trading-calendar claim."""
-    for offset in range(8):
-        day = generated.date() + timedelta(days=offset)
-        if day.weekday() >= 5:
-            continue
-        for hour, minute in ((8, 45), (22, 30)):
-            due = datetime.combine(day, time(hour, minute), TZ)
-            if due > generated:
-                return due
-    raise ValueError('No refresh deadline')
+def next_deadline(generated, report_mode, report_date):
+    """Anchor the next publication deadline to the report's intended slot.
+
+    Weekdays are a conservative publication SLA, not an official exchange
+    trading calendar. A late generation or re-render must not renew old data.
+    """
+    if report_mode not in ('close', 'premarket'):
+        raise ValueError('Unknown report mode')
+    if not isinstance(report_date, str):
+        raise ValueError('Report date missing')
+    day = date.fromisoformat(report_date)
+    if generated.tzinfo is None or generated.utcoffset() is None:
+        raise ValueError('Timestamp timezone missing')
+    if day > generated.astimezone(TZ).date():
+        raise ValueError('Report date is after generation date')
+    if report_mode == 'premarket':
+        return datetime.combine(day, time(22, 30), TZ)
+    day += timedelta(days=1)
+    while day.weekday() >= 5:
+        day += timedelta(days=1)
+    return datetime.combine(day, time(8, 45), TZ)
 
 
 def summary(payload, previous=None, now=None):
@@ -64,7 +74,7 @@ def summary(payload, previous=None, now=None):
         if generated.tzinfo is None:
             raise ValueError('timestamp timezone missing')
         generated = generated.astimezone(TZ)
-        valid_until = next_deadline(generated)
+        valid_until = next_deadline(generated, payload.get('report_mode'), payload.get('trade_date'))
         if generated > now + timedelta(minutes=5):
             issues.append('報告時間異常')
         if now > valid_until:

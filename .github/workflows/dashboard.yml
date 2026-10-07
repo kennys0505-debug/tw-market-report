@@ -17,8 +17,9 @@ permissions:
   id-token: write
 
 concurrency:
-  group: dashboard-layout-publication
-  cancel-in-progress: true
+  # Share the lock with market report publication; checkout main after waiting.
+  group: market-report-publication
+  cancel-in-progress: false
 
 jobs:
   publish:
