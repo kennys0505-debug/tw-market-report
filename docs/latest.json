@@ -1,7 +1,7 @@
 {
-  "trade_date": "2026-10-09",
+  "trade_date": "2026-10-12",
   "report_mode": "premarket",
-  "generated_at": "2026-10-09T14:00:09.721927+08:00",
+  "generated_at": "2026-10-12T13:11:19.126210+08:00",
   "domestic_market_state": "強多",
   "overnight_risk_state": "中性",
   "composite_score": 68.51,
@@ -4633,24 +4633,10 @@
     "foreign_tmf_long_oi": 1955.0,
     "foreign_tmf_short_oi": 12867.0,
     "foreign_futures_net": -83890.1,
-    "us_vix": 15.41,
-    "us_vix_change_1d": 0.021883289124668526,
-    "us_vix_change_5d": -0.059792556436851774,
+    "us_vix": 14.84,
+    "us_vix_change_1d": -0.036988968202466,
+    "us_vix_change_5d": -0.030698889614630964,
     "taiex_price_history": [
-      {
-        "date": "2026-07-08",
-        "close": 45734.41015625,
-        "open": 45524.69140625,
-        "high": 45837.12109375,
-        "low": 45036.640625
-      },
-      {
-        "date": "2026-07-09",
-        "close": 45354.609375,
-        "open": 45805.62109375,
-        "high": 46064.05859375,
-        "low": 45352.41015625
-      },
       {
         "date": "2026-07-13",
         "close": 45380.51953125,
@@ -5084,17 +5070,24 @@
         "open": 49783.05859375,
         "high": 49783.05859375,
         "low": 49189.76953125
+      },
+      {
+        "date": "2026-10-12",
+        "close": 49394.76953125,
+        "open": 49272.078125,
+        "high": 49412.8984375,
+        "low": 48768.8203125
       }
     ],
-    "sox_return_1d": -0.03386157486790853,
-    "sox_return_5d": -0.016002029703211518,
-    "sox_return_20d": 0.08692313319448308,
-    "sox_relative_nasdaq": -0.02797527428306723,
-    "usd_twd": 31.91200065612793,
-    "usd_twd_change_5d": 0.0007902922065357032,
-    "tsm_adr_close": 457.989990234375,
-    "tsm_adr_equivalent_twd": 2923.0753737718796,
-    "tsm_adr_premium": 0.1463040681458352,
+    "sox_return_1d": -0.004062992513390373,
+    "sox_return_5d": -0.04295228572809151,
+    "sox_return_20d": 0.06329667810174211,
+    "sox_relative_nasdaq": -0.0493996930886762,
+    "usd_twd": 31.91699981689453,
+    "usd_twd_change_5d": 0.002594666129511314,
+    "tsm_adr_close": 453.30999755859375,
+    "tsm_adr_equivalent_twd": 2893.6590218148194,
+    "tsm_adr_premium": 0.1347682438489488,
     "_tpex_limit_breadth": 0.02306805074971165,
     "limit_breadth": 0.01648634724368882,
     "limit_strength_proxy": 1.8458266904983307,
@@ -5773,53 +5766,53 @@
     "收盤站上60日線"
   ],
   "data_freshness": {
-    "Cboe VIX": "2026-10-08",
-    "Yahoo ^SOX": "2026-10-08",
-    "Yahoo ^IXIC": "2026-10-08",
-    "Yahoo TSM": "2026-10-08",
-    "Yahoo TWD=X": "2026-10-09",
-    "Yahoo ^TWII": "2026-10-08"
+    "Cboe VIX": "2026-10-09",
+    "Yahoo ^SOX": "2026-10-09",
+    "Yahoo ^IXIC": "2026-10-09",
+    "Yahoo TSM": "2026-10-09",
+    "Yahoo TWD=X": "2026-10-12",
+    "Yahoo ^TWII": "2026-10-12"
   },
   "source_status": [
     {
       "name": "Cboe VIX",
       "status": "ready",
-      "as_of": "2026-10-08",
+      "as_of": "2026-10-09",
       "message": "",
       "url": "https://cdn.cboe.com/api/global/us_indices/daily_prices/VIX_History.csv"
     },
     {
       "name": "Yahoo ^SOX",
       "status": "ready",
-      "as_of": "2026-10-08",
+      "as_of": "2026-10-09",
       "message": "",
       "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5ESOX?range=3mo&interval=1d"
     },
     {
       "name": "Yahoo ^IXIC",
       "status": "ready",
-      "as_of": "2026-10-08",
+      "as_of": "2026-10-09",
       "message": "",
       "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5EIXIC?range=3mo&interval=1d"
     },
     {
       "name": "Yahoo TSM",
       "status": "ready",
-      "as_of": "2026-10-08",
+      "as_of": "2026-10-09",
       "message": "",
       "url": "https://query1.finance.yahoo.com/v8/finance/chart/TSM?range=3mo&interval=1d"
     },
     {
       "name": "Yahoo TWD=X",
       "status": "ready",
-      "as_of": "2026-10-09",
+      "as_of": "2026-10-12",
       "message": "",
       "url": "https://query1.finance.yahoo.com/v8/finance/chart/TWD%3DX?range=3mo&interval=1d"
     },
     {
       "name": "Yahoo ^TWII",
       "status": "ready",
-      "as_of": "2026-10-08",
+      "as_of": "2026-10-12",
       "message": "",
       "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5ETWII?range=3mo&interval=1d"
     }
@@ -74687,12 +74680,12 @@
     "label": "非三大法人部位代理"
   },
   "taiwan_vix": 24.55,
-  "us_vix": 15.41,
-  "tsm_adr_premium": 0.1463040681458352,
+  "us_vix": 14.84,
+  "tsm_adr_premium": 0.1347682438489488,
   "sox_change": {
-    "1d": -0.03386157486790853,
-    "5d": -0.016002029703211518,
-    "20d": 0.08692313319448308
+    "1d": -0.004062992513390373,
+    "5d": -0.04295228572809151,
+    "20d": 0.06329667810174211
   },
   "margin_stress": {
     "proxy": null,
@@ -74714,8 +74707,8 @@
     "change_text": "目標水位不變",
     "change_pp": 0,
     "adjustment_reason": "",
-    "previous_generated_at": "2026-10-09T03:31:03.304229+08:00",
-    "valid_until": "2026-10-09T22:30:00+08:00",
+    "previous_generated_at": "2026-10-09T14:00:09.721927+08:00",
+    "valid_until": "2026-10-12T22:30:00+08:00",
     "data_date": "2026-10-08",
     "exposure_note": "模型研究值，未經完整十年策略驗證；不是個人化最佳水位。",
     "leveraged": false
