@@ -10,6 +10,7 @@ from zoneinfo import ZoneInfo
 from tw_market_report import scheduled_report as scheduled
 from tw_market_report.presentation import summary
 from tw_market_report.scheduled_report import Slot, is_current, select_slot, slot_identity
+from tw_market_report.sources.calendar import CalendarUnavailableError, is_taiwan_trading_day
 
 
 TZ = ZoneInfo("Asia/Taipei")
@@ -247,6 +248,53 @@ class RunControlTests(unittest.TestCase):
         self.assertFalse(result["changed"])
         cli.assert_not_called()
         notify.assert_not_called()
+
+    def test_actual_roc_calendar_skips_long_weekend_even_with_legacy_holiday_report(self):
+        rows = [{'Date': '1151009', 'Name': '國慶日', 'Description': '於星期五補假。'}]
+        for now in (taipei(2026, 10, 9, 12), taipei(2026, 10, 11, 6, 2),
+                    taipei(2026, 10, 12, 3), taipei(2026, 10, 12, 8, 6)):
+            with self.subTest(now=now):
+                _, cli, notify = self.harness(latest=ready_payload(day=date(2026, 10, 9),
+                                                                 core_day=date(2026, 10, 8)))
+                with patch.object(scheduled, 'load_config', return_value=SimpleNamespace(
+                        root=Path('virtual-schedule-test'), sources={'twse_calendar': 'x'})), \
+                     patch.object(scheduled, 'is_taiwan_trading_day', wraps=is_taiwan_trading_day), \
+                     patch.object(scheduled.HttpClient.return_value, 'get_json', return_value=rows):
+                    result = scheduled.run(force=True, notify=True, now=now)
+                self.assertEqual(result['date'], '2026-10-08')
+                self.assertFalse(result['publish'])
+                self.assertFalse(result['changed'])
+                cli.assert_not_called()
+                notify.assert_not_called()
+
+    def test_calendar_failure_is_a_safe_skip_without_collection_or_notification(self):
+        _, cli, notify = self.harness(calendar=lambda day: (_ for _ in ()).throw(
+            CalendarUnavailableError('unverified annual calendar')))
+        result = scheduled.run(force=True, notify=True, now=taipei(2026, 10, 12, 9))
+        self.assertFalse(result['publish'])
+        self.assertFalse(result['changed'])
+        self.assertIn('unverified annual calendar', result['reason'])
+        cli.assert_not_called()
+        notify.assert_not_called()
+
+    def test_unknown_previous_calendar_does_not_build_monday_premarket(self):
+        def calendar(day):
+            if day == date(2026, 10, 12):
+                return True
+            raise CalendarUnavailableError('previous session unknown')
+        _, cli, notify = self.harness(calendar=calendar)
+        result = scheduled.run(now=taipei(2026, 10, 12, 9))
+        self.assertFalse(result['publish'])
+        self.assertIn('previous session unknown', result['reason'])
+        cli.assert_not_called()
+        notify.assert_not_called()
+
+    def test_closed_day_checks_use_strict_calendar_mode(self):
+        self.harness()
+        with patch.object(scheduled, 'is_taiwan_trading_day', side_effect=CalendarUnavailableError('offline')) as check:
+            result = scheduled.run(now=taipei(2026, 10, 8, 9))
+        self.assertFalse(result['publish'])
+        self.assertIs(check.call_args.args[3], True)
 
     def test_premarket_build_repairs_previous_close_first_without_notifications(self):
         files, cli, notify = self.harness(close=ready_payload("close", day=date(2026, 10, 6)))

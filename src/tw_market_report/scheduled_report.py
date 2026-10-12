@@ -16,7 +16,7 @@ from .sources.http import HttpClient
 from .notify import send_line
 from .pipeline import ReportPipeline
 from .presentation import finite, summary, next_deadline
-from .sources.calendar import is_taiwan_trading_day
+from .sources.calendar import CalendarUnavailableError, is_taiwan_trading_day
 
 TZ = ZoneInfo('Asia/Taipei')
 PREMARKET_START = time(8, 7)
@@ -116,22 +116,35 @@ def run(config_path='config/report.json', requested_mode='auto', force=False,
     calendar_cache = {}
     def trading_day(day):
         if day not in calendar_cache:
-            calendar_cache[day] = is_taiwan_trading_day(day, config.sources, client)
+            calendar_cache[day] = is_taiwan_trading_day(day, config.sources, client, True)
         return calendar_cache[day]
 
-    slot = select_slot(now, trading_day)
+    try:
+        slot = select_slot(now, trading_day)
+    except CalendarUnavailableError as error:
+        # A failed/changed calendar must never turn an unknown day into an open
+        # session. Keep saved data untouched, and let a later backup retry.
+        return {'publish': False, 'changed': False, 'mode': requested_mode,
+                'date': now.astimezone(TZ).date().isoformat(),
+                'reason': str(error)}
     if requested_mode not in ('auto', slot.mode):
         raise ValueError(f'Current publication slot is {slot.mode}; refusing an out-of-order {requested_mode} report')
+    if now > next_deadline(now, slot.mode, slot.day.isoformat()):
+        # Check before comparing saved identities: an old holiday-dated report
+        # from the former calendar bug must not make every closed-day backup fail.
+        return {'publish': False, 'changed': False, 'mode': slot.mode, 'date': slot.day.isoformat(),
+                'reason': 'No currently valid publication slot; keep the expired-data protection'}
     docs = config.root / 'docs'
     latest = load_json(docs / 'latest.json', {}) or {}
     identity = slot_identity(latest)
     if identity and identity > (slot.day, int(slot.mode == 'close')):
         raise ValueError('A newer report already exists; refusing to overwrite it')
-    core_day = slot.day if slot.mode == 'close' else previous_day(slot.day, trading_day)
+    try:
+        core_day = slot.day if slot.mode == 'close' else previous_day(slot.day, trading_day)
+    except CalendarUnavailableError as error:
+        return {'publish': False, 'changed': False, 'mode': slot.mode,
+                'date': slot.day.isoformat(), 'reason': str(error)}
     current = is_current(latest, slot, now, core_day)
-    if now > next_deadline(now, slot.mode, slot.day.isoformat()):
-        return {'publish': False, 'changed': False, 'mode': slot.mode, 'date': slot.day.isoformat(),
-                'reason': 'No currently valid publication slot; keep the expired-data protection'}
     built = force or not current
     if built:
         previous_generated = latest.get('generated_at')
