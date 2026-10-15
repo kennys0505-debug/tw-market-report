@@ -1,7 +1,7 @@
 {
-  "trade_date": "2026-10-14",
-  "report_mode": "close",
-  "generated_at": "2026-10-15T02:11:34.488867+08:00",
+  "trade_date": "2026-10-15",
+  "report_mode": "premarket",
+  "generated_at": "2026-10-15T12:28:06.423167+08:00",
   "domestic_market_state": "強多",
   "overnight_risk_state": "中性",
   "composite_score": 71.39,
@@ -2805,7 +2805,8 @@
     "volatility_cap": 75,
     "restrictions": [
       "兩者偏多，強弱不同"
-    ]
+    ],
+    "overnight_adjustment": 0
   },
   "confidence": "中",
   "model_exposure_range": [
@@ -4653,17 +4654,10 @@
     "foreign_tmf_long_oi": 8713.0,
     "foreign_tmf_short_oi": 13247.0,
     "foreign_futures_net": -86993.2,
-    "us_vix": 15.27,
-    "us_vix_change_1d": 0.0039447731755424265,
-    "us_vix_change_5d": 0.017321785476348994,
+    "us_vix": 16.87,
+    "us_vix_change_1d": 0.10478061558611662,
+    "us_vix_change_5d": 0.11870026525198951,
     "taiex_price_history": [
-      {
-        "date": "2026-07-14",
-        "close": 44737.94921875,
-        "open": 45364.3984375,
-        "high": 45364.3984375,
-        "low": 43654.0390625
-      },
       {
         "date": "2026-07-15",
         "close": 45631.58984375,
@@ -5097,17 +5091,31 @@
         "open": 49126.26953125,
         "high": 49126.26953125,
         "low": 48066.359375
+      },
+      {
+        "date": "2026-10-14",
+        "close": 48625.828125,
+        "open": 48382.640625,
+        "high": 49059.12109375,
+        "low": 48382.640625
+      },
+      {
+        "date": "2026-10-15",
+        "close": 46822.6484375,
+        "open": 48382.75,
+        "high": 48382.75,
+        "low": 46822.6484375
       }
     ],
-    "sox_return_1d": -0.04203266393378047,
-    "sox_return_5d": -0.10489151581294043,
-    "sox_return_20d": 0.03997041685506364,
-    "sox_relative_nasdaq": -0.07285086902120019,
-    "usd_twd": 32.1609992980957,
-    "usd_twd_change_5d": 0.012087395823123126,
-    "tsm_adr_close": 429.30499267578125,
-    "tsm_adr_equivalent_twd": 2761.3755136229565,
-    "tsm_adr_premium": 0.10898615004938006,
+    "sox_return_1d": -0.04295349126097914,
+    "sox_return_5d": -0.1057519213007011,
+    "sox_return_20d": 0.03897076567358315,
+    "sox_relative_nasdaq": -0.07503803006997589,
+    "usd_twd": 32.32600021362305,
+    "usd_twd_change_5d": 0.014999207674454507,
+    "tsm_adr_close": 430.0,
+    "tsm_adr_equivalent_twd": 2780.036018371582,
+    "tsm_adr_premium": 0.11648032866328606,
     "_tpex_limit_breadth": 0.02304147465437788,
     "limit_breadth": 0.022587268993839837,
     "limit_strength_proxy": 2.120263536200091,
@@ -5168,7 +5176,8 @@
       "foreign_futures_scheme7_score": "外資期貨方案七＝部位歷史水位40%＋5日變化30%＋占全市場OI 20%＋方向持續性10%。"
     },
     "limit_scoring_enabled": false,
-    "core_data_ready": true
+    "core_data_ready": true,
+    "overnight_exposure_adjustment": 0
   },
   "limits": {
     "twse": {
@@ -5785,138 +5794,18 @@
     "收盤站上60日線"
   ],
   "data_freshness": {
-    "TWSE收盤行情": "20261014",
-    "TWSE加權指數開高低收": "20261014",
-    "TPEx市場現況": "20261014",
-    "TPEx櫃買指數歷史": "20261014",
-    "TPEx上櫃成交值": "20261014",
-    "TWSE三大法人": "20261014",
-    "TWSE融資融券": "20261014",
-    "TWSE借券餘額": "20261014",
-    "TWSE估值": "20261014",
-    "TAIFEX Put/Call": "2026-10-14",
-    "TAIWAN VIX": "2026-10-14",
-    "TAIFEX台指期行情": "2026-10-14",
-    "TAIFEX市場未平倉量": "2026-10-14",
-    "TAIFEX三大法人期貨": "2026-10-14",
-    "TAIFEX選擇權履約價": "2026-10-14",
-    "Cboe VIX": "2026-10-13",
+    "Cboe VIX": "2026-10-14",
     "Yahoo ^SOX": "2026-10-14",
     "Yahoo ^IXIC": "2026-10-14",
     "Yahoo TSM": "2026-10-14",
-    "Yahoo TWD=X": "2026-10-14",
-    "Yahoo ^TWII": "2026-10-13"
+    "Yahoo TWD=X": "2026-10-15",
+    "Yahoo ^TWII": "2026-10-15"
   },
   "source_status": [
     {
-      "name": "TWSE收盤行情",
-      "status": "ready",
-      "as_of": "20261014",
-      "message": "",
-      "url": "https://www.twse.com.tw/exchangeReport/MI_INDEX?response=json&type=ALLBUT0999&date=20261014"
-    },
-    {
-      "name": "TWSE加權指數開高低收",
-      "status": "ready",
-      "as_of": "20261014",
-      "message": "",
-      "url": "https://www.twse.com.tw/rwd/zh/TAIEX/MI_5MINS_HIST?date=20261014&response=json"
-    },
-    {
-      "name": "TPEx市場現況",
-      "status": "ready",
-      "as_of": "20261014",
-      "message": "",
-      "url": "https://www.tpex.org.tw/openapi/v1/tpex_mainborad_highlight"
-    },
-    {
-      "name": "TPEx櫃買指數歷史",
-      "status": "ready",
-      "as_of": "20261014",
-      "message": "",
-      "url": "https://www.tpex.org.tw/openapi/v1/tpex_index"
-    },
-    {
-      "name": "TPEx上櫃成交值",
-      "status": "ready",
-      "as_of": "20261014",
-      "message": "",
-      "url": "https://www.tpex.org.tw/openapi/v1/tpex_mainboard_quotes"
-    },
-    {
-      "name": "TWSE三大法人",
-      "status": "ready",
-      "as_of": "20261014",
-      "message": "",
-      "url": "https://www.twse.com.tw/fund/BFI82U?response=json&dayDate=20261014&type=day"
-    },
-    {
-      "name": "TWSE融資融券",
-      "status": "ready",
-      "as_of": "20261014",
-      "message": "",
-      "url": "https://www.twse.com.tw/exchangeReport/MI_MARGN?response=json&selectType=MS&date=20261014"
-    },
-    {
-      "name": "TWSE借券餘額",
-      "status": "ready",
-      "as_of": "20261014",
-      "message": "",
-      "url": "https://www.twse.com.tw/rwd/zh/lending/TWT72U?response=json&date=20261014"
-    },
-    {
-      "name": "TWSE估值",
-      "status": "ready",
-      "as_of": "20261014",
-      "message": "",
-      "url": "https://www.twse.com.tw/exchangeReport/BWIBBU_d?response=json&date=20261014&selectType=ALL"
-    },
-    {
-      "name": "TAIFEX Put/Call",
-      "status": "ready",
-      "as_of": "2026-10-14",
-      "message": "",
-      "url": "https://www.taifex.com.tw/cht/3/pcRatio"
-    },
-    {
-      "name": "TAIWAN VIX",
-      "status": "ready",
-      "as_of": "2026-10-14",
-      "message": "",
-      "url": "https://www.taifex.com.tw/cht/7/vixMinNew"
-    },
-    {
-      "name": "TAIFEX台指期行情",
-      "status": "ready",
-      "as_of": "2026-10-14",
-      "message": "",
-      "url": "https://www.taifex.com.tw/cht/3/futDailyMarketReport"
-    },
-    {
-      "name": "TAIFEX市場未平倉量",
-      "status": "ready",
-      "as_of": "2026-10-14",
-      "message": "",
-      "url": "https://www.taifex.com.tw/cht/3/futDailyMarketReport"
-    },
-    {
-      "name": "TAIFEX三大法人期貨",
-      "status": "ready",
-      "as_of": "2026-10-14",
-      "message": "",
-      "url": "https://www.taifex.com.tw/cht/3/futContractsDate"
-    },
-    {
-      "name": "TAIFEX選擇權履約價",
-      "status": "ready",
-      "as_of": "2026-10-14",
-      "message": "",
-      "url": "https://www.taifex.com.tw/cht/3/optDailyMarketSummary"
-    },
-    {
       "name": "Cboe VIX",
       "status": "ready",
-      "as_of": "2026-10-13",
+      "as_of": "2026-10-14",
       "message": "",
       "url": "https://cdn.cboe.com/api/global/us_indices/daily_prices/VIX_History.csv"
     },
@@ -5944,14 +5833,14 @@
     {
       "name": "Yahoo TWD=X",
       "status": "ready",
-      "as_of": "2026-10-14",
+      "as_of": "2026-10-15",
       "message": "",
       "url": "https://query1.finance.yahoo.com/v8/finance/chart/TWD%3DX?range=3mo&interval=1d"
     },
     {
       "name": "Yahoo ^TWII",
       "status": "ready",
-      "as_of": "2026-10-13",
+      "as_of": "2026-10-15",
       "message": "",
       "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5ETWII?range=3mo&interval=1d"
     }
@@ -81143,12 +81032,12 @@
     "label": "非三大法人部位代理"
   },
   "taiwan_vix": 26.08,
-  "us_vix": 15.27,
-  "tsm_adr_premium": 0.10898615004938006,
+  "us_vix": 16.87,
+  "tsm_adr_premium": 0.11648032866328606,
   "sox_change": {
-    "1d": -0.04203266393378047,
-    "5d": -0.10489151581294043,
-    "20d": 0.03997041685506364
+    "1d": -0.04295349126097914,
+    "5d": -0.1057519213007011,
+    "20d": 0.03897076567358315
   },
   "margin_stress": {
     "proxy": null,
@@ -81167,11 +81056,11 @@
     "explanation": "加權收盤站上20、60日線；櫃買收盤站上20、60日線。加權與櫃買均偏多；依既有模型水位控管曝險，不因單日上漲追高。",
     "target_percent": 75,
     "cash_percent": 25,
-    "change_text": "較上一份報告增加 10 個百分點",
-    "change_pp": 10,
-    "adjustment_reason": "技術主分數由60.6變為74.0，再依波動風險上限調整。",
-    "previous_generated_at": "2026-10-14T12:45:33.473295+08:00",
-    "valid_until": "2026-10-15T08:45:00+08:00",
+    "change_text": "目標水位不變",
+    "change_pp": 0,
+    "adjustment_reason": "",
+    "previous_generated_at": "2026-10-15T02:11:34.488867+08:00",
+    "valid_until": "2026-10-15T22:30:00+08:00",
     "data_date": "2026-10-14",
     "exposure_note": "模型研究值，未經完整十年策略驗證；不是個人化最佳水位。",
     "leveraged": false
