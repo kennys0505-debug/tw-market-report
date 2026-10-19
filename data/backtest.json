@@ -23,12 +23,12 @@
   "limit_horizon_tests": {
     "1d": {
       "1": {
-        "samples": 102,
-        "average_return": 0.0019619700979143554,
-        "median_return": 0.00180859123638355,
-        "up_probability": 0.5784313725490197,
-        "max_favorable_excursion": 0.0019619700979143554,
-        "max_adverse_excursion": 0.0019619700979143554
+        "samples": 103,
+        "average_return": 0.0019721473554140914,
+        "median_return": 0.0021724668601372787,
+        "up_probability": 0.5825242718446602,
+        "max_favorable_excursion": 0.0019721473554140914,
+        "max_adverse_excursion": 0.0019721473554140914
       },
       "5": {
         "samples": 102,
@@ -57,12 +57,12 @@
     },
     "3d": {
       "1": {
-        "samples": 100,
-        "average_return": 0.0005373974943352278,
-        "median_return": 0.0007288545424083415,
-        "up_probability": 0.54,
-        "max_favorable_excursion": 0.0005373974943352278,
-        "max_adverse_excursion": 0.0005373974943352278
+        "samples": 101,
+        "average_return": 0.0005618809609298014,
+        "median_return": 0.0007567140836743924,
+        "up_probability": 0.5445544554455446,
+        "max_favorable_excursion": 0.0005618809609298014,
+        "max_adverse_excursion": 0.0005618809609298014
       },
       "5": {
         "samples": 100,
