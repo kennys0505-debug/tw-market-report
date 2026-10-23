@@ -31,12 +31,12 @@
         "max_adverse_excursion": 0.0019721473554140914
       },
       "5": {
-        "samples": 102,
-        "average_return": 0.007913185290382414,
-        "median_return": 0.008696841175691361,
-        "up_probability": 0.6568627450980392,
-        "max_favorable_excursion": 0.021913546689544237,
-        "max_adverse_excursion": -0.015349429451461947
+        "samples": 103,
+        "average_return": 0.007644448401361715,
+        "median_return": 0.008467497915371158,
+        "up_probability": 0.6504854368932039,
+        "max_favorable_excursion": 0.02173001931994077,
+        "max_adverse_excursion": -0.015392315711921052
       },
       "10": {
         "samples": 102,
@@ -65,12 +65,12 @@
         "max_adverse_excursion": 0.0005618809609298014
       },
       "5": {
-        "samples": 100,
-        "average_return": 0.0053352678715321246,
-        "median_return": 0.00854077850149415,
-        "up_probability": 0.68,
-        "max_favorable_excursion": 0.020992806888474252,
-        "max_adverse_excursion": -0.016765785241594923
+        "samples": 101,
+        "average_return": 0.005086733394796664,
+        "median_return": 0.008467497915371158,
+        "up_probability": 0.6732673267326733,
+        "max_favorable_excursion": 0.02081476154918626,
+        "max_adverse_excursion": -0.01679549741027962
       },
       "10": {
         "samples": 100,
