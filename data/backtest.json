@@ -23,12 +23,12 @@
   "limit_horizon_tests": {
     "1d": {
       "1": {
-        "samples": 103,
-        "average_return": 0.0019721473554140914,
-        "median_return": 0.0021724668601372787,
-        "up_probability": 0.5825242718446602,
-        "max_favorable_excursion": 0.0019721473554140914,
-        "max_adverse_excursion": 0.0019721473554140914
+        "samples": 104,
+        "average_return": 0.0019646289420203167,
+        "median_return": 0.00180859123638355,
+        "up_probability": 0.5865384615384616,
+        "max_favorable_excursion": 0.0019646289420203167,
+        "max_adverse_excursion": 0.0019646289420203167
       },
       "5": {
         "samples": 103,
