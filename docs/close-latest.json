@@ -1,64 +1,51 @@
 {
-  "trade_date": "2026-10-27",
+  "trade_date": "2026-10-28",
   "report_mode": "close",
-  "generated_at": "2026-10-28T03:00:38.156276+08:00",
-  "domestic_market_state": "轉空",
+  "generated_at": "2026-10-29T03:08:59.262150+08:00",
+  "domestic_market_state": "盤整",
   "overnight_risk_state": "中性",
-  "composite_score": 32.75,
-  "technical_score": 32.0,
-  "technical_state": "轉空",
+  "composite_score": 53.44,
+  "technical_score": 49.9,
+  "technical_state": "盤整",
   "technical_analysis": {
-    "score": 32.0,
-    "state": "轉空",
-    "stage": "初步轉折",
-    "synchrony": "兩者偏空，同向確認",
+    "score": 49.9,
+    "state": "盤整",
+    "stage": "觀察",
+    "synchrony": "方向尚未一致",
     "coverage": 1.0,
     "taiex": {
       "market": "taiex",
       "label": "加權指數",
-      "close": 46096.23,
-      "score": 39.2,
-      "signal": "轉空",
+      "close": 47035.58,
+      "score": 55.3,
+      "signal": "盤整",
       "coverage": 1.0,
       "components": {
-        "trend": 40.1,
-        "structure": 25.8,
-        "momentum": 23.9,
-        "volume": 76.6,
-        "candlestick_volatility": 44.7
+        "trend": 61.7,
+        "structure": 44.5,
+        "momentum": 27.8,
+        "volume": 69.5,
+        "candlestick_volatility": 97.4
       },
       "moving_averages": {
-        "20": 47986.41,
-        "60": 46216.73,
-        "120": 43309.89,
-        "240": 34594.23
+        "20": 47930.33,
+        "60": 46307.26,
+        "120": 43434.65,
+        "240": 34701.22
       },
-      "rsi14": 33.5,
-      "roc5": -0.021545380021676275,
-      "roc20": -0.03564715355614834,
-      "volume_ratio_20d": 1.06,
-      "confirmation_level": 46041.43,
-      "invalidation_level": 49313.44,
+      "rsi14": 30.7,
+      "roc5": 0.004559814514861316,
+      "roc20": -0.023292631292167743,
+      "volume_ratio_20d": 0.78,
+      "confirmation_level": 49301.96,
+      "invalidation_level": 46041.43,
       "reasons": [
         "收盤跌破20日線",
-        "收盤跌破60日線",
-        "RSI14 33.5",
-        "成交值為20日均量1.06倍"
+        "收盤站上60日線",
+        "RSI14 30.7",
+        "成交值為20日均量0.78倍"
       ],
       "chart": [
-        {
-          "date": "2026-04-29",
-          "close": 39303.5,
-          "open": 39303.5,
-          "high": 39303.5,
-          "low": 39303.5,
-          "price_kind": "close_only",
-          "ma5": 36996.92,
-          "ma20": 34391.16,
-          "ma60": 30605.99,
-          "signal_event": null,
-          "signal_events": []
-        },
         {
           "date": "2026-04-30",
           "close": 38926.63,
@@ -549,11 +536,11 @@
         },
         {
           "date": "2026-07-27",
-          "close": 43634.19140625,
-          "open": 43585.921875,
-          "high": 43686.1484375,
-          "low": 42969.48046875,
-          "price_kind": "ohlc",
+          "close": 43634.19,
+          "open": 43634.19,
+          "high": 43634.19,
+          "low": 43634.19,
+          "price_kind": "close_only",
           "ma5": 44202.82,
           "ma20": 45312.02,
           "ma60": 40403.06,
@@ -581,7 +568,7 @@
           "low": 39384.8515625,
           "price_kind": "ohlc",
           "ma5": 42872.08,
-          "ma20": 45001.46,
+          "ma20": 45001.45,
           "ma60": 40694.96,
           "signal_event": null,
           "signal_events": []
@@ -1370,17 +1357,30 @@
         },
         {
           "date": "2026-10-27",
-          "close": 46096.23,
-          "open": 46211.2,
-          "high": 46585.45,
-          "low": 45676.67,
+          "close": 46096.23046875,
+          "open": 46211.19921875,
+          "high": 46585.44921875,
+          "low": 45676.671875,
           "price_kind": "ohlc",
           "ma5": 46428.09,
           "ma20": 47986.41,
           "ma60": 46281.97,
           "signal_event": null,
+          "signal_events": []
+        },
+        {
+          "date": "2026-10-28",
+          "close": 47035.58,
+          "open": 46402.79,
+          "high": 47060.46,
+          "low": 46402.79,
+          "price_kind": "ohlc",
+          "ma5": 46470.79,
+          "ma20": 47930.33,
+          "ma60": 46398.58,
+          "signal_event": null,
           "signal_events": [],
-          "current_signal": "轉空"
+          "current_signal": "盤整"
         }
       ],
       "chart_version": 2
@@ -1388,49 +1388,36 @@
     "otc": {
       "market": "otc",
       "label": "櫃買指數",
-      "close": 379.2,
-      "score": 22.3,
-      "signal": "轉空",
+      "close": 394.61,
+      "score": 42.8,
+      "signal": "盤整",
       "coverage": 1.0,
       "components": {
-        "trend": 21.2,
-        "structure": 19.9,
-        "momentum": 16.5,
-        "volume": 30.9,
-        "candlestick_volatility": 29.9
+        "trend": 21.4,
+        "structure": 43.1,
+        "momentum": 27.2,
+        "volume": 67.7,
+        "candlestick_volatility": 100.0
       },
       "moving_averages": {
-        "20": 411.0,
-        "60": 398.45,
-        "120": 408.55,
-        "240": 352.87
+        "20": 410.05,
+        "60": 399.46,
+        "120": 408.52,
+        "240": 353.42
       },
-      "rsi14": 24.8,
-      "roc5": -0.05261579973017538,
-      "roc20": -0.0866392080352627,
-      "volume_ratio_20d": 0.76,
-      "confirmation_level": 381.69,
-      "invalidation_level": 427.9,
+      "rsi14": 31.9,
+      "roc5": 0.0014211394493084395,
+      "roc20": -0.04628286929621028,
+      "volume_ratio_20d": 0.71,
+      "confirmation_level": 427.9,
+      "invalidation_level": 379.2,
       "reasons": [
         "收盤跌破20日線",
         "收盤跌破60日線",
-        "RSI14 24.8",
-        "成交值為20日均量0.76倍"
+        "RSI14 31.9",
+        "成交值為20日均量0.71倍"
       ],
       "chart": [
-        {
-          "date": "2026-06-01",
-          "close": 446.02,
-          "open": 443.97,
-          "high": 451.09,
-          "low": 443.97,
-          "price_kind": "ohlc",
-          "ma5": 440.33,
-          "ma20": 421.17,
-          "ma60": 367.9,
-          "signal_event": null,
-          "signal_events": []
-        },
         {
           "date": "2026-06-02",
           "close": 440.64,
@@ -2792,54 +2779,67 @@
           "ma20": 411.0,
           "ma60": 398.45,
           "signal_event": null,
+          "signal_events": []
+        },
+        {
+          "date": "2026-10-28",
+          "close": 394.61,
+          "open": 382.46,
+          "high": 394.61,
+          "low": 382.46,
+          "price_kind": "ohlc",
+          "ma5": 387.76,
+          "ma20": 410.05,
+          "ma60": 399.46,
+          "signal_event": null,
           "signal_events": [],
-          "current_signal": "轉空"
+          "current_signal": "盤整"
         }
       ],
       "chart_version": 2
     },
     "method": "加權指數4/7＋櫃買指數3/7；趨勢30%、結構25%、動能20%、量價15%、K線與波動10%"
   },
-  "auxiliary_score": 51.87,
-  "auxiliary_adjustment": 0.75,
+  "auxiliary_score": 58.86,
+  "auxiliary_adjustment": 3.54,
   "exposure_details": {
     "technical_range": [
-      20,
-      40
+      40,
+      60
     ],
     "risk_adjusted_range": [
-      20,
-      40
+      40,
+      56
     ],
-    "center": 30,
-    "cash_reserve": 70,
-    "gross_exposure": 30,
+    "center": 48,
+    "cash_reserve": 52,
+    "gross_exposure": 48,
     "leverage_multiple": 1.0,
-    "annualized_volatility_20d": 0.2004,
-    "volatility_cap": 60,
+    "annualized_volatility_20d": 0.2125,
+    "volatility_cap": 56,
     "restrictions": []
   },
   "confidence": "高",
   "model_exposure_range": [
-    20,
-    40
+    40,
+    56
   ],
   "shadow_mode": true,
   "module_scores": {
-    "capital_flow": 52.94,
-    "futures": 51.18,
-    "leverage_lending": 64.79,
-    "options_volatility": 30.98,
-    "overseas": 50.0,
-    "trend_breadth": 38.32,
-    "valuation": 56.44
+    "capital_flow": 70.7,
+    "futures": 64.06,
+    "leverage_lending": 48.44,
+    "options_volatility": 35.23,
+    "overseas": 67.34,
+    "trend_breadth": 75.2,
+    "valuation": 57.45
   },
   "module_coverage": {
     "capital_flow": 1.0,
     "futures": 1.0,
     "leverage_lending": 1.0,
     "options_volatility": 1.0,
-    "overseas": 0.0,
+    "overseas": 1.0,
     "trend_breadth": 1.0,
     "valuation": 1.0
   },
@@ -2848,7 +2848,7 @@
     "futures": 1.0,
     "leverage_lending": 1.0,
     "options_volatility": 1.0,
-    "overseas": 0.0,
+    "overseas": 1.0,
     "trend_breadth": 1.0,
     "valuation": 1.0
   },
@@ -2862,29 +2862,29 @@
     "valuation": 1.0
   },
   "module_calculation_notes": {
-    "capital_flow": "4/4項實測；投信買賣超占成交值 +2.29%→99.0分、自營商買賣超占成交值 -1.20%→29.9分、資金輪動擴散 91.1%→34.9分；另1項已納入；模組合成52.9分。",
-    "futures": "2/2項實測；台指期正逆價差 +0.02%→66.3分、外資期貨方案七 36.0分→36.0分；模組合成51.2分。",
-    "leverage_lending": "4/4項實測；融資餘額日變化 -0.0166→96.0分、借券餘額日變化 0.0158→4.0分、融資與指數單日背離 -0.0177→96.0分；另1項已納入；模組合成64.8分。",
-    "options_volatility": "3/3項實測；Put/Call情緒 +0.620→8.8分、TAIWAN VIX水準 29.86→27.7分、選擇權壓力平衡 -0.032→56.5分；模組合成31.0分。",
-    "overseas": "5/5項實測；台積電ADR溢價 +18.20%→82.8分、費半相對Nasdaq +1.43%→68.4分、美元兌台幣五日變化 -0.24%→67.2分；另2項已納入；高相關項先合併；模組合成65.3分。",
-    "trend_breadth": "7/7項實測；上櫃漲跌家數廣度 +0.005→12.7分、漲跌停強弱 +0.651→15.6分、櫃買指數單日趨勢 -0.65%→37.1分；另3項已納入；1項因驗證閘門未計分；高相關項先合併；模組合成38.3分。",
-    "valuation": "4/4項實測；殖利率分位 11.6百分位→93.6分、距52週高點 -7.48%→6.7分、市場本益比分位 47.3百分位→67.0分；另1項已納入；模組合成56.4分。"
+    "capital_flow": "4/4項實測；投信買賣超占成交值 +1.92%→95.7分、外資買賣超占成交值 +2.14%→67.5分、自營商買賣超占成交值 +0.29%→65.0分；另1項已納入；模組合成70.7分。",
+    "futures": "2/2項實測；台指期正逆價差 +0.45%→90.6分、外資期貨方案七 37.5分→37.5分；模組合成64.1分。",
+    "leverage_lending": "4/4項實測；融資金額／成交值壓力 0.846→10.6分、借券餘額日變化 -0.00845→84.2分、融資餘額日變化 0.0143→18.5分；另1項已納入；模組合成48.4分。",
+    "options_volatility": "3/3項實測；Put/Call情緒 +0.694→19.5分、TAIWAN VIX水準 27.42→42.8分、選擇權壓力平衡 -0.096→43.4分；模組合成35.2分。",
+    "overseas": "5/5項實測；美元兌台幣五日變化 -0.61%→81.5分、台積電ADR溢價 +17.05%→80.6分、費半相對Nasdaq +1.98%→74.0分；另2項已納入；高相關項先合併；模組合成67.3分。",
+    "trend_breadth": "7/7項實測；櫃買指數單日趨勢 +4.06%→94.4分、加權指數單日趨勢 +2.04%→92.2分、上櫃漲跌家數廣度 +0.036→89.1分；另3項已納入；1項因驗證閘門未計分；高相關項先合併；模組合成75.2分。",
+    "valuation": "4/4項實測；殖利率分位 10.4百分位→88.2分、距52週高點 -5.59%→16.9分、市場本益比分位 47.7百分位→65.4分；另1項已納入；模組合成57.4分。"
   },
   "imputed_score_features": [],
   "features": {
-    "taiex_close": 46096.23,
-    "advance_decline_ratio": -0.05483271375464684,
-    "tsmc_close": 2400.0,
-    "tsmc_turnover": 91313227194.0,
-    "market_turnover": 1028976483116.0,
-    "taiex_open": 46211.2,
-    "taiex_high": 46585.45,
-    "taiex_low": 45676.67,
-    "otc_close": 379.2,
-    "otc_turnover": 177976316190.0,
-    "otc_open": 383.88,
-    "otc_high": 388.39,
-    "otc_low": 375.73,
+    "taiex_close": 47035.58,
+    "advance_decline_ratio": 0.40148011100832565,
+    "tsmc_close": 2425.0,
+    "tsmc_turnover": 52940678675.0,
+    "market_turnover": 747021273438.0,
+    "taiex_open": 46402.79,
+    "taiex_high": 47060.46,
+    "taiex_low": 46402.79,
+    "otc_close": 394.61,
+    "otc_turnover": 162089614860.0,
+    "otc_open": 382.46,
+    "otc_high": 394.61,
+    "otc_low": 382.46,
     "otc_history": [
       {
         "date": "20251001",
@@ -4677,54 +4677,54 @@
         "open": 396.32,
         "high": 400.3,
         "low": 381.3
+      },
+      {
+        "date": "20261027",
+        "close": 379.2,
+        "open": 383.88,
+        "high": 388.39,
+        "low": 375.73
       }
     ],
-    "trust_flow_ratio": 0.022939791769117607,
-    "foreign_flow_ratio": -0.007812494523350298,
-    "dealer_flow_ratio": -0.012049618541770156,
+    "trust_flow_ratio": 0.019169002024663866,
+    "foreign_flow_ratio": 0.021360328487786153,
+    "dealer_flow_ratio": 0.0028985586622382992,
     "institutional_flow_parser_version": "bfi82u_v2",
-    "margin_balance": 623386860.0,
-    "borrowed_balance": 90190248000.0,
-    "tsmc_pe": 27.82,
-    "tsmc_pb": 9.68,
-    "tsmc_dividend_yield": 0.92,
-    "market_pe_median": 17.31,
+    "margin_balance": 632299552.0,
+    "borrowed_balance": 89428536000.0,
+    "tsmc_pe": 28.11,
+    "tsmc_pb": 9.78,
+    "tsmc_dividend_yield": 0.91,
+    "market_pe_median": 17.34,
     "market_pb_median": 1.66,
-    "market_dividend_yield_median": 2.53,
-    "put_call_volume_ratio": 0.8989,
-    "put_call_oi_ratio": 0.6196,
-    "put_call_sentiment": 0.6196,
-    "taiwan_vix": 29.86,
-    "tx_settlement": 46106.0,
+    "market_dividend_yield_median": 2.51,
+    "put_call_volume_ratio": 0.9229,
+    "put_call_oi_ratio": 0.6938,
+    "put_call_sentiment": 0.6938,
+    "taiwan_vix": 27.42,
+    "tx_settlement": 47249.0,
     "tx_price_source": "settlement",
     "tx_selected_contract": "202611",
-    "futures_basis": 9.769999999996799,
-    "futures_basis_pct": 0.0002119479185173451,
-    "tx_market_oi": 119940.0,
-    "mtx_market_oi": 37899.0,
-    "tmf_market_oi": 107340.0,
-    "futures_market_oi": 134781.75,
-    "foreign_tx_net": -86043.0,
-    "foreign_tx_long_oi": 9755.0,
-    "foreign_tx_short_oi": 95798.0,
-    "foreign_mtx_net": -2645.0,
-    "foreign_mtx_long_oi": 2035.0,
-    "foreign_mtx_short_oi": 4680.0,
-    "foreign_tmf_net": -7237.0,
-    "foreign_tmf_long_oi": 900.0,
-    "foreign_tmf_short_oi": 8137.0,
-    "foreign_futures_net": -87066.1,
-    "us_vix": 18.39,
-    "us_vix_change_1d": -0.05449871465295619,
-    "us_vix_change_5d": -0.0027114967462039674,
+    "futures_basis": 213.41999999999825,
+    "futures_basis_pct": 0.004537416143268526,
+    "tx_market_oi": 121476.0,
+    "mtx_market_oi": 39580.0,
+    "tmf_market_oi": 103617.0,
+    "futures_market_oi": 136551.85,
+    "foreign_tx_net": -84917.0,
+    "foreign_tx_long_oi": 10510.0,
+    "foreign_tx_short_oi": 95427.0,
+    "foreign_mtx_net": 1224.0,
+    "foreign_mtx_long_oi": 3603.0,
+    "foreign_mtx_short_oi": 2379.0,
+    "foreign_tmf_net": 1511.0,
+    "foreign_tmf_long_oi": 4867.0,
+    "foreign_tmf_short_oi": 3356.0,
+    "foreign_futures_net": -84535.45,
+    "us_vix": 17.52,
+    "us_vix_change_1d": -0.047308319738988636,
+    "us_vix_change_5d": 0.012131715771230622,
     "taiex_price_history": [
-      {
-        "date": "2026-07-27",
-        "close": 43634.19140625,
-        "open": 43585.921875,
-        "high": 43686.1484375,
-        "low": 42969.48046875
-      },
       {
         "date": "2026-07-28",
         "close": 41603.359375,
@@ -5144,63 +5144,69 @@
         "open": 46942.75,
         "high": 47332.1796875,
         "low": 46041.4296875
+      },
+      {
+        "date": "2026-10-27",
+        "close": 46096.23046875,
+        "open": 46211.19921875,
+        "high": 46585.44921875,
+        "low": 45676.671875
       }
     ],
-    "sox_return_1d": 0.03526877415365459,
-    "sox_return_5d": 0.016887961967770204,
-    "sox_return_20d": -0.0914383874125636,
-    "sox_relative_nasdaq": 0.014305384685580735,
-    "usd_twd": 32.402000427246094,
-    "usd_twd_change_5d": -0.0024076603531156815,
-    "tsm_adr_close": 437.760009765625,
-    "tsm_adr_equivalent_twd": 2836.860004691407,
-    "tsm_adr_premium": 0.1820250019547529,
-    "overseas_data_stale": true,
-    "_tpex_limit_breadth": 0.0045871559633027525,
-    "limit_breadth": 0.005646817248459959,
-    "limit_strength_proxy": 0.6505875661411494,
-    "limit_up_percentile_5y": 51.34920634920635,
-    "limit_down_percentile_5y": 91.98412698412699,
-    "option_pressure_balance": -0.03194444444444444,
-    "rotation_score": 0.9112581981295816,
-    "taiex_ma20_gap": -0.039389982339584684,
-    "taiex_ma60_gap": -0.0026072234077557654,
-    "taiex_ma120_gap": 0.06433490786135954,
-    "taiex_ma240_gap": 0.33248310650166646,
-    "taiex_daily_return_proxy": 0.0011902323624615185,
-    "volume_price_confirmation": 0.001267562387382433,
-    "otc_ma20_gap": -0.0773801196340177,
-    "otc_daily_return_proxy": -0.006523618643401785,
-    "tpex_breadth_proxy": 0.0045871559633027525,
-    "foreign_futures_level_score": 5.100234217854152,
-    "foreign_futures_change_score": 76.31116390791752,
-    "foreign_futures_share_score": 15.423544942861358,
+    "sox_return_1d": 0.014453124999999956,
+    "sox_return_5d": 0.012419946776749402,
+    "sox_return_20d": -0.07761434743301865,
+    "sox_relative_nasdaq": 0.019833493312905737,
+    "usd_twd": 32.37799835205078,
+    "usd_twd_change_5d": -0.00612691630068396,
+    "tsm_adr_close": 438.32501220703125,
+    "tsm_adr_equivalent_twd": 2838.417304580379,
+    "tsm_adr_premium": 0.1704813627135584,
+    "_tpex_limit_breadth": 0.03555045871559633,
+    "limit_breadth": 0.03123399897593446,
+    "limit_strength_proxy": 3.060270794691562,
+    "limit_up_percentile_5y": 96.98412698412699,
+    "limit_down_percentile_5y": 39.84126984126984,
+    "option_pressure_balance": -0.09611411706837186,
+    "rotation_score": 0.9291309624539175,
+    "taiex_ma20_gap": -0.018667689707154822,
+    "taiex_ma60_gap": 0.015727892311323766,
+    "taiex_ma120_gap": 0.08290452455211472,
+    "taiex_ma240_gap": 0.3554444350466275,
+    "taiex_daily_return_proxy": 0.020378022237393267,
+    "volume_price_confirmation": 0.015873825446227344,
+    "otc_ma20_gap": -0.037644556952146746,
+    "otc_daily_return_proxy": 0.04063818565400856,
+    "tpex_breadth_proxy": 0.03555045871559633,
+    "foreign_futures_level_score": 6.918055387597294,
+    "foreign_futures_change_score": 74.83002788899864,
+    "foreign_futures_share_score": 21.626654357296527,
     "foreign_futures_persistence_score": 80.0,
     "foreign_futures_persistence": 0.6,
-    "foreign_futures_market_share": -0.6459784058301662,
-    "foreign_futures_change_5d": 7011.649999999994,
-    "foreign_futures_change_5d_share": 0.05202225078692029,
-    "foreign_futures_scheme7_score": 36.01815184808919,
-    "margin_daily_change_proxy": -0.016554097178625438,
-    "margin_price_divergence_proxy": -0.017744329541086956,
-    "margin_turnover_pressure_proxy": 0.6058319798643285,
-    "margin_20d_change": 0.030627585990089967,
+    "foreign_futures_market_share": -0.6190721692895409,
+    "foreign_futures_change_5d": 6522.949999999997,
+    "foreign_futures_change_5d_share": 0.047769034253289114,
+    "foreign_futures_scheme7_score": 37.54156139319782,
+    "margin_daily_change_proxy": 0.014297208638629266,
+    "margin_price_divergence_proxy": -0.006080813598764001,
+    "margin_turnover_pressure_proxy": 0.8464277718490951,
+    "margin_20d_change": 0.04276565739264737,
     "margin_price_divergence": 0.0,
-    "borrowed_balance_daily_change_proxy": 0.015782644240626142,
-    "taiwan_vix_level_proxy": 29.86,
-    "taiwan_vix_change_5d": 0.13406760349411329,
-    "taiwan_vix_percentile": 98.76984126984127,
-    "market_pe_percentile": 47.33704292527822,
-    "market_pb_percentile": 76.58982511923688,
-    "dividend_yield_percentile": 11.645468998410175,
-    "drawdown_52w": -0.07479183622676877,
-    "limit_contraction": false,
+    "borrowed_balance_daily_change_proxy": -0.008445613765248772,
+    "taiwan_vix_level_proxy": 27.42,
+    "taiwan_vix_change_5d": -0.0767676767676767,
+    "taiwan_vix_percentile": 98.01587301587301,
+    "market_pe_percentile": 47.69475357710652,
+    "market_pb_percentile": 76.55007949125596,
+    "dividend_yield_percentile": 10.373608903020667,
+    "drawdown_52w": -0.05593792369118,
+    "limit_contraction": true,
     "price_reversal": true,
-    "breadth_reversal": false,
-    "institution_reversal": false,
+    "breadth_reversal": true,
+    "institution_reversal": true,
     "futures_reversal": true,
     "options_reversal": false,
-    "trade_date": "2026-10-27",
+    "trade_date": "2026-10-28",
     "active_feature_mode": "free_official_proxy_v2",
     "feature_proxy_definitions": {
       "taiex_daily_return_proxy": "取代加權指數20／60日均線；使用官方收盤價相對前一有效交易日報酬。",
@@ -5221,67 +5227,67 @@
   "limits": {
     "twse": {
       "market": "twse",
-      "eligible_count": 1076,
-      "limit_up_count": 9,
+      "eligible_count": 1081,
+      "limit_up_count": 32,
       "limit_down_count": 2,
       "intraday_up_touch_count": null,
       "intraday_down_touch_count": null,
-      "limit_up_ratio": 0.008364312267657992,
-      "limit_down_ratio": 0.0018587360594795538,
-      "limit_breadth": 0.006505576208178439,
-      "strength_ratio": 3.3333333333333335,
-      "up_percentile_1y": 23.015873015873016,
-      "down_percentile_1y": 64.28571428571429,
-      "up_percentile_5y": 42.857142857142854,
-      "down_percentile_5y": 66.34920634920636,
-      "up_percentile_full": 48.92601431980907,
-      "down_percentile_full": 69.03341288782816,
-      "up_historical_rank": 857,
-      "down_historical_rank": 520,
+      "limit_up_ratio": 0.02960222016651249,
+      "limit_down_ratio": 0.0018501387604070306,
+      "limit_breadth": 0.027752081406105456,
+      "strength_ratio": 11.0,
+      "up_percentile_1y": 84.92063492063492,
+      "down_percentile_1y": 62.8968253968254,
+      "up_percentile_5y": 95.23809523809524,
+      "down_percentile_5y": 65.9920634920635,
+      "up_percentile_full": 96.36255217650566,
+      "down_percentile_full": 68.78354203935599,
+      "up_historical_rank": 62,
+      "down_historical_rank": 524,
       "universe_verified": false,
       "calculation_method": "official_market_aggregate"
     },
     "tpex": {
       "market": "tpex",
       "eligible_count": 872,
-      "limit_up_count": 13,
-      "limit_down_count": 9,
+      "limit_up_count": 31,
+      "limit_down_count": 0,
       "intraday_up_touch_count": null,
       "intraday_down_touch_count": null,
-      "limit_up_ratio": 0.014908256880733946,
-      "limit_down_ratio": 0.010321100917431193,
-      "limit_breadth": 0.0045871559633027525,
-      "strength_ratio": 1.4,
-      "up_percentile_1y": 54.36507936507937,
-      "down_percentile_1y": 96.42857142857143,
-      "up_percentile_5y": 58.96825396825397,
-      "down_percentile_5y": 95.39682539682539,
-      "up_percentile_full": 60.859188544152744,
-      "down_percentile_full": 95.88305489260144,
-      "up_historical_rank": 657,
-      "down_historical_rank": 70,
+      "limit_up_ratio": 0.03555045871559633,
+      "limit_down_ratio": 0.0,
+      "limit_breadth": 0.03555045871559633,
+      "strength_ratio": 32.0,
+      "up_percentile_1y": 92.85714285714286,
+      "down_percentile_1y": 20.238095238095237,
+      "up_percentile_5y": 95.87301587301587,
+      "down_percentile_5y": 17.38095238095238,
+      "up_percentile_full": 96.83959451401311,
+      "down_percentile_full": 16.308884913536076,
+      "up_historical_rank": 54,
+      "down_historical_rank": 1131,
       "universe_verified": false,
       "calculation_method": "official_market_highlight"
     },
     "combined": {
       "market": "combined",
-      "eligible_count": 1948,
-      "limit_up_count": 22,
-      "limit_down_count": 11,
+      "eligible_count": 1953,
+      "limit_up_count": 63,
+      "limit_down_count": 2,
       "intraday_up_touch_count": null,
       "intraday_down_touch_count": null,
-      "limit_up_ratio": 0.011293634496919919,
-      "limit_down_ratio": 0.005646817248459959,
-      "limit_breadth": 0.005646817248459959,
-      "strength_ratio": 1.9166666666666667,
-      "up_percentile_1y": 36.507936507936506,
-      "down_percentile_1y": 92.06349206349206,
-      "up_percentile_5y": 51.34920634920635,
-      "down_percentile_5y": 91.98412698412699,
-      "up_percentile_full": 55.78758949880668,
-      "down_percentile_full": 93.07875894988067,
-      "up_historical_rank": 742,
-      "down_historical_rank": 117,
+      "limit_up_ratio": 0.03225806451612903,
+      "limit_down_ratio": 0.0010240655401945725,
+      "limit_breadth": 0.03123399897593446,
+      "strength_ratio": 21.333333333333332,
+      "up_percentile_1y": 91.66666666666667,
+      "down_percentile_1y": 42.857142857142854,
+      "up_percentile_5y": 96.98412698412699,
+      "down_percentile_5y": 39.84126984126984,
+      "up_percentile_full": 97.7340488968396,
+      "down_percentile_full": 38.938580799045916,
+      "up_historical_rank": 39,
+      "down_historical_rank": 1025,
       "universe_verified": false,
       "calculation_method": "combined_mixed_scope"
     }
@@ -5289,484 +5295,484 @@
   "historical_limit_analogs": [
     {
       "market": "twse",
-      "trade_date": "2023-06-12",
-      "limit_up_count": 8,
+      "trade_date": "2020-03-27",
+      "limit_up_count": 28,
       "limit_down_count": 2,
-      "limit_up_ratio": 0.008247422680412371,
-      "limit_down_ratio": 0.002061855670103093,
-      "distance": 0.00032,
-      "return_1d": 0.01540691828016727,
-      "return_5d": 0.01882530431361884,
-      "return_10d": -0.001164232924436237,
-      "return_20d": 0.006253476037385353
-    },
-    {
-      "market": "twse",
-      "trade_date": "2022-07-20",
-      "limit_up_count": 8,
-      "limit_down_count": 2,
-      "limit_up_ratio": 0.008438818565400843,
-      "limit_down_ratio": 0.002109704641350211,
-      "distance": 0.000325,
-      "return_1d": 0.013878839791980457,
-      "return_5d": 0.010770218594441605,
-      "return_10d": -0.0021054460599921887,
-      "return_20d": 0.04585284140194745
-    },
-    {
-      "market": "twse",
-      "trade_date": "2023-09-12",
-      "limit_up_count": 8,
-      "limit_down_count": 2,
-      "limit_up_ratio": 0.008238928939237899,
-      "limit_down_ratio": 0.0020597322348094747,
-      "distance": 0.000326,
-      "return_1d": 0.0005309934223189927,
-      "return_5d": 0.0038382376811034735,
-      "return_10d": -0.01789930554507979,
-      "return_20d": 0.004798853054208019
-    },
-    {
-      "market": "twse",
-      "trade_date": "2020-09-24",
-      "limit_up_count": 8,
-      "limit_down_count": 2,
-      "limit_up_ratio": 0.008547008547008548,
-      "limit_down_ratio": 0.002136752136752137,
-      "distance": 0.000461,
-      "return_1d": -0.0025659674602384053,
-      "return_5d": 0.035864022478103275,
-      "return_10d": 0.05340098724925357,
-      "return_20d": 0.04316320922867689
-    },
-    {
-      "market": "twse",
-      "trade_date": "2022-07-04",
-      "limit_up_count": 8,
-      "limit_down_count": 2,
-      "limit_up_ratio": 0.008547008547008548,
-      "limit_down_ratio": 0.002136752136752137,
-      "distance": 0.000461,
-      "return_1d": 0.009294467351196545,
-      "return_5d": 0.007569778843164565,
-      "return_10d": 0.05068839830457228,
-      "return_20d": 0.05760544022463154
-    },
-    {
-      "market": "twse",
-      "trade_date": "2020-10-26",
-      "limit_up_count": 8,
-      "limit_down_count": 2,
-      "limit_up_ratio": 0.008583690987124463,
+      "limit_up_ratio": 0.030042918454935622,
       "limit_down_ratio": 0.002145922746781116,
-      "distance": 0.000507,
-      "return_1d": -0.002635364547142638,
-      "return_5d": -0.013403020986084924,
-      "return_10d": 0.013377457485186595,
-      "return_20d": 0.06957145502024531
+      "distance": 0.000736,
+      "return_1d": -0.00716471524664597,
+      "return_5d": 0.03067042516073948,
+      "return_10d": 0.06537016492557934,
+      "return_20d": 0.0945610439100435
     },
     {
       "market": "twse",
-      "trade_date": "2020-05-14",
-      "limit_up_count": 8,
-      "limit_down_count": 2,
-      "limit_up_ratio": 0.008629989212513484,
-      "limit_down_ratio": 0.002157497303128371,
-      "distance": 0.000564,
-      "return_1d": 0.0031574416930715277,
-      "return_5d": 0.021095680501035163,
-      "return_10d": 0.015148114068610496,
-      "return_20d": 0.06020473282329464
-    },
-    {
-      "market": "twse",
-      "trade_date": "2024-11-21",
-      "limit_up_count": 8,
-      "limit_down_count": 2,
-      "limit_up_ratio": 0.007858546168958742,
-      "limit_down_ratio": 0.0019646365422396855,
-      "distance": 0.000612,
-      "return_1d": 0.015457760934505904,
-      "return_5d": 0.028268292747807067,
-      "return_10d": 0.016696031062713335,
-      "return_20d": -0.013899837114054736
-    },
-    {
-      "market": "twse",
-      "trade_date": "2017-07-20",
-      "limit_up_count": 7,
-      "limit_down_count": 2,
-      "limit_up_ratio": 0.008149010477299184,
-      "limit_down_ratio": 0.002328288707799767,
-      "distance": 0.000685,
-      "return_1d": -0.005967982810380801,
-      "return_5d": 0.0008581475442313025,
-      "return_10d": -0.002807790189116366,
-      "return_20d": -0.016956271620365504
-    },
-    {
-      "market": "twse",
-      "trade_date": "2016-08-04",
-      "limit_up_count": 7,
+      "trade_date": "2018-02-21",
+      "limit_up_count": 27,
       "limit_down_count": 1,
-      "limit_up_ratio": 0.00823529411764706,
-      "limit_down_ratio": 0.001176470588235294,
-      "distance": 0.000811,
-      "return_1d": 0.00746949209448311,
-      "return_5d": 0.011869633484067776,
-      "return_10d": 0.010835805250251962,
-      "return_20d": -0.002610610202433028
+      "limit_up_ratio": 0.029801324503311258,
+      "limit_down_ratio": 0.0011037527593818985,
+      "distance": 0.000945,
+      "return_1d": -0.0048588633657009606,
+      "return_5d": 0.0066592374403142696,
+      "return_10d": 0.014035264558856841,
+      "return_20d": 0.011723431182590893
+    },
+    {
+      "market": "twse",
+      "trade_date": "2026-09-21",
+      "limit_up_count": 32,
+      "limit_down_count": 1,
+      "limit_up_ratio": 0.029712163416898793,
+      "limit_down_ratio": 0.0009285051067780873,
+      "distance": 0.001032,
+      "return_1d": 0.0017043582786171463,
+      "return_5d": 0.0046373717382903745,
+      "return_10d": 0.043746453182851974,
+      "return_20d": -0.035151944179699135
+    },
+    {
+      "market": "twse",
+      "trade_date": "2018-06-11",
+      "limit_up_count": 26,
+      "limit_down_count": 1,
+      "limit_up_ratio": 0.028824833702882482,
+      "limit_down_ratio": 0.0011086474501108647,
+      "distance": 0.001519,
+      "return_1d": -0.00039823377937298066,
+      "return_5d": -0.02197819939134804,
+      "return_10d": -0.03651014464676028,
+      "return_20d": -0.042369742125689336
+    },
+    {
+      "market": "twse",
+      "trade_date": "2026-03-25",
+      "limit_up_count": 32,
+      "limit_down_count": 1,
+      "limit_up_ratio": 0.030245746691871456,
+      "limit_down_ratio": 0.000945179584120983,
+      "distance": 0.001548,
+      "return_1d": -0.05132074388343466,
+      "return_5d": 0.12784550784993987,
+      "return_10d": 0.23026151114667814,
+      "return_20d": 0.3049521951989751
+    },
+    {
+      "market": "twse",
+      "trade_date": "2020-11-30",
+      "limit_up_count": 28,
+      "limit_down_count": 3,
+      "limit_up_ratio": 0.029882604055496264,
+      "limit_down_ratio": 0.0032017075773745998,
+      "distance": 0.001632,
+      "return_1d": 0.01186193287274051,
+      "return_5d": 0.03889195351707997,
+      "return_10d": 0.02518638566657616,
+      "return_20d": 0.05459199920716418
+    },
+    {
+      "market": "twse",
+      "trade_date": "2024-07-04",
+      "limit_up_count": 29,
+      "limit_down_count": 0,
+      "limit_up_ratio": 0.02959183673469388,
+      "limit_down_ratio": 0.0,
+      "distance": 0.001861,
+      "return_1d": 0.0014479734960484159,
+      "return_5d": 0.020181502584968536,
+      "return_10d": -0.059658548634011765,
+      "return_20d": -0.0733747602830137
+    },
+    {
+      "market": "twse",
+      "trade_date": "2026-09-30",
+      "limit_up_count": 32,
+      "limit_down_count": 0,
+      "limit_up_ratio": 0.02962962962962963,
+      "limit_down_ratio": 0.0,
+      "distance": 0.001878,
+      "return_1d": 0.008622421340951814,
+      "return_5d": 0.03892855526257444,
+      "return_10d": -0.020238993928468618,
+      "return_20d": null
+    },
+    {
+      "market": "twse",
+      "trade_date": "2026-09-18",
+      "limit_up_count": 32,
+      "limit_down_count": 0,
+      "limit_up_ratio": 0.029712163416898793,
+      "limit_down_ratio": 0.0,
+      "distance": 0.00196,
+      "return_1d": 0.011404863212221006,
+      "return_5d": 0.009563434239599822,
+      "return_10d": 0.055993175182675214,
+      "return_20d": -0.0062097359622304005
+    },
+    {
+      "market": "twse",
+      "trade_date": "2018-12-03",
+      "limit_up_count": 27,
+      "limit_down_count": 0,
+      "limit_up_ratio": 0.02973568281938326,
+      "limit_down_ratio": 0.0,
+      "distance": 0.001984,
+      "return_1d": -0.005359113896706069,
+      "return_5d": -0.04836617553785949,
+      "return_10d": -0.04133511279982882,
+      "return_20d": 0.17187535448767832
     },
     {
       "market": "tpex",
-      "trade_date": "2020-08-19",
-      "limit_up_count": 12,
-      "limit_down_count": 8,
-      "limit_up_ratio": 0.015727391874180863,
-      "limit_down_ratio": 0.010484927916120577,
-      "distance": 0.000983,
-      "return_1d": -0.03255432502989364,
-      "return_5d": 0.004276667939624446,
-      "return_10d": -0.006193147314581204,
-      "return_20d": 0.015503997295486904
+      "trade_date": "2020-09-02",
+      "limit_up_count": 27,
+      "limit_down_count": 0,
+      "limit_up_ratio": 0.03571428571428571,
+      "limit_down_ratio": 0.0,
+      "distance": 0.000164,
+      "return_1d": 0.004604118272372837,
+      "return_5d": -0.0071593369817709585,
+      "return_10d": 0.021832355604551434,
+      "return_20d": -0.014480097641639378
     },
     {
       "market": "tpex",
-      "trade_date": "2020-10-12",
-      "limit_up_count": 11,
-      "limit_down_count": 7,
-      "limit_up_ratio": 0.014705882352941176,
-      "limit_down_ratio": 0.009358288770053475,
-      "distance": 0.001165,
-      "return_1d": -0.000677683003355245,
-      "return_5d": -0.003671683424784522,
-      "return_10d": -0.0036184258766848165,
-      "return_20d": 0.009710626270173162
+      "trade_date": "2024-01-31",
+      "limit_up_count": 28,
+      "limit_down_count": 0,
+      "limit_up_ratio": 0.03513174404015056,
+      "limit_down_ratio": 0.0,
+      "distance": 0.000419,
+      "return_1d": 0.004390829064549351,
+      "return_5d": 0.04011781172929907,
+      "return_10d": 0.055877841601470246,
+      "return_20d": 0.11125427344216376
     },
     {
       "market": "tpex",
-      "trade_date": "2023-07-18",
-      "limit_up_count": 12,
-      "limit_down_count": 7,
-      "limit_up_ratio": 0.014962593516209476,
-      "limit_down_ratio": 0.008728179551122194,
-      "distance": 0.001647,
-      "return_1d": -0.006470314739280725,
-      "return_5d": -0.0016844759462988357,
-      "return_10d": -0.0008730020066276545,
-      "return_20d": -0.041284752474327946
+      "trade_date": "2022-05-23",
+      "limit_up_count": 27,
+      "limit_down_count": 0,
+      "limit_up_ratio": 0.03483870967741935,
+      "limit_down_ratio": 0.0,
+      "distance": 0.000712,
+      "return_1d": -0.011932106204286752,
+      "return_5d": 0.0281132999224456,
+      "return_10d": 0.031820187776863795,
+      "return_20d": -0.052801952909093064
     },
     {
       "market": "tpex",
-      "trade_date": "2024-11-11",
-      "limit_up_count": 11,
-      "limit_down_count": 9,
-      "limit_up_ratio": 0.013365735115431349,
-      "limit_down_ratio": 0.010935601458080195,
-      "distance": 0.002157,
-      "return_1d": -0.023284249142783264,
-      "return_5d": -0.0413937484806397,
-      "return_10d": -0.014295586332812582,
-      "return_20d": -0.012014633458055535
+      "trade_date": "2026-08-27",
+      "limit_up_count": 30,
+      "limit_down_count": 0,
+      "limit_up_ratio": 0.03456221198156682,
+      "limit_down_ratio": 0.0,
+      "distance": 0.000988,
+      "return_1d": 0.007748304412681373,
+      "return_5d": -0.0025570296346596466,
+      "return_10d": 0.020995440587342484,
+      "return_20d": 0.04457575189417251
     },
     {
       "market": "tpex",
-      "trade_date": "2018-06-28",
-      "limit_up_count": 12,
-      "limit_down_count": 7,
-      "limit_up_ratio": 0.016282225237449117,
-      "limit_down_ratio": 0.009497964721845319,
-      "distance": 0.002197,
-      "return_1d": 0.017141468029749474,
-      "return_5d": -0.0042902946046097235,
-      "return_10d": 0.01973479202724171,
-      "return_20d": 0.03956156586836457
+      "trade_date": "2020-04-27",
+      "limit_up_count": 27,
+      "limit_down_count": 1,
+      "limit_up_ratio": 0.03557312252964427,
+      "limit_down_ratio": 0.0013175230566534915,
+      "distance": 0.00134,
+      "return_1d": 0.004617086532282988,
+      "return_5d": 0.01965597547900244,
+      "return_10d": 0.035108405482210614,
+      "return_20d": 0.04233733026600062
     },
     {
       "market": "tpex",
-      "trade_date": "2026-08-11",
-      "limit_up_count": 14,
-      "limit_down_count": 8,
-      "limit_up_ratio": 0.016018306636155607,
-      "limit_down_ratio": 0.009153318077803204,
-      "distance": 0.002278,
-      "return_1d": 0.019963333918430415,
-      "return_5d": -0.00889546975314226,
-      "return_10d": 0.01577767376052508,
-      "return_20d": 0.045713809531408245
+      "trade_date": "2018-02-21",
+      "limit_up_count": 25,
+      "limit_down_count": 0,
+      "limit_up_ratio": 0.034106412005457026,
+      "limit_down_ratio": 0.0,
+      "distance": 0.001444,
+      "return_1d": -0.0048588633657009606,
+      "return_5d": 0.0066592374403142696,
+      "return_10d": 0.014035264558856841,
+      "return_20d": 0.011723431182590893
     },
     {
       "market": "tpex",
-      "trade_date": "2024-09-10",
-      "limit_up_count": 13,
-      "limit_down_count": 7,
-      "limit_up_ratio": 0.015931372549019607,
-      "limit_down_ratio": 0.00857843137254902,
-      "distance": 0.002766,
-      "return_1d": -0.0015704459914699376,
-      "return_5d": 0.029185229072430374,
-      "return_10d": 0.08058837604110858,
-      "return_20d": 0.11503896680984882
+      "trade_date": "2018-02-26",
+      "limit_up_count": 25,
+      "limit_down_count": 0,
+      "limit_up_ratio": 0.034106412005457026,
+      "limit_down_ratio": 0.0,
+      "distance": 0.001444,
+      "return_1d": -0.001959083484824875,
+      "return_5d": -0.004831729216458913,
+      "return_10d": 0.016771710945213902,
+      "return_20d": 0.0008508125167254743
     },
     {
       "market": "tpex",
-      "trade_date": "2023-07-31",
-      "limit_up_count": 11,
-      "limit_down_count": 7,
-      "limit_up_ratio": 0.013681592039800995,
-      "limit_down_ratio": 0.008706467661691543,
-      "distance": 0.002841,
-      "return_1d": 0.003933409660766607,
-      "return_5d": -0.016009513905454797,
-      "return_10d": -0.04074846766747764,
-      "return_20d": -0.020748386013065945
+      "trade_date": "2018-02-23",
+      "limit_up_count": 25,
+      "limit_down_count": 0,
+      "limit_up_ratio": 0.0340599455040872,
+      "limit_down_ratio": 0.0,
+      "distance": 0.001491,
+      "return_1d": 0.0039047482294307656,
+      "return_5d": -0.014048756085246694,
+      "return_10d": 0.02262715907564461,
+      "return_20d": 0.006587583549105824
     },
     {
       "market": "tpex",
-      "trade_date": "2024-03-13",
-      "limit_up_count": 10,
-      "limit_down_count": 8,
-      "limit_up_ratio": 0.012422360248447204,
-      "limit_down_ratio": 0.009937888198757764,
-      "distance": 0.002869,
-      "return_1d": 0.00047218783541769227,
-      "return_5d": -0.007228839486745242,
-      "return_10d": 0.01362921763844871,
-      "return_20d": 0.0101979525815028
+      "trade_date": "2023-03-22",
+      "limit_up_count": 27,
+      "limit_down_count": 0,
+      "limit_up_ratio": 0.034047919293820936,
+      "limit_down_ratio": 0.0,
+      "distance": 0.001503,
+      "return_1d": 0.006566432705644498,
+      "return_5d": 0.0005900842995700817,
+      "return_10d": 0.009734487445163476,
+      "return_20d": -0.02472833914746142
     },
     {
       "market": "tpex",
-      "trade_date": "2023-07-11",
-      "limit_up_count": 13,
-      "limit_down_count": 7,
-      "limit_up_ratio": 0.016209476309226933,
-      "limit_down_ratio": 0.008728179551122194,
-      "distance": 0.002894,
-      "return_1d": 0.0037351521488664385,
-      "return_5d": 0.0194687112955807,
-      "return_10d": 0.017751440773398963,
-      "return_20d": -0.01563473620487943
+      "trade_date": "2018-03-06",
+      "limit_up_count": 27,
+      "limit_down_count": 0,
+      "limit_up_ratio": 0.03708791208791209,
+      "limit_down_ratio": 0.0,
+      "distance": 0.001537,
+      "return_1d": -0.003618209366544445,
+      "return_5d": 0.021708328928798704,
+      "return_10d": 0.020539040868518654,
+      "return_20d": 0.01758846623900956
     },
     {
       "market": "combined",
-      "trade_date": "2022-05-11",
-      "limit_up_count": 20,
-      "limit_down_count": 10,
-      "limit_up_ratio": 0.011594202898550725,
-      "limit_down_ratio": 0.005797101449275362,
-      "distance": 0.000451,
-      "return_1d": -0.024338617727450162,
-      "return_5d": 0.018156032799687694,
-      "return_10d": 0.0061088637251074385,
-      "return_20d": 0.028355798516204622
+      "trade_date": "2026-05-22",
+      "limit_up_count": 64,
+      "limit_down_count": 2,
+      "limit_up_ratio": 0.03278688524590164,
+      "limit_down_ratio": 0.0010245901639344263,
+      "distance": 0.000529,
+      "return_1d": 0.032564374395079865,
+      "return_5d": 0.09915758906803429,
+      "return_10d": 0.07402815891087267,
+      "return_20d": 0.08201103577957491
     },
     {
       "market": "combined",
-      "trade_date": "2026-03-10",
-      "limit_up_count": 22,
-      "limit_down_count": 12,
-      "limit_up_ratio": 0.011393060590367685,
-      "limit_down_ratio": 0.006214396685655101,
-      "distance": 0.000667,
-      "return_1d": 0.04095951802567255,
-      "return_5d": -0.03200549739761571,
-      "return_10d": 0.19930599016778716,
-      "return_20d": 0.22119427423580018
+      "trade_date": "2020-03-26",
+      "limit_up_count": 55,
+      "limit_down_count": 1,
+      "limit_up_ratio": 0.03271861986912552,
+      "limit_down_ratio": 0.000594883997620464,
+      "distance": 0.00089,
+      "return_1d": -0.003845379587443354,
+      "return_5d": 0.00846106758583276,
+      "return_10d": 0.03726854799945767,
+      "return_20d": 0.08534092823190598
     },
     {
       "market": "combined",
-      "trade_date": "2018-07-04",
-      "limit_up_count": 19,
-      "limit_down_count": 10,
-      "limit_up_ratio": 0.01173563928350834,
-      "limit_down_ratio": 0.006176652254478073,
-      "distance": 0.000972,
-      "return_1d": -0.010567186507577597,
-      "return_5d": 0.0015398433295683578,
-      "return_10d": 0.010586772643204734,
-      "return_20d": 0.01939027427118578
+      "trade_date": "2020-07-02",
+      "limit_up_count": 55,
+      "limit_down_count": 1,
+      "limit_up_ratio": 0.03273809523809524,
+      "limit_down_ratio": 0.0005952380952380953,
+      "distance": 0.000909,
+      "return_1d": 0.008811416044197662,
+      "return_5d": 0.03282892028387652,
+      "return_10d": 0.02986834548340811,
+      "return_20d": 0.07664288606488356
     },
     {
       "market": "combined",
-      "trade_date": "2023-06-27",
-      "limit_up_count": 19,
-      "limit_down_count": 9,
-      "limit_up_ratio": 0.01080773606370876,
-      "limit_down_ratio": 0.005119453924914676,
-      "distance": 0.001013,
-      "return_1d": 0.0028262839074129076,
-      "return_5d": 0.009979334316285504,
-      "return_10d": 0.004389533334517415,
-      "return_20d": 0.01626312330129842
+      "trade_date": "2018-02-21",
+      "limit_up_count": 52,
+      "limit_down_count": 1,
+      "limit_up_ratio": 0.03172666259914582,
+      "limit_down_ratio": 0.0006101281269066504,
+      "distance": 0.000945,
+      "return_1d": -0.0048588633657009606,
+      "return_5d": 0.0066592374403142696,
+      "return_10d": 0.014035264558856841,
+      "return_20d": 0.011723431182590893
     },
     {
       "market": "combined",
-      "trade_date": "2023-08-04",
-      "limit_up_count": 18,
-      "limit_down_count": 10,
-      "limit_up_ratio": 0.010192525481313703,
-      "limit_down_ratio": 0.0056625141562853904,
-      "distance": 0.001117,
-      "return_1d": 0.009043154465057546,
-      "return_5d": -0.02671743941941429,
-      "return_10d": -0.024108152137775063,
-      "return_20d": -0.013330816068697682
+      "trade_date": "2026-06-09",
+      "limit_up_count": 61,
+      "limit_down_count": 1,
+      "limit_up_ratio": 0.03147574819401445,
+      "limit_down_ratio": 0.0005159958720330237,
+      "distance": 0.00129,
+      "return_1d": -0.0347835695962192,
+      "return_5d": 0.039386691791687634,
+      "return_10d": 0.04562678785373442,
+      "return_20d": -0.06936850120480209
     },
     {
       "market": "combined",
-      "trade_date": "2017-05-08",
-      "limit_up_count": 16,
-      "limit_down_count": 9,
-      "limit_up_ratio": 0.009993753903810118,
-      "limit_down_ratio": 0.005621486570893191,
-      "distance": 0.001325,
-      "return_1d": -0.0021907469370299193,
-      "return_5d": 0.010019874713829147,
-      "return_10d": 0.006038894060228062,
-      "return_20d": 0.02903519585398384
+      "trade_date": "2020-04-14",
+      "limit_up_count": 53,
+      "limit_down_count": 1,
+      "limit_up_ratio": 0.03134240094618569,
+      "limit_down_ratio": 0.0005913660555884093,
+      "distance": 0.001348,
+      "return_1d": 0.011058808044951185,
+      "return_5d": -0.004308551099687086,
+      "return_10d": 0.027399752635745456,
+      "return_20d": 0.043350682380812966
     },
     {
       "market": "combined",
-      "trade_date": "2017-12-08",
-      "limit_up_count": 17,
-      "limit_down_count": 8,
-      "limit_up_ratio": 0.010578718108276292,
-      "limit_down_ratio": 0.004978220286247666,
-      "distance": 0.001384,
-      "return_1d": 0.007161527202647955,
-      "return_5d": 0.008926184436011564,
-      "return_10d": 0.013333500022118194,
-      "return_20d": 0.04964793405278756
+      "trade_date": "2026-09-21",
+      "limit_up_count": 66,
+      "limit_down_count": 2,
+      "limit_up_ratio": 0.03381147540983607,
+      "limit_down_ratio": 0.0010245901639344263,
+      "distance": 0.001554,
+      "return_1d": 0.0017043582786171463,
+      "return_5d": 0.0046373717382903745,
+      "return_10d": 0.043746453182851974,
+      "return_20d": -0.035151944179699135
     },
     {
       "market": "combined",
-      "trade_date": "2026-06-23",
-      "limit_up_count": 20,
-      "limit_down_count": 10,
-      "limit_up_ratio": 0.010319917440660475,
-      "limit_down_ratio": 0.005159958720330237,
-      "distance": 0.001461,
-      "return_1d": -0.017948584573673654,
-      "return_5d": -0.011555254545319471,
-      "return_10d": -0.09404074041441046,
-      "return_20d": -0.05284534289866494
+      "trade_date": "2026-06-03",
+      "limit_up_count": 61,
+      "limit_down_count": 1,
+      "limit_up_ratio": 0.03115423901940756,
+      "limit_down_ratio": 0.0005107252298263534,
+      "distance": 0.001617,
+      "return_1d": -0.016825530207606132,
+      "return_5d": -0.022862445209943627,
+      "return_10d": -0.004388800830665063,
+      "return_20d": -0.04791929083521962
     },
     {
       "market": "combined",
-      "trade_date": "2020-02-06",
-      "limit_up_count": 21,
-      "limit_down_count": 9,
-      "limit_up_ratio": 0.012470308788598575,
-      "limit_down_ratio": 0.005344418052256532,
-      "distance": 0.001479,
-      "return_1d": -0.011648827882972168,
-      "return_5d": 0.0035830763050568315,
-      "return_10d": -0.0020928229534762366,
-      "return_20d": -0.06570732139088054
+      "trade_date": "2020-09-23",
+      "limit_up_count": 52,
+      "limit_down_count": 2,
+      "limit_up_ratio": 0.03078744819419775,
+      "limit_down_ratio": 0.0011841326228537595,
+      "distance": 0.001631,
+      "return_1d": -0.025389625457331144,
+      "return_5d": -0.00542519477299519,
+      "return_10d": 0.02886629560993903,
+      "return_20d": 0.02313515386351428
     },
     {
       "market": "combined",
-      "trade_date": "2023-07-31",
-      "limit_up_count": 21,
-      "limit_down_count": 12,
-      "limit_up_ratio": 0.011857707509881422,
-      "limit_down_ratio": 0.006775832862789385,
-      "distance": 0.001693,
-      "return_1d": 0.003933409660766607,
-      "return_5d": -0.016009513905454797,
-      "return_10d": -0.04074846766747764,
-      "return_20d": -0.020748386013065945
+      "trade_date": "2020-06-18",
+      "limit_up_count": 52,
+      "limit_down_count": 2,
+      "limit_up_ratio": 0.03071470761961016,
+      "limit_down_ratio": 0.0011813349084465446,
+      "distance": 0.001701,
+      "return_1d": 0.002130178129651661,
+      "return_5d": 0.013429647403564005,
+      "return_10d": 0.05384847852460051,
+      "return_20d": 0.06543889895768484
     }
   ],
   "post_analog_returns": {
     "twse": {
       "1d": {
         "sample_count": 10,
-        "average": 0.005402659874996196,
-        "median": 0.005313466893777319,
-        "positive_rate": 0.7,
-        "worst": -0.005967982810380801
+        "average": -0.003406012097128175,
+        "median": 0.0005248698583377176,
+        "positive_rate": 0.5,
+        "worst": -0.05132074388343466
       },
       "5d": {
         "sample_count": 10,
-        "average": 0.012555629520148815,
-        "median": 0.01131992603925469,
-        "positive_rate": 0.9,
-        "worst": -0.013403020986084924
+        "average": 0.02070336128642992,
+        "median": 0.014872468412284179,
+        "positive_rate": 0.8,
+        "worst": -0.04836617553785949
       },
       "10d": {
         "sample_count": 10,
-        "average": 0.013617001870196366,
-        "median": 0.012106631367719278,
+        "average": 0.027685015465414818,
+        "median": 0.0196108251127165,
         "positive_rate": 0.6,
-        "worst": -0.01789930554507979
+        "worst": -0.059658548634011765
       },
       "20d": {
-        "sample_count": 10,
-        "average": 0.025398328885353594,
-        "median": 0.024708342633031122,
-        "positive_rate": 0.7,
-        "worst": -0.016956271620365504
+        "sample_count": 9,
+        "average": 0.053399760159535486,
+        "median": 0.011723431182590893,
+        "positive_rate": 0.5555555555555556,
+        "worst": -0.0733747602830137
       }
     },
     "tpex": {
       "1d": {
         "sample_count": 10,
-        "average": -0.0019311466313552184,
-        "median": -0.00010274758396877637,
-        "positive_rate": 0.5,
-        "worst": -0.03255432502989364
+        "average": 0.000946325679560478,
+        "median": 0.004147788646990058,
+        "positive_rate": 0.6,
+        "worst": -0.011932106204286752
       },
       "5d": {
         "sample_count": 10,
-        "average": -0.0030243417294039563,
-        "median": -0.003980989014697123,
-        "positive_rate": 0.3,
-        "worst": -0.0413937484806397
+        "average": 0.008824788588129396,
+        "median": 0.0036246608699421756,
+        "positive_rate": 0.6,
+        "worst": -0.014048756085246694
       },
       "10d": {
         "sample_count": 10,
-        "average": 0.008175287104253914,
-        "median": 0.0063781078159105276,
-        "positive_rate": 0.5,
-        "worst": -0.04074846766747764
+        "average": 0.024934189394583604,
+        "median": 0.02141389809594696,
+        "positive_rate": 1.0,
+        "worst": 0.009734487445163476
       },
       "20d": {
         "sample_count": 10,
-        "average": 0.014604441020645564,
-        "median": 0.009954289425837981,
-        "positive_rate": 0.6,
-        "worst": -0.041284752474327946
+        "average": 0.014290725939157478,
+        "median": 0.009155507365848359,
+        "positive_rate": 0.7,
+        "worst": -0.052801952909093064
       }
     },
     "combined": {
       "1d": {
         "sample_count": 10,
-        "average": -0.00027700703671459383,
-        "median": 0.00031776848519149414,
+        "average": -0.002943383332180327,
+        "median": -0.0010705106544131038,
         "positive_rate": 0.5,
-        "worst": -0.024338617727450162
+        "worst": -0.0347835695962192
       },
       "5d": {
         "sample_count": 10,
-        "average": -0.0034083359367365175,
-        "median": 0.0025614598173125946,
-        "positive_rate": 0.6,
-        "worst": -0.03200549739761571
+        "average": 0.017196433422897395,
+        "median": 0.007560152513073515,
+        "positive_rate": 0.7,
+        "worst": -0.022862445209943627
       },
       "10d": {
         "sample_count": 10,
-        "average": 0.00787733707798236,
-        "median": 0.005214213697372738,
-        "positive_rate": 0.6,
-        "worst": -0.09404074041441046
+        "average": 0.03502992839288016,
+        "median": 0.03356844674143289,
+        "positive_rate": 0.9,
+        "worst": -0.004388800830665063
       },
       "20d": {
         "sample_count": 10,
-        "average": 0.02112547338599513,
-        "median": 0.0178266987862421,
-        "positive_rate": 0.6,
-        "worst": -0.06570732139088054
+        "average": 0.02352032802412466,
+        "median": 0.03324291812216362,
+        "positive_rate": 0.7,
+        "worst": -0.06936850120480209
       }
     }
   },
@@ -5774,506 +5780,237 @@
     "calls": [
       {
         "side": "call",
-        "strike": 46200.0,
-        "open_interest": 3502.0,
-        "weight": 3502.0
+        "strike": 47000.0,
+        "open_interest": 6050.0,
+        "weight": 6050.0
       },
       {
         "side": "call",
-        "strike": 46000.0,
-        "open_interest": 3351.0,
-        "weight": 3351.0
+        "strike": 47200.0,
+        "open_interest": 2608.0,
+        "weight": 2608.0
       },
       {
         "side": "call",
-        "strike": 46300.0,
-        "open_interest": 2806.0,
-        "weight": 2806.0
+        "strike": 46950.0,
+        "open_interest": 2484.0,
+        "weight": 2484.0
       }
     ],
     "puts": [
       {
         "side": "put",
-        "strike": 45900.0,
-        "open_interest": 3208.0,
-        "weight": 3208.0
+        "strike": 46800.0,
+        "open_interest": 4013.0,
+        "weight": 4013.0
       },
       {
         "side": "put",
-        "strike": 46000.0,
-        "open_interest": 3072.0,
-        "weight": 3072.0
+        "strike": 46850.0,
+        "open_interest": 2634.0,
+        "weight": 2634.0
       },
       {
         "side": "put",
-        "strike": 46100.0,
-        "open_interest": 2781.0,
-        "weight": 2781.0
+        "strike": 46900.0,
+        "open_interest": 2541.0,
+        "weight": 2541.0
       }
     ],
-    "max_pain": 46050.0,
+    "max_pain": 46900.0,
     "status": "ready",
-    "pressure_balance": -0.03194444444444444
+    "pressure_balance": -0.09611411706837186
   },
   "positive_drivers": [
-    "投信買賣超占成交值（+49.0）",
-    "融資餘額日變化（免費官方代理）（+46.0）",
-    "融資與指數單日背離（免費官方代理）（+46.0）"
+    "投信買賣超占成交值（+45.7）",
+    "櫃買指數單日趨勢（免費官方代理）（+44.4）",
+    "加權指數單日趨勢（免費官方代理）（+42.2）"
   ],
   "negative_drivers": [
-    "借券餘額日變化（非借券賣出）（-46.0）",
-    "距52週高點（-43.3）",
-    "Put/Call情緒（-41.2）"
+    "融資金額／成交值壓力（免費官方代理）（-39.4）",
+    "距52週高點（-33.1）",
+    "融資餘額日變化（免費官方代理）（-31.5）"
   ],
-  "reversal_stage": "初步轉折",
+  "reversal_stage": "觀察",
   "reversal_reasons": [
     "收盤跌破20日線",
-    "收盤跌破60日線",
+    "收盤站上60日線",
     "收盤跌破20日線",
     "收盤跌破60日線"
   ],
   "data_freshness": {
-    "TWSE收盤行情": "20261027",
-    "TWSE加權指數開高低收": "20261027",
-    "TPEx市場現況": "20261027",
-    "TPEx櫃買指數歷史": "20261027",
-    "TPEx上櫃成交值": "20261027",
-    "TWSE三大法人": "20261027",
-    "TWSE融資融券": "20261027",
-    "TWSE借券餘額": "20261027",
-    "TWSE估值": "20261027",
-    "TAIFEX Put/Call": "2026-10-27",
-    "TAIWAN VIX": "2026-10-27",
-    "TAIFEX台指期行情": "2026-10-27",
-    "TAIFEX市場未平倉量": "2026-10-27",
-    "TAIFEX三大法人期貨": "2026-10-27",
-    "TAIFEX選擇權履約價": "2026-10-27",
-    "Cboe VIX": "2026-10-26",
-    "Yahoo ^SOX": "2026-10-27",
-    "Yahoo ^IXIC": "2026-10-27",
-    "Yahoo TSM": "2026-10-27",
-    "Yahoo TWD=X": "2026-10-27",
-    "Yahoo ^TWII": "2026-10-22"
+    "TWSE收盤行情": "20261028",
+    "TWSE加權指數開高低收": "20261028",
+    "TPEx市場現況": "20261028",
+    "TPEx櫃買指數歷史": "20261028",
+    "TPEx上櫃成交值": "20261028",
+    "TWSE三大法人": "20261028",
+    "TWSE融資融券": "20261028",
+    "TWSE借券餘額": "20261028",
+    "TWSE估值": "20261028",
+    "TAIFEX Put/Call": "2026-10-28",
+    "TAIWAN VIX": "2026-10-28",
+    "TAIFEX台指期行情": "2026-10-28",
+    "TAIFEX市場未平倉量": "2026-10-28",
+    "TAIFEX三大法人期貨": "2026-10-28",
+    "TAIFEX選擇權履約價": "2026-10-28",
+    "Cboe VIX": "2026-10-27",
+    "Yahoo ^SOX": "2026-10-28",
+    "Yahoo ^IXIC": "2026-10-28",
+    "Yahoo TSM": "2026-10-28",
+    "Yahoo TWD=X": "2026-10-28",
+    "Yahoo ^TWII": "2026-10-27"
   },
   "source_status": [
     {
       "name": "TWSE收盤行情",
       "status": "ready",
-      "as_of": "20261027",
+      "as_of": "20261028",
       "message": "",
-      "url": "https://www.twse.com.tw/exchangeReport/MI_INDEX?response=json&type=ALLBUT0999&date=20261027"
+      "url": "https://www.twse.com.tw/exchangeReport/MI_INDEX?response=json&type=ALLBUT0999&date=20261028"
     },
     {
       "name": "TWSE加權指數開高低收",
       "status": "ready",
-      "as_of": "20261027",
+      "as_of": "20261028",
       "message": "",
-      "url": "https://www.twse.com.tw/rwd/zh/TAIEX/MI_5MINS_HIST?date=20261027&response=json"
+      "url": "https://www.twse.com.tw/rwd/zh/TAIEX/MI_5MINS_HIST?date=20261028&response=json"
     },
     {
       "name": "TPEx市場現況",
       "status": "ready",
-      "as_of": "20261027",
+      "as_of": "20261028",
       "message": "",
       "url": "https://www.tpex.org.tw/openapi/v1/tpex_mainborad_highlight"
     },
     {
       "name": "TPEx櫃買指數歷史",
       "status": "ready",
-      "as_of": "20261027",
+      "as_of": "20261028",
       "message": "",
       "url": "https://www.tpex.org.tw/openapi/v1/tpex_index"
     },
     {
       "name": "TPEx上櫃成交值",
       "status": "ready",
-      "as_of": "20261027",
+      "as_of": "20261028",
       "message": "",
       "url": "https://www.tpex.org.tw/openapi/v1/tpex_mainboard_quotes"
     },
     {
       "name": "TWSE三大法人",
       "status": "ready",
-      "as_of": "20261027",
+      "as_of": "20261028",
       "message": "",
-      "url": "https://www.twse.com.tw/fund/BFI82U?response=json&dayDate=20261027&type=day"
+      "url": "https://www.twse.com.tw/fund/BFI82U?response=json&dayDate=20261028&type=day"
     },
     {
       "name": "TWSE融資融券",
       "status": "ready",
-      "as_of": "20261027",
+      "as_of": "20261028",
       "message": "",
-      "url": "https://www.twse.com.tw/exchangeReport/MI_MARGN?response=json&selectType=MS&date=20261027"
+      "url": "https://www.twse.com.tw/exchangeReport/MI_MARGN?response=json&selectType=MS&date=20261028"
     },
     {
       "name": "TWSE借券餘額",
       "status": "ready",
-      "as_of": "20261027",
+      "as_of": "20261028",
       "message": "",
-      "url": "https://www.twse.com.tw/rwd/zh/lending/TWT72U?response=json&date=20261027"
+      "url": "https://www.twse.com.tw/rwd/zh/lending/TWT72U?response=json&date=20261028"
     },
     {
       "name": "TWSE估值",
       "status": "ready",
-      "as_of": "20261027",
+      "as_of": "20261028",
       "message": "",
-      "url": "https://www.twse.com.tw/exchangeReport/BWIBBU_d?response=json&date=20261027&selectType=ALL"
+      "url": "https://www.twse.com.tw/exchangeReport/BWIBBU_d?response=json&date=20261028&selectType=ALL"
     },
     {
       "name": "TAIFEX Put/Call",
       "status": "ready",
-      "as_of": "2026-10-27",
+      "as_of": "2026-10-28",
       "message": "",
       "url": "https://www.taifex.com.tw/cht/3/pcRatio"
     },
     {
       "name": "TAIWAN VIX",
       "status": "ready",
-      "as_of": "2026-10-27",
+      "as_of": "2026-10-28",
       "message": "",
       "url": "https://www.taifex.com.tw/cht/7/vixMinNew"
     },
     {
       "name": "TAIFEX台指期行情",
       "status": "ready",
-      "as_of": "2026-10-27",
+      "as_of": "2026-10-28",
       "message": "",
       "url": "https://www.taifex.com.tw/cht/3/futDailyMarketReport"
     },
     {
       "name": "TAIFEX市場未平倉量",
       "status": "ready",
-      "as_of": "2026-10-27",
+      "as_of": "2026-10-28",
       "message": "",
       "url": "https://www.taifex.com.tw/cht/3/futDailyMarketReport"
     },
     {
       "name": "TAIFEX三大法人期貨",
       "status": "ready",
-      "as_of": "2026-10-27",
+      "as_of": "2026-10-28",
       "message": "",
       "url": "https://www.taifex.com.tw/cht/3/futContractsDate"
     },
     {
       "name": "TAIFEX選擇權履約價",
       "status": "ready",
-      "as_of": "2026-10-27",
+      "as_of": "2026-10-28",
       "message": "",
       "url": "https://www.taifex.com.tw/cht/3/optDailyMarketSummary"
     },
     {
       "name": "Cboe VIX",
       "status": "ready",
-      "as_of": "2026-10-26",
+      "as_of": "2026-10-27",
       "message": "",
       "url": "https://cdn.cboe.com/api/global/us_indices/daily_prices/VIX_History.csv"
     },
     {
       "name": "Yahoo ^SOX",
       "status": "ready",
-      "as_of": "2026-10-27",
+      "as_of": "2026-10-28",
       "message": "",
       "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5ESOX?range=3mo&interval=1d"
     },
     {
       "name": "Yahoo ^IXIC",
       "status": "ready",
-      "as_of": "2026-10-27",
+      "as_of": "2026-10-28",
       "message": "",
       "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5EIXIC?range=3mo&interval=1d"
     },
     {
       "name": "Yahoo TSM",
       "status": "ready",
-      "as_of": "2026-10-27",
+      "as_of": "2026-10-28",
       "message": "",
       "url": "https://query1.finance.yahoo.com/v8/finance/chart/TSM?range=3mo&interval=1d"
     },
     {
       "name": "Yahoo TWD=X",
       "status": "ready",
-      "as_of": "2026-10-27",
+      "as_of": "2026-10-28",
       "message": "",
       "url": "https://query1.finance.yahoo.com/v8/finance/chart/TWD%3DX?range=3mo&interval=1d"
     },
     {
       "name": "Yahoo ^TWII",
-      "status": "stale",
-      "as_of": "2026-10-22",
-      "message": "free end-of-day data is more than one business day old",
+      "status": "ready",
+      "as_of": "2026-10-27",
+      "message": "",
       "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5ETWII?range=3mo&interval=1d"
     }
   ],
   "history": [
-    {
-      "trade_date": "2026-07-28",
-      "report_mode": "close",
-      "limit_scope": "combined",
-      "taiex_close": 41603.36,
-      "limit_up_count": 4,
-      "limit_down_count": 97,
-      "limit_up_ratio": 0.002068252326783868,
-      "limit_down_ratio": 0.05015511892450879,
-      "composite_score": 50.0,
-      "domestic_market_state": "盤整",
-      "reversal_stage": "無",
-      "features": {
-        "taiex_close": 41603.36,
-        "advance_decline_ratio": -0.780373831775701,
-        "tsmc_close": 2280.0,
-        "tsmc_turnover": 103624205064.0,
-        "market_turnover": 870557365445.0,
-        "trust_flow_ratio": 0.001851480392881509,
-        "foreign_flow_ratio": -0.10049265995731455,
-        "dealer_flow_ratio": -0.03644760790207181,
-        "institutional_flow_parser_version": "bfi82u_v2",
-        "margin_balance": 545534811.0,
-        "borrowed_balance": 90727785000.0,
-        "tsmc_pe": 30.65,
-        "tsmc_pb": 10.04,
-        "tsmc_dividend_yield": 0.96,
-        "market_pe_median": 19.55,
-        "market_pb_median": 1.61,
-        "market_dividend_yield_median": 2.63,
-        "tpex_market_turnover": 169378769647.0,
-        "limit_breadth": -0.048086866597724924,
-        "rotation_score": 0.8809679761757794,
-        "taiwan_vix": 1.0,
-        "futures_basis": -30.360000000000582,
-        "tx_price_source": "settlement",
-        "tx_settlement": 41573.0,
-        "futures_basis_pct": -0.0007297487510624282,
-        "foreign_mtx_short_oi": 3753.0,
-        "foreign_tx_long_oi": 7401.0,
-        "foreign_tx_net": -82255.0,
-        "foreign_mtx_long_oi": 653.0,
-        "foreign_mtx_net": -3100.0,
-        "foreign_tmf_short_oi": 5174.0,
-        "foreign_tx_short_oi": 89656.0,
-        "foreign_futures_net": -83234.05,
-        "foreign_tmf_net": -4081.0,
-        "foreign_tmf_long_oi": 1093.0,
-        "tx_market_oi": 110153.0,
-        "mtx_market_oi": 39683.0,
-        "tmf_market_oi": 99948.0,
-        "futures_market_oi": 125071.15,
-        "option_pressure_balance": 0.5163218390804598,
-        "us_vix": 18.67,
-        "us_vix_change_1d": 0.004843918191604013,
-        "us_vix_change_5d": 0.0010723860589814116,
-        "sox_return_1d": -0.022337142150325007,
-        "sox_return_5d": -0.016090952528176716,
-        "sox_return_20d": -0.12486701631956787,
-        "sox_relative_nasdaq": 0.006489753394244291,
-        "usd_twd": 32.363800048828125,
-        "usd_twd_change_5d": 0.001187881391234935,
-        "tsm_adr_close": 399.0899963378906,
-        "tsm_adr_equivalent_twd": 2583.213768593408,
-        "tsm_adr_premium": 0.13298849499710874,
-        "historical_overseas_as_of": {
-          "vix": "2026-07-27",
-          "sox": "2026-07-27",
-          "nasdaq": "2026-07-27",
-          "tsm": "2026-07-27",
-          "usd_twd": "2026-07-28"
-        },
-        "historical_backfill_version": "free_history_v1",
-        "historical_source_coverage": 0.9090909090909091,
-        "core_data_ready": true
-      },
-      "limits": {
-        "twse": {
-          "market": "twse",
-          "eligible_count": 1070,
-          "limit_up_count": 2,
-          "limit_down_count": 55,
-          "intraday_up_touch_count": null,
-          "intraday_down_touch_count": null,
-          "limit_up_ratio": 0.001869158878504673,
-          "limit_down_ratio": 0.0514018691588785,
-          "limit_breadth": -0.04953271028037383,
-          "strength_ratio": 0.05357142857142857,
-          "up_percentile_1y": null,
-          "down_percentile_1y": null,
-          "up_percentile_5y": null,
-          "down_percentile_5y": null,
-          "up_percentile_full": null,
-          "down_percentile_full": null,
-          "up_historical_rank": null,
-          "down_historical_rank": null,
-          "universe_verified": false,
-          "calculation_method": "official_market_aggregate"
-        },
-        "tpex": {
-          "market": "tpex",
-          "eligible_count": 864,
-          "limit_up_count": 2,
-          "limit_down_count": 42,
-          "intraday_up_touch_count": 5,
-          "intraday_down_touch_count": 8,
-          "limit_up_ratio": 0.0023148148148148147,
-          "limit_down_ratio": 0.04861111111111111,
-          "limit_breadth": -0.046296296296296294,
-          "strength_ratio": 0.06976744186046512,
-          "up_percentile_1y": null,
-          "down_percentile_1y": null,
-          "up_percentile_5y": null,
-          "down_percentile_5y": null,
-          "up_percentile_full": null,
-          "down_percentile_full": null,
-          "up_historical_rank": null,
-          "down_historical_rank": null,
-          "universe_verified": true,
-          "calculation_method": "official_previous_day_limit_price_crosscheck"
-        },
-        "combined": {
-          "market": "combined",
-          "eligible_count": 1934,
-          "limit_up_count": 4,
-          "limit_down_count": 97,
-          "intraday_up_touch_count": null,
-          "intraday_down_touch_count": null,
-          "limit_up_ratio": 0.002068252326783868,
-          "limit_down_ratio": 0.05015511892450879,
-          "limit_breadth": -0.048086866597724924,
-          "strength_ratio": 0.05102040816326531,
-          "up_percentile_1y": null,
-          "down_percentile_1y": null,
-          "up_percentile_5y": null,
-          "down_percentile_5y": null,
-          "up_percentile_full": null,
-          "down_percentile_full": null,
-          "up_historical_rank": null,
-          "down_historical_rank": null,
-          "universe_verified": false,
-          "calculation_method": "combined_mixed_scope"
-        }
-      },
-      "options_pressure_zones": {
-        "calls": [
-          {
-            "side": "call",
-            "strike": 42000.0,
-            "open_interest": 531.0,
-            "weight": 531.0
-          },
-          {
-            "side": "call",
-            "strike": 41800.0,
-            "open_interest": 264.0,
-            "weight": 264.0
-          },
-          {
-            "side": "call",
-            "strike": 41800.0,
-            "open_interest": 257.0,
-            "weight": 257.0
-          }
-        ],
-        "puts": [
-          {
-            "side": "put",
-            "strike": 41500.0,
-            "open_interest": 1208.0,
-            "weight": 1208.0
-          },
-          {
-            "side": "put",
-            "strike": 41600.0,
-            "open_interest": 1195.0,
-            "weight": 1195.0
-          },
-          {
-            "side": "put",
-            "strike": 41800.0,
-            "open_interest": 895.0,
-            "weight": 895.0
-          }
-        ],
-        "max_pain": 41800.0,
-        "status": "ready",
-        "pressure_balance": 0.5163218390804598
-      },
-      "source_status": [
-        {
-          "name": "TWSE收盤行情",
-          "status": "ready",
-          "as_of": "20260728",
-          "message": "",
-          "url": "https://www.twse.com.tw/exchangeReport/MI_INDEX?response=json&type=ALLBUT0999&date=20260728"
-        },
-        {
-          "name": "TWSE三大法人",
-          "status": "ready",
-          "as_of": "20260728",
-          "message": "",
-          "url": "https://www.twse.com.tw/fund/BFI82U?response=json&dayDate=20260728&type=day"
-        },
-        {
-          "name": "TWSE融資融券",
-          "status": "ready",
-          "as_of": "20260728",
-          "message": "",
-          "url": "https://www.twse.com.tw/exchangeReport/MI_MARGN?response=json&selectType=MS&date=20260728"
-        },
-        {
-          "name": "TWSE借券餘額",
-          "status": "ready",
-          "as_of": "20260728",
-          "message": "",
-          "url": "https://www.twse.com.tw/rwd/zh/lending/TWT72U?response=json&date=20260728"
-        },
-        {
-          "name": "TWSE估值",
-          "status": "ready",
-          "as_of": "20260728",
-          "message": "",
-          "url": "https://www.twse.com.tw/exchangeReport/BWIBBU_d?response=json&date=20260728&selectType=ALL"
-        },
-        {
-          "name": "TAIFEX Put/Call",
-          "status": "partial",
-          "as_of": "2026-08-10",
-          "message": "最新資料為 2026-08-10，非報告交易日",
-          "url": "https://www.taifex.com.tw/cht/3/pcRatio"
-        },
-        {
-          "name": "TAIWAN VIX",
-          "status": "ready",
-          "as_of": "2026-07-28",
-          "message": "",
-          "url": "https://www.taifex.com.tw/cht/7/vixMinNew"
-        },
-        {
-          "name": "TAIFEX台指期行情",
-          "status": "ready",
-          "as_of": "2026-07-28",
-          "message": "",
-          "url": "https://www.taifex.com.tw/cht/3/futDailyMarketReport"
-        },
-        {
-          "name": "TAIFEX市場未平倉量",
-          "status": "ready",
-          "as_of": "2026-07-28",
-          "message": "",
-          "url": "https://www.taifex.com.tw/cht/3/futDailyMarketReport"
-        },
-        {
-          "name": "TAIFEX三大法人期貨",
-          "status": "ready",
-          "as_of": "2026-07-28",
-          "message": "",
-          "url": "https://www.taifex.com.tw/cht/3/futContractsDate"
-        },
-        {
-          "name": "TAIFEX選擇權履約價",
-          "status": "ready",
-          "as_of": "2026-07-28",
-          "message": "",
-          "url": "https://www.taifex.com.tw/cht/3/optDailyMarketSummary"
-        }
-      ]
-    },
     {
       "trade_date": "2026-07-29",
       "report_mode": "close",
@@ -96150,42 +95887,2471 @@
     },
     {
       "trade_date": "2026-10-27",
+      "report_mode": "close",
+      "taiex_close": 46096.23,
+      "limit_up_count": 22,
+      "limit_down_count": 11,
+      "limit_up_ratio": 0.011293634496919919,
+      "limit_down_ratio": 0.005646817248459959,
       "composite_score": 32.75,
-      "taiex_close": 46096.23
+      "technical_score": 32.0,
+      "technical_state": "轉空",
+      "domestic_market_state": "轉空",
+      "reversal_stage": "初步轉折",
+      "features": {
+        "taiex_close": 46096.23,
+        "advance_decline_ratio": -0.05483271375464684,
+        "tsmc_close": 2400.0,
+        "tsmc_turnover": 91313227194.0,
+        "market_turnover": 1028976483116.0,
+        "taiex_open": 46211.2,
+        "taiex_high": 46585.45,
+        "taiex_low": 45676.67,
+        "otc_close": 379.2,
+        "otc_turnover": 177976316190.0,
+        "otc_open": 383.88,
+        "otc_high": 388.39,
+        "otc_low": 375.73,
+        "otc_history": [
+          {
+            "date": "20251001",
+            "close": 261.47,
+            "open": 261.86,
+            "high": 263.97,
+            "low": 261.38
+          },
+          {
+            "date": "20251002",
+            "close": 262.94,
+            "open": 262.07,
+            "high": 265.25,
+            "low": 262.07
+          },
+          {
+            "date": "20251003",
+            "close": 263.66,
+            "open": 262.75,
+            "high": 264.43,
+            "low": 262.75
+          },
+          {
+            "date": "20251007",
+            "close": 264.85,
+            "open": 264.14,
+            "high": 266.11,
+            "low": 264.14
+          },
+          {
+            "date": "20251008",
+            "close": 265.35,
+            "open": 264.93,
+            "high": 265.53,
+            "low": 263.2
+          },
+          {
+            "date": "20251009",
+            "close": 265.15,
+            "open": 265.64,
+            "high": 267.81,
+            "low": 264.9
+          },
+          {
+            "date": "20251013",
+            "close": 261.36,
+            "open": 263.76,
+            "high": 263.76,
+            "low": 256.1
+          },
+          {
+            "date": "20251014",
+            "close": 255.58,
+            "open": 262.33,
+            "high": 265.64,
+            "low": 255.58
+          },
+          {
+            "date": "20251015",
+            "close": 260.56,
+            "open": 256.26,
+            "high": 260.56,
+            "low": 256.26
+          },
+          {
+            "date": "20251016",
+            "close": 263.52,
+            "open": 261.02,
+            "high": 265.22,
+            "low": 261.02
+          },
+          {
+            "date": "20251017",
+            "close": 261.28,
+            "open": 263.2,
+            "high": 263.2,
+            "low": 261.12
+          },
+          {
+            "date": "20251020",
+            "close": 263.25,
+            "open": 261.6,
+            "high": 264.16,
+            "low": 261.6
+          },
+          {
+            "date": "20251021",
+            "close": 265.85,
+            "open": 263.63,
+            "high": 266.95,
+            "low": 263.63
+          },
+          {
+            "date": "20251022",
+            "close": 264.47,
+            "open": 265.74,
+            "high": 266.26,
+            "low": 264.21
+          },
+          {
+            "date": "20251023",
+            "close": 262.72,
+            "open": 264.16,
+            "high": 264.16,
+            "low": 262.1
+          },
+          {
+            "date": "20251027",
+            "close": 264.71,
+            "open": 263.77,
+            "high": 267.64,
+            "low": 263.77
+          },
+          {
+            "date": "20251028",
+            "close": 264.19,
+            "open": 264.81,
+            "high": 265.83,
+            "low": 263.25
+          },
+          {
+            "date": "20251029",
+            "close": 264.08,
+            "open": 264.41,
+            "high": 266.59,
+            "low": 264.08
+          },
+          {
+            "date": "20251030",
+            "close": 262.02,
+            "open": 264.29,
+            "high": 265.7,
+            "low": 260.36
+          },
+          {
+            "date": "20251031",
+            "close": 264.31,
+            "open": 262.17,
+            "high": 264.77,
+            "low": 262.17
+          },
+          {
+            "date": "20251103",
+            "close": 265.68,
+            "open": 264.48,
+            "high": 266.33,
+            "low": 264.48
+          },
+          {
+            "date": "20251104",
+            "close": 261.0,
+            "open": 265.83,
+            "high": 267.22,
+            "low": 261.0
+          },
+          {
+            "date": "20251105",
+            "close": 259.11,
+            "open": 260.17,
+            "high": 260.17,
+            "low": 254.53
+          },
+          {
+            "date": "20251106",
+            "close": 262.11,
+            "open": 259.83,
+            "high": 262.27,
+            "low": 259.83
+          },
+          {
+            "date": "20251107",
+            "close": 258.86,
+            "open": 261.99,
+            "high": 261.99,
+            "low": 258.07
+          },
+          {
+            "date": "20251110",
+            "close": 257.26,
+            "open": 258.87,
+            "high": 260.07,
+            "low": 255.9
+          },
+          {
+            "date": "20251111",
+            "close": 256.7,
+            "open": 257.54,
+            "high": 259.9,
+            "low": 256.61
+          },
+          {
+            "date": "20251112",
+            "close": 258.82,
+            "open": 257.1,
+            "high": 259.73,
+            "low": 257.1
+          },
+          {
+            "date": "20251113",
+            "close": 260.3,
+            "open": 259.1,
+            "high": 261.08,
+            "low": 258.87
+          },
+          {
+            "date": "20251114",
+            "close": 256.25,
+            "open": 259.78,
+            "high": 259.78,
+            "low": 256.25
+          },
+          {
+            "date": "20251117",
+            "close": 255.96,
+            "open": 256.53,
+            "high": 259.41,
+            "low": 255.93
+          },
+          {
+            "date": "20251118",
+            "close": 250.06,
+            "open": 255.63,
+            "high": 256.25,
+            "low": 249.67
+          },
+          {
+            "date": "20251119",
+            "close": 246.7,
+            "open": 249.7,
+            "high": 250.57,
+            "low": 246.51
+          },
+          {
+            "date": "20251120",
+            "close": 252.95,
+            "open": 247.71,
+            "high": 254.19,
+            "low": 247.71
+          },
+          {
+            "date": "20251121",
+            "close": 245.97,
+            "open": 251.63,
+            "high": 251.63,
+            "low": 244.74
+          },
+          {
+            "date": "20251124",
+            "close": 250.34,
+            "open": 246.81,
+            "high": 250.34,
+            "low": 246.81
+          },
+          {
+            "date": "20251125",
+            "close": 254.4,
+            "open": 251.45,
+            "high": 255.56,
+            "low": 251.45
+          },
+          {
+            "date": "20251126",
+            "close": 256.14,
+            "open": 254.83,
+            "high": 257.77,
+            "low": 254.83
+          },
+          {
+            "date": "20251127",
+            "close": 258.24,
+            "open": 256.57,
+            "high": 258.77,
+            "low": 256.57
+          },
+          {
+            "date": "20251128",
+            "close": 262.28,
+            "open": 258.51,
+            "high": 262.84,
+            "low": 258.51
+          },
+          {
+            "date": "20251201",
+            "close": 259.72,
+            "open": 262.2,
+            "high": 263.25,
+            "low": 259.6
+          },
+          {
+            "date": "20251202",
+            "close": 259.13,
+            "open": 259.81,
+            "high": 261.23,
+            "low": 259.13
+          },
+          {
+            "date": "20251203",
+            "close": 260.55,
+            "open": 259.47,
+            "high": 261.92,
+            "low": 259.47
+          },
+          {
+            "date": "20251204",
+            "close": 259.86,
+            "open": 260.56,
+            "high": 261.75,
+            "low": 259.46
+          },
+          {
+            "date": "20251205",
+            "close": 260.65,
+            "open": 260.09,
+            "high": 261.58,
+            "low": 259.68
+          },
+          {
+            "date": "20251208",
+            "close": 262.37,
+            "open": 261.19,
+            "high": 262.52,
+            "low": 261.13
+          },
+          {
+            "date": "20251209",
+            "close": 264.19,
+            "open": 262.64,
+            "high": 264.19,
+            "low": 262.64
+          },
+          {
+            "date": "20251210",
+            "close": 264.67,
+            "open": 264.48,
+            "high": 265.16,
+            "low": 264.15
+          },
+          {
+            "date": "20251211",
+            "close": 263.98,
+            "open": 265.01,
+            "high": 267.2,
+            "low": 263.98
+          },
+          {
+            "date": "20251212",
+            "close": 265.37,
+            "open": 264.24,
+            "high": 266.64,
+            "low": 264.24
+          },
+          {
+            "date": "20251215",
+            "close": 265.16,
+            "open": 264.89,
+            "high": 265.82,
+            "low": 261.92
+          },
+          {
+            "date": "20251216",
+            "close": 260.24,
+            "open": 265.13,
+            "high": 265.67,
+            "low": 257.95
+          },
+          {
+            "date": "20251217",
+            "close": 261.45,
+            "open": 260.47,
+            "high": 263.49,
+            "low": 260.47
+          },
+          {
+            "date": "20251218",
+            "close": 259.39,
+            "open": 261.3,
+            "high": 261.54,
+            "low": 259.15
+          },
+          {
+            "date": "20251219",
+            "close": 262.64,
+            "open": 259.93,
+            "high": 263.01,
+            "low": 259.93
+          },
+          {
+            "date": "20251222",
+            "close": 266.85,
+            "open": 263.31,
+            "high": 266.85,
+            "low": 263.31
+          },
+          {
+            "date": "20251223",
+            "close": 267.76,
+            "open": 267.2,
+            "high": 268.85,
+            "low": 267.2
+          },
+          {
+            "date": "20251224",
+            "close": 269.75,
+            "open": 268.21,
+            "high": 270.25,
+            "low": 268.21
+          },
+          {
+            "date": "20251226",
+            "close": 271.5,
+            "open": 270.09,
+            "high": 272.27,
+            "low": 270.09
+          },
+          {
+            "date": "20251229",
+            "close": 272.82,
+            "open": 271.75,
+            "high": 273.65,
+            "low": 271.75
+          },
+          {
+            "date": "20251230",
+            "close": 274.54,
+            "open": 272.73,
+            "high": 274.7,
+            "low": 271.97
+          },
+          {
+            "date": "20251231",
+            "close": 276.24,
+            "open": 274.74,
+            "high": 277.36,
+            "low": 274.74
+          },
+          {
+            "date": "20260102",
+            "close": 278.03,
+            "open": 276.64,
+            "high": 278.8,
+            "low": 276.64
+          },
+          {
+            "date": "20260105",
+            "close": 275.66,
+            "open": 278.74,
+            "high": 281.0,
+            "low": 275.44
+          },
+          {
+            "date": "20260106",
+            "close": 278.97,
+            "open": 276.03,
+            "high": 279.79,
+            "low": 276.03
+          },
+          {
+            "date": "20260107",
+            "close": 281.44,
+            "open": 279.3,
+            "high": 282.81,
+            "low": 279.3
+          },
+          {
+            "date": "20260108",
+            "close": 280.06,
+            "open": 281.65,
+            "high": 283.91,
+            "low": 279.91
+          },
+          {
+            "date": "20260109",
+            "close": 279.85,
+            "open": 280.54,
+            "high": 280.85,
+            "low": 275.67
+          },
+          {
+            "date": "20260112",
+            "close": 286.57,
+            "open": 280.9,
+            "high": 286.57,
+            "low": 280.9
+          },
+          {
+            "date": "20260113",
+            "close": 285.36,
+            "open": 286.9,
+            "high": 288.94,
+            "low": 282.51
+          },
+          {
+            "date": "20260114",
+            "close": 290.6,
+            "open": 286.15,
+            "high": 291.06,
+            "low": 286.15
+          },
+          {
+            "date": "20260115",
+            "close": 291.16,
+            "open": 290.75,
+            "high": 291.67,
+            "low": 289.62
+          },
+          {
+            "date": "20260116",
+            "close": 292.78,
+            "open": 292.16,
+            "high": 294.77,
+            "low": 291.41
+          },
+          {
+            "date": "20260119",
+            "close": 295.11,
+            "open": 293.34,
+            "high": 295.6,
+            "low": 293.34
+          },
+          {
+            "date": "20260120",
+            "close": 297.61,
+            "open": 294.48,
+            "high": 298.02,
+            "low": 292.89
+          },
+          {
+            "date": "20260121",
+            "close": 293.16,
+            "open": 297.28,
+            "high": 299.18,
+            "low": 292.5
+          },
+          {
+            "date": "20260122",
+            "close": 297.82,
+            "open": 294.73,
+            "high": 300.7,
+            "low": 294.73
+          },
+          {
+            "date": "20260123",
+            "close": 299.26,
+            "open": 298.73,
+            "high": 301.16,
+            "low": 297.23
+          },
+          {
+            "date": "20260126",
+            "close": 302.65,
+            "open": 299.88,
+            "high": 302.76,
+            "low": 299.88
+          },
+          {
+            "date": "20260127",
+            "close": 305.26,
+            "open": 303.55,
+            "high": 306.09,
+            "low": 303.55
+          },
+          {
+            "date": "20260128",
+            "close": 309.28,
+            "open": 306.45,
+            "high": 310.12,
+            "low": 306.45
+          },
+          {
+            "date": "20260129",
+            "close": 305.48,
+            "open": 309.23,
+            "high": 311.68,
+            "low": 304.24
+          },
+          {
+            "date": "20260130",
+            "close": 300.78,
+            "open": 305.23,
+            "high": 305.42,
+            "low": 299.29
+          },
+          {
+            "date": "20260202",
+            "close": 294.32,
+            "open": 299.68,
+            "high": 299.68,
+            "low": 292.44
+          },
+          {
+            "date": "20260203",
+            "close": 298.26,
+            "open": 295.49,
+            "high": 301.35,
+            "low": 294.13
+          },
+          {
+            "date": "20260204",
+            "close": 301.52,
+            "open": 298.07,
+            "high": 301.52,
+            "low": 296.57
+          },
+          {
+            "date": "20260205",
+            "close": 296.36,
+            "open": 301.07,
+            "high": 302.62,
+            "low": 296.01
+          },
+          {
+            "date": "20260206",
+            "close": 290.72,
+            "open": 295.93,
+            "high": 295.93,
+            "low": 285.03
+          },
+          {
+            "date": "20260209",
+            "close": 296.62,
+            "open": 291.94,
+            "high": 299.13,
+            "low": 291.94
+          },
+          {
+            "date": "20260210",
+            "close": 296.52,
+            "open": 297.06,
+            "high": 299.47,
+            "low": 295.55
+          },
+          {
+            "date": "20260211",
+            "close": 297.71,
+            "open": 296.48,
+            "high": 298.0,
+            "low": 295.64
+          },
+          {
+            "date": "20260223",
+            "close": 303.83,
+            "open": 298.47,
+            "high": 305.07,
+            "low": 298.47
+          },
+          {
+            "date": "20260224",
+            "close": 311.44,
+            "open": 303.96,
+            "high": 311.51,
+            "low": 303.96
+          },
+          {
+            "date": "20260225",
+            "close": 313.24,
+            "open": 311.76,
+            "high": 313.77,
+            "low": 310.6
+          },
+          {
+            "date": "20260226",
+            "close": 316.73,
+            "open": 313.34,
+            "high": 318.32,
+            "low": 313.34
+          },
+          {
+            "date": "20260302",
+            "close": 316.01,
+            "open": 315.17,
+            "high": 317.85,
+            "low": 308.46
+          },
+          {
+            "date": "20260303",
+            "close": 308.81,
+            "open": 316.39,
+            "high": 321.09,
+            "low": 308.49
+          },
+          {
+            "date": "20260304",
+            "close": 293.8,
+            "open": 307.83,
+            "high": 307.83,
+            "low": 292.5
+          },
+          {
+            "date": "20260305",
+            "close": 304.21,
+            "open": 295.61,
+            "high": 308.45,
+            "low": 295.61
+          },
+          {
+            "date": "20260306",
+            "close": 306.49,
+            "open": 304.36,
+            "high": 308.18,
+            "low": 302.14
+          },
+          {
+            "date": "20260309",
+            "close": 288.96,
+            "open": 302.89,
+            "high": 302.89,
+            "low": 285.18
+          },
+          {
+            "date": "20260310",
+            "close": 297.53,
+            "open": 290.63,
+            "high": 300.08,
+            "low": 290.63
+          },
+          {
+            "date": "20260311",
+            "close": 311.5,
+            "open": 298.49,
+            "high": 312.16,
+            "low": 298.49
+          },
+          {
+            "date": "20260312",
+            "close": 311.59,
+            "open": 311.7,
+            "high": 315.35,
+            "low": 309.7
+          },
+          {
+            "date": "20260313",
+            "close": 312.9,
+            "open": 311.08,
+            "high": 313.62,
+            "low": 306.07
+          },
+          {
+            "date": "20260316",
+            "close": 317.19,
+            "open": 313.54,
+            "high": 319.22,
+            "low": 313.54
+          },
+          {
+            "date": "20260317",
+            "close": 321.03,
+            "open": 318.02,
+            "high": 323.93,
+            "low": 318.02
+          },
+          {
+            "date": "20260318",
+            "close": 329.4,
+            "open": 322.46,
+            "high": 330.12,
+            "low": 322.46
+          },
+          {
+            "date": "20260319",
+            "close": 329.79,
+            "open": 329.18,
+            "high": 332.84,
+            "low": 326.54
+          },
+          {
+            "date": "20260320",
+            "close": 328.4,
+            "open": 330.3,
+            "high": 334.64,
+            "low": 325.61
+          },
+          {
+            "date": "20260323",
+            "close": 317.02,
+            "open": 326.69,
+            "high": 326.69,
+            "low": 316.71
+          },
+          {
+            "date": "20260324",
+            "close": 312.74,
+            "open": 318.16,
+            "high": 324.29,
+            "low": 310.18
+          },
+          {
+            "date": "20260325",
+            "close": 324.87,
+            "open": 313.77,
+            "high": 325.32,
+            "low": 313.77
+          },
+          {
+            "date": "20260326",
+            "close": 322.8,
+            "open": 325.05,
+            "high": 330.67,
+            "low": 322.8
+          },
+          {
+            "date": "20260327",
+            "close": 325.0,
+            "open": 322.38,
+            "high": 325.0,
+            "low": 316.28
+          },
+          {
+            "date": "20260330",
+            "close": 320.4,
+            "open": 324.44,
+            "high": 324.44,
+            "low": 316.05
+          },
+          {
+            "date": "20260331",
+            "close": 307.73,
+            "open": 319.92,
+            "high": 319.92,
+            "low": 307.0
+          },
+          {
+            "date": "20260401",
+            "close": 321.19,
+            "open": 309.5,
+            "high": 321.9,
+            "low": 309.5
+          },
+          {
+            "date": "20260402",
+            "close": 317.9,
+            "open": 321.61,
+            "high": 327.12,
+            "low": 317.77
+          },
+          {
+            "date": "20260407",
+            "close": 325.61,
+            "open": 318.81,
+            "high": 326.69,
+            "low": 318.81
+          },
+          {
+            "date": "20260408",
+            "close": 341.2,
+            "open": 326.79,
+            "high": 341.2,
+            "low": 326.79
+          },
+          {
+            "date": "20260409",
+            "close": 342.57,
+            "open": 341.51,
+            "high": 345.83,
+            "low": 341.51
+          },
+          {
+            "date": "20260410",
+            "close": 349.5,
+            "open": 343.67,
+            "high": 349.83,
+            "low": 343.67
+          },
+          {
+            "date": "20260413",
+            "close": 352.23,
+            "open": 350.13,
+            "high": 353.74,
+            "low": 349.84
+          },
+          {
+            "date": "20260414",
+            "close": 356.0,
+            "open": 353.07,
+            "high": 359.65,
+            "low": 353.07
+          },
+          {
+            "date": "20260415",
+            "close": 359.86,
+            "open": 356.22,
+            "high": 361.99,
+            "low": 356.22
+          },
+          {
+            "date": "20260416",
+            "close": 365.96,
+            "open": 360.18,
+            "high": 366.27,
+            "low": 360.18
+          },
+          {
+            "date": "20260417",
+            "close": 372.34,
+            "open": 366.18,
+            "high": 374.75,
+            "low": 366.18
+          },
+          {
+            "date": "20260420",
+            "close": 383.5,
+            "open": 373.17,
+            "high": 385.17,
+            "low": 373.17
+          },
+          {
+            "date": "20260421",
+            "close": 390.57,
+            "open": 384.43,
+            "high": 392.28,
+            "low": 383.66
+          },
+          {
+            "date": "20260422",
+            "close": 395.08,
+            "open": 391.0,
+            "high": 397.99,
+            "low": 391.0
+          },
+          {
+            "date": "20260423",
+            "close": 381.32,
+            "open": 396.15,
+            "high": 404.55,
+            "low": 371.73
+          },
+          {
+            "date": "20260424",
+            "close": 381.54,
+            "open": 382.56,
+            "high": 391.09,
+            "low": 376.88
+          },
+          {
+            "date": "20260427",
+            "close": 377.05,
+            "open": 382.6,
+            "high": 388.04,
+            "low": 372.31
+          },
+          {
+            "date": "20260428",
+            "close": 382.06,
+            "open": 377.41,
+            "high": 382.38,
+            "low": 374.86
+          },
+          {
+            "date": "20260429",
+            "close": 382.75,
+            "open": 381.7,
+            "high": 383.64,
+            "low": 377.57
+          },
+          {
+            "date": "20260430",
+            "close": 384.58,
+            "open": 383.49,
+            "high": 390.16,
+            "low": 383.49
+          },
+          {
+            "date": "20260504",
+            "close": 398.25,
+            "open": 385.82,
+            "high": 398.43,
+            "low": 385.82
+          },
+          {
+            "date": "20260505",
+            "close": 407.44,
+            "open": 398.61,
+            "high": 407.44,
+            "low": 398.61
+          },
+          {
+            "date": "20260506",
+            "close": 410.29,
+            "open": 408.15,
+            "high": 416.46,
+            "low": 399.85
+          },
+          {
+            "date": "20260507",
+            "close": 416.41,
+            "open": 410.89,
+            "high": 417.86,
+            "low": 410.89
+          },
+          {
+            "date": "20260508",
+            "close": 409.44,
+            "open": 415.61,
+            "high": 420.38,
+            "low": 402.08
+          },
+          {
+            "date": "20260511",
+            "close": 422.01,
+            "open": 410.24,
+            "high": 422.14,
+            "low": 410.24
+          },
+          {
+            "date": "20260512",
+            "close": 425.71,
+            "open": 423.72,
+            "high": 430.05,
+            "low": 423.06
+          },
+          {
+            "date": "20260513",
+            "close": 420.54,
+            "open": 424.2,
+            "high": 424.2,
+            "low": 414.53
+          },
+          {
+            "date": "20260514",
+            "close": 426.57,
+            "open": 422.74,
+            "high": 431.74,
+            "low": 422.74
+          },
+          {
+            "date": "20260515",
+            "close": 411.18,
+            "open": 427.5,
+            "high": 430.26,
+            "low": 411.18
+          },
+          {
+            "date": "20260518",
+            "close": 409.63,
+            "open": 409.77,
+            "high": 409.98,
+            "low": 398.67
+          },
+          {
+            "date": "20260519",
+            "close": 398.18,
+            "open": 409.18,
+            "high": 409.74,
+            "low": 396.67
+          },
+          {
+            "date": "20260520",
+            "close": 396.42,
+            "open": 398.87,
+            "high": 403.54,
+            "low": 395.31
+          },
+          {
+            "date": "20260521",
+            "close": 409.8,
+            "open": 399.67,
+            "high": 411.91,
+            "low": 399.67
+          },
+          {
+            "date": "20260522",
+            "close": 423.25,
+            "open": 411.78,
+            "high": 423.25,
+            "low": 411.78
+          },
+          {
+            "date": "20260525",
+            "close": 434.99,
+            "open": 426.34,
+            "high": 437.27,
+            "low": 426.34
+          },
+          {
+            "date": "20260526",
+            "close": 439.3,
+            "open": 437.65,
+            "high": 443.26,
+            "low": 432.47
+          },
+          {
+            "date": "20260527",
+            "close": 440.19,
+            "open": 440.92,
+            "high": 449.38,
+            "low": 436.54
+          },
+          {
+            "date": "20260528",
+            "close": 432.48,
+            "open": 440.6,
+            "high": 447.3,
+            "low": 430.08
+          },
+          {
+            "date": "20260529",
+            "close": 443.64,
+            "open": 435.81,
+            "high": 446.86,
+            "low": 435.81
+          },
+          {
+            "date": "20260601",
+            "close": 446.02,
+            "open": 443.97,
+            "high": 451.09,
+            "low": 443.97
+          },
+          {
+            "date": "20260602",
+            "close": 440.64,
+            "open": 446.83,
+            "high": 449.47,
+            "low": 433.71
+          },
+          {
+            "date": "20260603",
+            "close": 446.82,
+            "open": 442.6,
+            "high": 450.18,
+            "low": 442.6
+          },
+          {
+            "date": "20260604",
+            "close": 440.1,
+            "open": 444.98,
+            "high": 445.62,
+            "low": 440.1
+          },
+          {
+            "date": "20260605",
+            "close": 431.07,
+            "open": 438.19,
+            "high": 438.19,
+            "low": 419.44
+          },
+          {
+            "date": "20260608",
+            "close": 412.57,
+            "open": 422.43,
+            "high": 422.43,
+            "low": 395.16
+          },
+          {
+            "date": "20260609",
+            "close": 424.71,
+            "open": 414.05,
+            "high": 424.71,
+            "low": 413.54
+          },
+          {
+            "date": "20260610",
+            "close": 405.91,
+            "open": 422.75,
+            "high": 426.9,
+            "low": 405.4
+          },
+          {
+            "date": "20260611",
+            "close": 407.09,
+            "open": 405.68,
+            "high": 411.07,
+            "low": 392.56
+          },
+          {
+            "date": "20260612",
+            "close": 419.72,
+            "open": 411.35,
+            "high": 424.84,
+            "low": 411.35
+          },
+          {
+            "date": "20260615",
+            "close": 429.37,
+            "open": 423.35,
+            "high": 433.05,
+            "low": 423.35
+          },
+          {
+            "date": "20260616",
+            "close": 430.26,
+            "open": 431.33,
+            "high": 436.66,
+            "low": 429.98
+          },
+          {
+            "date": "20260617",
+            "close": 433.34,
+            "open": 428.97,
+            "high": 433.34,
+            "low": 426.55
+          },
+          {
+            "date": "20260618",
+            "close": 447.06,
+            "open": 434.54,
+            "high": 447.06,
+            "low": 434.54
+          },
+          {
+            "date": "20260622",
+            "close": 453.5,
+            "open": 449.85,
+            "high": 459.56,
+            "low": 449.85
+          },
+          {
+            "date": "20260623",
+            "close": 440.81,
+            "open": 453.91,
+            "high": 456.83,
+            "low": 440.81
+          },
+          {
+            "date": "20260624",
+            "close": 442.09,
+            "open": 438.54,
+            "high": 442.46,
+            "low": 431.79
+          },
+          {
+            "date": "20260625",
+            "close": 439.84,
+            "open": 442.8,
+            "high": 447.63,
+            "low": 438.3
+          },
+          {
+            "date": "20260626",
+            "close": 415.26,
+            "open": 438.84,
+            "high": 438.84,
+            "low": 414.87
+          },
+          {
+            "date": "20260629",
+            "close": 412.93,
+            "open": 414.75,
+            "high": 420.92,
+            "low": 409.3
+          },
+          {
+            "date": "20260630",
+            "close": 426.97,
+            "open": 414.56,
+            "high": 427.96,
+            "low": 414.56
+          },
+          {
+            "date": "20260701",
+            "close": 431.23,
+            "open": 430.29,
+            "high": 437.56,
+            "low": 430.29
+          },
+          {
+            "date": "20260702",
+            "close": 439.51,
+            "open": 429.41,
+            "high": 439.51,
+            "low": 424.2
+          },
+          {
+            "date": "20260703",
+            "close": 445.38,
+            "open": 438.16,
+            "high": 445.97,
+            "low": 435.92
+          },
+          {
+            "date": "20260706",
+            "close": 439.8,
+            "open": 447.13,
+            "high": 454.58,
+            "low": 437.21
+          },
+          {
+            "date": "20260707",
+            "close": 419.47,
+            "open": 439.63,
+            "high": 443.0,
+            "low": 418.45
+          },
+          {
+            "date": "20260708",
+            "close": 421.39,
+            "open": 419.78,
+            "high": 424.2,
+            "low": 413.1
+          },
+          {
+            "date": "20260709",
+            "close": 424.99,
+            "open": 423.45,
+            "high": 432.04,
+            "low": 423.45
+          },
+          {
+            "date": "20260713",
+            "close": 419.9,
+            "open": 428.47,
+            "high": 436.77,
+            "low": 417.55
+          },
+          {
+            "date": "20260714",
+            "close": 407.41,
+            "open": 419.28,
+            "high": 420.37,
+            "low": 390.99
+          },
+          {
+            "date": "20260715",
+            "close": 416.41,
+            "open": 409.91,
+            "high": 417.64,
+            "low": 409.91
+          },
+          {
+            "date": "20260716",
+            "close": 407.01,
+            "open": 414.88,
+            "high": 414.88,
+            "low": 404.89
+          },
+          {
+            "date": "20260717",
+            "close": 378.44,
+            "open": 401.65,
+            "high": 401.65,
+            "low": 378.2
+          },
+          {
+            "date": "20260720",
+            "close": 368.53,
+            "open": 378.15,
+            "high": 378.15,
+            "low": 357.22
+          },
+          {
+            "date": "20260721",
+            "close": 381.96,
+            "open": 369.65,
+            "high": 382.59,
+            "low": 369.65
+          },
+          {
+            "date": "20260722",
+            "close": 395.18,
+            "open": 385.18,
+            "high": 399.07,
+            "low": 385.18
+          },
+          {
+            "date": "20260723",
+            "close": 392.11,
+            "open": 396.21,
+            "high": 399.93,
+            "low": 389.31
+          },
+          {
+            "date": "20260724",
+            "close": 377.63,
+            "open": 390.07,
+            "high": 391.89,
+            "low": 377.54
+          },
+          {
+            "date": "20260727",
+            "close": 378.09,
+            "open": 377.85,
+            "high": 378.9,
+            "low": 369.52
+          },
+          {
+            "date": "20260728",
+            "close": 352.42,
+            "open": 373.42,
+            "high": 373.42,
+            "low": 352.42
+          },
+          {
+            "date": "20260729",
+            "close": 334.24,
+            "open": 352.31,
+            "high": 354.18,
+            "low": 327.79
+          },
+          {
+            "date": "20260730",
+            "close": 326.23,
+            "open": 330.72,
+            "high": 340.7,
+            "low": 322.74
+          },
+          {
+            "date": "20260731",
+            "close": 347.85,
+            "open": 331.88,
+            "high": 348.59,
+            "low": 331.88
+          },
+          {
+            "date": "20260803",
+            "close": 362.89,
+            "open": 349.29,
+            "high": 365.82,
+            "low": 349.14
+          },
+          {
+            "date": "20260804",
+            "close": 375.03,
+            "open": 364.8,
+            "high": 376.61,
+            "low": 364.8
+          },
+          {
+            "date": "20260805",
+            "close": 383.75,
+            "open": 378.69,
+            "high": 390.96,
+            "low": 378.69
+          },
+          {
+            "date": "20260806",
+            "close": 391.37,
+            "open": 383.72,
+            "high": 391.96,
+            "low": 378.5
+          },
+          {
+            "date": "20260807",
+            "close": 384.19,
+            "open": 391.77,
+            "high": 394.28,
+            "low": 382.71
+          },
+          {
+            "date": "20260810",
+            "close": 391.61,
+            "open": 386.32,
+            "high": 396.92,
+            "low": 386.32
+          },
+          {
+            "date": "20260811",
+            "close": 391.68,
+            "open": 390.93,
+            "high": 393.12,
+            "low": 386.09
+          },
+          {
+            "date": "20260812",
+            "close": 402.02,
+            "open": 392.0,
+            "high": 402.12,
+            "low": 392.0
+          },
+          {
+            "date": "20260813",
+            "close": 406.12,
+            "open": 403.76,
+            "high": 411.25,
+            "low": 403.76
+          },
+          {
+            "date": "20260814",
+            "close": 400.95,
+            "open": 406.45,
+            "high": 409.29,
+            "low": 399.48
+          },
+          {
+            "date": "20260817",
+            "close": 398.32,
+            "open": 400.91,
+            "high": 401.03,
+            "low": 395.19
+          },
+          {
+            "date": "20260818",
+            "close": 390.83,
+            "open": 398.61,
+            "high": 400.81,
+            "low": 389.92
+          },
+          {
+            "date": "20260819",
+            "close": 384.79,
+            "open": 387.57,
+            "high": 389.78,
+            "low": 379.93
+          },
+          {
+            "date": "20260820",
+            "close": 389.96,
+            "open": 386.94,
+            "high": 392.69,
+            "low": 383.94
+          },
+          {
+            "date": "20260821",
+            "close": 387.27,
+            "open": 390.13,
+            "high": 390.99,
+            "low": 384.93
+          },
+          {
+            "date": "20260824",
+            "close": 386.1,
+            "open": 388.0,
+            "high": 394.35,
+            "low": 386.1
+          },
+          {
+            "date": "20260825",
+            "close": 389.41,
+            "open": 384.87,
+            "high": 389.41,
+            "low": 377.51
+          },
+          {
+            "date": "20260826",
+            "close": 395.66,
+            "open": 389.13,
+            "high": 395.97,
+            "low": 389.13
+          },
+          {
+            "date": "20260827",
+            "close": 400.38,
+            "open": 397.48,
+            "high": 401.75,
+            "low": 395.73
+          },
+          {
+            "date": "20260828",
+            "close": 402.83,
+            "open": 401.38,
+            "high": 406.24,
+            "low": 399.31
+          },
+          {
+            "date": "20260831",
+            "close": 401.7,
+            "open": 401.75,
+            "high": 401.75,
+            "low": 393.34
+          },
+          {
+            "date": "20260901",
+            "close": 410.77,
+            "open": 402.12,
+            "high": 412.9,
+            "low": 402.12
+          },
+          {
+            "date": "20260902",
+            "close": 406.96,
+            "open": 410.14,
+            "high": 410.97,
+            "low": 406.69
+          },
+          {
+            "date": "20260903",
+            "close": 395.25,
+            "open": 407.5,
+            "high": 411.77,
+            "low": 394.74
+          },
+          {
+            "date": "20260904",
+            "close": 402.48,
+            "open": 398.83,
+            "high": 405.64,
+            "low": 394.59
+          },
+          {
+            "date": "20260907",
+            "close": 409.33,
+            "open": 404.12,
+            "high": 411.23,
+            "low": 404.12
+          },
+          {
+            "date": "20260908",
+            "close": 407.19,
+            "open": 410.21,
+            "high": 414.16,
+            "low": 405.6
+          },
+          {
+            "date": "20260909",
+            "close": 408.09,
+            "open": 410.11,
+            "high": 413.99,
+            "low": 405.51
+          },
+          {
+            "date": "20260910",
+            "close": 405.24,
+            "open": 407.45,
+            "high": 407.45,
+            "low": 403.52
+          },
+          {
+            "date": "20260911",
+            "close": 395.52,
+            "open": 403.04,
+            "high": 403.04,
+            "low": 393.76
+          },
+          {
+            "date": "20260914",
+            "close": 394.67,
+            "open": 393.37,
+            "high": 396.95,
+            "low": 386.91
+          },
+          {
+            "date": "20260915",
+            "close": 388.73,
+            "open": 394.59,
+            "high": 398.02,
+            "low": 388.73
+          },
+          {
+            "date": "20260916",
+            "close": 399.21,
+            "open": 390.02,
+            "high": 399.8,
+            "low": 390.02
+          },
+          {
+            "date": "20260917",
+            "close": 398.17,
+            "open": 400.61,
+            "high": 407.8,
+            "low": 397.65
+          },
+          {
+            "date": "20260918",
+            "close": 412.68,
+            "open": 401.05,
+            "high": 412.68,
+            "low": 401.05
+          },
+          {
+            "date": "20260921",
+            "close": 412.57,
+            "open": 413.21,
+            "high": 414.58,
+            "low": 410.24
+          },
+          {
+            "date": "20260922",
+            "close": 415.17,
+            "open": 414.95,
+            "high": 422.3,
+            "low": 414.78
+          },
+          {
+            "date": "20260923",
+            "close": 413.76,
+            "open": 414.83,
+            "high": 417.3,
+            "low": 411.81
+          },
+          {
+            "date": "20260924",
+            "close": 412.99,
+            "open": 413.22,
+            "high": 413.61,
+            "low": 410.64
+          },
+          {
+            "date": "20260929",
+            "close": 412.25,
+            "open": 412.56,
+            "high": 414.95,
+            "low": 410.45
+          },
+          {
+            "date": "20260930",
+            "close": 417.07,
+            "open": 414.21,
+            "high": 419.03,
+            "low": 414.21
+          },
+          {
+            "date": "20261001",
+            "close": 418.82,
+            "open": 417.48,
+            "high": 421.21,
+            "low": 417.09
+          },
+          {
+            "date": "20261002",
+            "close": 426.93,
+            "open": 419.94,
+            "high": 426.93,
+            "low": 419.94
+          },
+          {
+            "date": "20261005",
+            "close": 432.48,
+            "open": 429.02,
+            "high": 434.17,
+            "low": 429.02
+          },
+          {
+            "date": "20261006",
+            "close": 430.86,
+            "open": 433.06,
+            "high": 434.3,
+            "low": 428.48
+          },
+          {
+            "date": "20261007",
+            "close": 430.46,
+            "open": 431.38,
+            "high": 435.72,
+            "low": 429.72
+          },
+          {
+            "date": "20261008",
+            "close": 426.71,
+            "open": 428.67,
+            "high": 428.67,
+            "low": 420.56
+          },
+          {
+            "date": "20261012",
+            "close": 427.9,
+            "open": 425.61,
+            "high": 428.59,
+            "low": 423.65
+          },
+          {
+            "date": "20261013",
+            "close": 414.31,
+            "open": 425.07,
+            "high": 425.07,
+            "low": 408.39
+          },
+          {
+            "date": "20261014",
+            "close": 420.13,
+            "open": 415.03,
+            "high": 421.67,
+            "low": 415.03
+          },
+          {
+            "date": "20261015",
+            "close": 396.9,
+            "open": 415.3,
+            "high": 415.3,
+            "low": 395.18
+          },
+          {
+            "date": "20261016",
+            "close": 400.26,
+            "open": 397.67,
+            "high": 404.96,
+            "low": 396.8
+          },
+          {
+            "date": "20261019",
+            "close": 394.05,
+            "open": 396.64,
+            "high": 396.64,
+            "low": 384.5
+          },
+          {
+            "date": "20261020",
+            "close": 387.88,
+            "open": 393.73,
+            "high": 398.31,
+            "low": 387.2
+          },
+          {
+            "date": "20261021",
+            "close": 395.42,
+            "open": 390.75,
+            "high": 399.21,
+            "low": 390.75
+          },
+          {
+            "date": "20261022",
+            "close": 381.69,
+            "open": 396.32,
+            "high": 400.3,
+            "low": 381.3
+          }
+        ],
+        "trust_flow_ratio": 0.022939791769117607,
+        "foreign_flow_ratio": -0.007812494523350298,
+        "dealer_flow_ratio": -0.012049618541770156,
+        "institutional_flow_parser_version": "bfi82u_v2",
+        "margin_balance": 623386860.0,
+        "borrowed_balance": 90190248000.0,
+        "tsmc_pe": 27.82,
+        "tsmc_pb": 9.68,
+        "tsmc_dividend_yield": 0.92,
+        "market_pe_median": 17.31,
+        "market_pb_median": 1.66,
+        "market_dividend_yield_median": 2.53,
+        "put_call_volume_ratio": 0.8989,
+        "put_call_oi_ratio": 0.6196,
+        "put_call_sentiment": 0.6196,
+        "taiwan_vix": 29.86,
+        "tx_settlement": 46106.0,
+        "tx_price_source": "settlement",
+        "tx_selected_contract": "202611",
+        "futures_basis": 9.769999999996799,
+        "futures_basis_pct": 0.0002119479185173451,
+        "tx_market_oi": 119940.0,
+        "mtx_market_oi": 37899.0,
+        "tmf_market_oi": 107340.0,
+        "futures_market_oi": 134781.75,
+        "foreign_tx_net": -86043.0,
+        "foreign_tx_long_oi": 9755.0,
+        "foreign_tx_short_oi": 95798.0,
+        "foreign_mtx_net": -2645.0,
+        "foreign_mtx_long_oi": 2035.0,
+        "foreign_mtx_short_oi": 4680.0,
+        "foreign_tmf_net": -7237.0,
+        "foreign_tmf_long_oi": 900.0,
+        "foreign_tmf_short_oi": 8137.0,
+        "foreign_futures_net": -87066.1,
+        "us_vix": 18.39,
+        "us_vix_change_1d": -0.05449871465295619,
+        "us_vix_change_5d": -0.0027114967462039674,
+        "taiex_price_history": [
+          {
+            "date": "2026-07-27",
+            "close": 43634.19140625,
+            "open": 43585.921875,
+            "high": 43686.1484375,
+            "low": 42969.48046875
+          },
+          {
+            "date": "2026-07-28",
+            "close": 41603.359375,
+            "open": 43221.9296875,
+            "high": 43221.9296875,
+            "low": 41565.0
+          },
+          {
+            "date": "2026-07-29",
+            "close": 40039.1796875,
+            "open": 41491.48046875,
+            "high": 41698.390625,
+            "low": 39384.8515625
+          },
+          {
+            "date": "2026-07-30",
+            "close": 39933.30078125,
+            "open": 40048.94140625,
+            "high": 41155.421875,
+            "low": 39404.6484375
+          },
+          {
+            "date": "2026-07-31",
+            "close": 43119.75,
+            "open": 41610.41015625,
+            "high": 43214.359375,
+            "low": 41610.41015625
+          },
+          {
+            "date": "2026-08-03",
+            "close": 43386.41015625,
+            "open": 42780.421875,
+            "high": 43784.19140625,
+            "low": 42780.421875
+          },
+          {
+            "date": "2026-08-04",
+            "close": 43360.66015625,
+            "open": 43092.48828125,
+            "high": 43912.76953125,
+            "low": 42895.80859375
+          },
+          {
+            "date": "2026-08-05",
+            "close": 44611.6015625,
+            "open": 43809.828125,
+            "high": 44980.30859375,
+            "low": 43809.828125
+          },
+          {
+            "date": "2026-08-06",
+            "close": 44396.69921875,
+            "open": 44487.94140625,
+            "high": 44601.23828125,
+            "low": 44024.3203125
+          },
+          {
+            "date": "2026-08-07",
+            "close": 44225.91015625,
+            "open": 44450.19140625,
+            "high": 44827.12890625,
+            "low": 43941.55859375
+          },
+          {
+            "date": "2026-08-10",
+            "close": 44928.76171875,
+            "open": 44540.7109375,
+            "high": 45219.3984375,
+            "low": 44540.7109375
+          },
+          {
+            "date": "2026-08-11",
+            "close": 45120.71875,
+            "open": 44883.8984375,
+            "high": 45195.41015625,
+            "low": 44652.05859375
+          },
+          {
+            "date": "2026-08-12",
+            "close": 45518.0703125,
+            "open": 45175.69921875,
+            "high": 45529.48046875,
+            "low": 45175.69921875
+          },
+          {
+            "date": "2026-08-13",
+            "close": 46021.48046875,
+            "open": 45676.5390625,
+            "high": 46216.41015625,
+            "low": 45676.5390625
+          },
+          {
+            "date": "2026-08-14",
+            "close": 45811.01171875,
+            "open": 46103.80859375,
+            "high": 46402.6015625,
+            "low": 45798.30859375
+          },
+          {
+            "date": "2026-08-17",
+            "close": 45857.26953125,
+            "open": 45841.171875,
+            "high": 46189.30078125,
+            "low": 45765.0703125
+          },
+          {
+            "date": "2026-08-18",
+            "close": 45308.6796875,
+            "open": 45922.3984375,
+            "high": 46064.08984375,
+            "low": 45225.421875
+          },
+          {
+            "date": "2026-08-19",
+            "close": 44719.3515625,
+            "open": 45071.33984375,
+            "high": 45071.33984375,
+            "low": 44308.7109375
+          },
+          {
+            "date": "2026-08-20",
+            "close": 44933.73828125,
+            "open": 44942.01171875,
+            "high": 45160.05078125,
+            "low": 44446.359375
+          },
+          {
+            "date": "2026-08-21",
+            "close": 45224.2890625,
+            "open": 44923.33984375,
+            "high": 45254.83984375,
+            "low": 44583.87109375
+          },
+          {
+            "date": "2026-08-24",
+            "close": 44762.3203125,
+            "open": 45240.30078125,
+            "high": 45362.30078125,
+            "low": 44761.87890625
+          },
+          {
+            "date": "2026-08-25",
+            "close": 45169.4609375,
+            "open": 44728.359375,
+            "high": 45169.4609375,
+            "low": 44210.30859375
+          },
+          {
+            "date": "2026-08-26",
+            "close": 45832.62109375,
+            "open": 45157.640625,
+            "high": 45878.390625,
+            "low": 44925.83984375
+          },
+          {
+            "date": "2026-08-27",
+            "close": 45975.21875,
+            "open": 45890.1796875,
+            "high": 46401.78125,
+            "low": 45890.1796875
+          },
+          {
+            "date": "2026-08-28",
+            "close": 46331.44921875,
+            "open": 46070.828125,
+            "high": 46574.51953125,
+            "low": 46070.828125
+          },
+          {
+            "date": "2026-08-31",
+            "close": 46128.46875,
+            "open": 46224.69140625,
+            "high": 46224.69140625,
+            "low": 45450.2109375
+          },
+          {
+            "date": "2026-09-01",
+            "close": 46948.71875,
+            "open": 46177.109375,
+            "high": 46948.71875,
+            "low": 46081.109375
+          },
+          {
+            "date": "2026-09-02",
+            "close": 46164.71875,
+            "open": 46901.3203125,
+            "high": 46946.6015625,
+            "low": 46164.71875
+          },
+          {
+            "date": "2026-09-03",
+            "close": 45857.66015625,
+            "open": 46325.48046875,
+            "high": 46517.44921875,
+            "low": 45839.359375
+          },
+          {
+            "date": "2026-09-04",
+            "close": 46551.12890625,
+            "open": 45991.28125,
+            "high": 46620.9609375,
+            "low": 45966.859375
+          },
+          {
+            "date": "2026-09-07",
+            "close": 47326.26953125,
+            "open": 46724.0,
+            "high": 47429.578125,
+            "low": 46724.0
+          },
+          {
+            "date": "2026-09-08",
+            "close": 47105.78125,
+            "open": 47335.23828125,
+            "high": 47578.23828125,
+            "low": 47023.73046875
+          },
+          {
+            "date": "2026-09-09",
+            "close": 47183.359375,
+            "open": 47142.73828125,
+            "high": 47548.26171875,
+            "low": 47060.78125
+          },
+          {
+            "date": "2026-09-10",
+            "close": 46940.48828125,
+            "open": 47130.9609375,
+            "high": 47130.9609375,
+            "low": 46573.46875
+          },
+          {
+            "date": "2026-09-11",
+            "close": 46184.8515625,
+            "open": 46651.2109375,
+            "high": 46651.2109375,
+            "low": 45942.44140625
+          },
+          {
+            "date": "2026-09-14",
+            "close": 45862.51953125,
+            "open": 46010.73828125,
+            "high": 46050.23828125,
+            "low": 45398.4296875
+          },
+          {
+            "date": "2026-09-15",
+            "close": 45511.48828125,
+            "open": 45847.26953125,
+            "high": 46009.8515625,
+            "low": 45491.96875
+          },
+          {
+            "date": "2026-09-16",
+            "close": 45848.8984375,
+            "open": 45546.55859375,
+            "high": 46077.8203125,
+            "low": 45546.55859375
+          },
+          {
+            "date": "2026-09-17",
+            "close": 46288.0,
+            "open": 45936.109375,
+            "high": 46874.83984375,
+            "low": 45936.109375
+          },
+          {
+            "date": "2026-09-18",
+            "close": 47180.75,
+            "open": 46449.55859375,
+            "high": 47180.75,
+            "low": 46449.55859375
+          },
+          {
+            "date": "2026-09-21",
+            "close": 47718.83984375,
+            "open": 47207.30078125,
+            "high": 47750.98046875,
+            "low": 47207.30078125
+          },
+          {
+            "date": "2026-09-22",
+            "close": 47800.171875,
+            "open": 47981.0390625,
+            "high": 48601.53125,
+            "low": 47800.171875
+          },
+          {
+            "date": "2026-09-23",
+            "close": 48157.2890625,
+            "open": 47894.76953125,
+            "high": 48341.55859375,
+            "low": 47894.76953125
+          },
+          {
+            "date": "2026-09-24",
+            "close": 48024.6015625,
+            "open": 48075.390625,
+            "high": 48117.5390625,
+            "low": 47754.71875
+          },
+          {
+            "date": "2026-09-29",
+            "close": 47631.9609375,
+            "open": 47873.890625,
+            "high": 48045.12890625,
+            "low": 47573.08984375
+          },
+          {
+            "date": "2026-09-30",
+            "close": 47940.12890625,
+            "open": 47767.48828125,
+            "high": 48379.7109375,
+            "low": 47767.48828125
+          },
+          {
+            "date": "2026-10-01",
+            "close": 48353.48828125,
+            "open": 47961.98046875,
+            "high": 48353.48828125,
+            "low": 47893.421875
+          },
+          {
+            "date": "2026-10-02",
+            "close": 48475.73828125,
+            "open": 48390.6484375,
+            "high": 48491.62109375,
+            "low": 48205.80859375
+          },
+          {
+            "date": "2026-10-05",
+            "close": 49712.0390625,
+            "open": 48574.94921875,
+            "high": 49770.66015625,
+            "low": 48574.94921875
+          },
+          {
+            "date": "2026-10-06",
+            "close": 49822.55078125,
+            "open": 49736.37109375,
+            "high": 49968.921875,
+            "low": 49479.69140625
+          },
+          {
+            "date": "2026-10-07",
+            "close": 49806.37109375,
+            "open": 49857.3203125,
+            "high": 49966.890625,
+            "low": 49567.51953125
+          },
+          {
+            "date": "2026-10-08",
+            "close": 49313.44140625,
+            "open": 49783.05859375,
+            "high": 49783.05859375,
+            "low": 49189.76953125
+          },
+          {
+            "date": "2026-10-12",
+            "close": 49301.9609375,
+            "open": 49272.078125,
+            "high": 49412.8984375,
+            "low": 48768.8203125
+          },
+          {
+            "date": "2026-10-13",
+            "close": 48341.30859375,
+            "open": 49126.26953125,
+            "high": 49126.26953125,
+            "low": 48066.359375
+          },
+          {
+            "date": "2026-10-14",
+            "close": 48625.828125,
+            "open": 48382.640625,
+            "high": 49059.12109375,
+            "low": 48382.640625
+          },
+          {
+            "date": "2026-10-15",
+            "close": 46969.87109375,
+            "open": 48382.75,
+            "high": 48382.75,
+            "low": 46795.37890625
+          },
+          {
+            "date": "2026-10-16",
+            "close": 47111.26171875,
+            "open": 46995.03125,
+            "high": 47520.6015625,
+            "low": 46995.03125
+          },
+          {
+            "date": "2026-10-19",
+            "close": 46822.078125,
+            "open": 46844.640625,
+            "high": 46844.640625,
+            "low": 46170.0
+          },
+          {
+            "date": "2026-10-20",
+            "close": 46292.9296875,
+            "open": 46712.5703125,
+            "high": 46967.91015625,
+            "low": 46163.03125
+          },
+          {
+            "date": "2026-10-21",
+            "close": 46887.76953125,
+            "open": 46454.328125,
+            "high": 47254.9296875,
+            "low": 46454.328125
+          },
+          {
+            "date": "2026-10-22",
+            "close": 46041.4296875,
+            "open": 46942.75,
+            "high": 47332.1796875,
+            "low": 46041.4296875
+          }
+        ],
+        "sox_return_1d": 0.03526877415365459,
+        "sox_return_5d": 0.016887961967770204,
+        "sox_return_20d": -0.0914383874125636,
+        "sox_relative_nasdaq": 0.014305384685580735,
+        "usd_twd": 32.402000427246094,
+        "usd_twd_change_5d": -0.0024076603531156815,
+        "tsm_adr_close": 437.760009765625,
+        "tsm_adr_equivalent_twd": 2836.860004691407,
+        "tsm_adr_premium": 0.1820250019547529,
+        "overseas_data_stale": true,
+        "_tpex_limit_breadth": 0.0045871559633027525,
+        "limit_breadth": 0.005646817248459959,
+        "limit_strength_proxy": 0.6505875661411494,
+        "limit_up_percentile_5y": 51.34920634920635,
+        "limit_down_percentile_5y": 91.98412698412699,
+        "option_pressure_balance": -0.03194444444444444,
+        "rotation_score": 0.9112581981295816,
+        "taiex_ma20_gap": -0.039389982339584684,
+        "taiex_ma60_gap": -0.0026072234077557654,
+        "taiex_ma120_gap": 0.06433490786135954,
+        "taiex_ma240_gap": 0.33248310650166646,
+        "taiex_daily_return_proxy": 0.0011902323624615185,
+        "volume_price_confirmation": 0.001267562387382433,
+        "otc_ma20_gap": -0.0773801196340177,
+        "otc_daily_return_proxy": -0.006523618643401785,
+        "tpex_breadth_proxy": 0.0045871559633027525,
+        "foreign_futures_level_score": 5.100234217854152,
+        "foreign_futures_change_score": 76.31116390791752,
+        "foreign_futures_share_score": 15.423544942861358,
+        "foreign_futures_persistence_score": 80.0,
+        "foreign_futures_persistence": 0.6,
+        "foreign_futures_market_share": -0.6459784058301662,
+        "foreign_futures_change_5d": 7011.649999999994,
+        "foreign_futures_change_5d_share": 0.05202225078692029,
+        "foreign_futures_scheme7_score": 36.01815184808919,
+        "margin_daily_change_proxy": -0.016554097178625438,
+        "margin_price_divergence_proxy": -0.017744329541086956,
+        "margin_turnover_pressure_proxy": 0.6058319798643285,
+        "margin_20d_change": 0.030627585990089967,
+        "margin_price_divergence": 0.0,
+        "borrowed_balance_daily_change_proxy": 0.015782644240626142,
+        "taiwan_vix_level_proxy": 29.86,
+        "taiwan_vix_change_5d": 0.13406760349411329,
+        "taiwan_vix_percentile": 98.76984126984127,
+        "market_pe_percentile": 47.33704292527822,
+        "market_pb_percentile": 76.58982511923688,
+        "dividend_yield_percentile": 11.645468998410175,
+        "drawdown_52w": -0.07479183622676877,
+        "limit_contraction": false,
+        "price_reversal": true,
+        "breadth_reversal": false,
+        "institution_reversal": false,
+        "futures_reversal": true,
+        "options_reversal": false,
+        "trade_date": "2026-10-27",
+        "active_feature_mode": "free_official_proxy_v2",
+        "feature_proxy_definitions": {
+          "taiex_daily_return_proxy": "取代加權指數20／60日均線；使用官方收盤價相對前一有效交易日報酬。",
+          "otc_daily_return_proxy": "取代櫃買20日均線；使用櫃買官方指數相對前一有效交易日報酬。",
+          "tpex_breadth_proxy": "取代逐股站上20日線比例；使用上櫃官方漲跌家數淨廣度。",
+          "limit_strength_proxy": "以官方漲停／跌停家數強弱比取對數，保留方向且壓縮極端值。",
+          "margin_daily_change_proxy": "取代20日融資變化；使用官方融資金額相對前一有效交易日變化。",
+          "margin_price_divergence_proxy": "融資日變化減加權指數單日報酬；不是20日背離。",
+          "borrowed_balance_daily_change_proxy": "使用官方借券餘額日變化；不是借券賣出餘額。",
+          "margin_turnover_pressure_proxy": "官方融資金額（仟元換算元）除以當日市場成交值；不是整戶維持率。",
+          "taiwan_vix_level_proxy": "取代五日變化；使用當日TAIWAN VIX水準。",
+          "rotation_score": "資金輪動代理＝1－台積電成交值／上市市場成交值；數值越高代表成交越不集中於台積電，不代表實際資金申購或贖回。",
+          "foreign_futures_scheme7_score": "外資期貨方案七＝部位歷史水位40%＋5日變化30%＋占全市場OI 20%＋方向持續性10%。"
+        },
+        "limit_scoring_enabled": false,
+        "core_data_ready": true
+      },
+      "limits": {
+        "twse": {
+          "market": "twse",
+          "eligible_count": 1076,
+          "limit_up_count": 9,
+          "limit_down_count": 2,
+          "intraday_up_touch_count": null,
+          "intraday_down_touch_count": null,
+          "limit_up_ratio": 0.008364312267657992,
+          "limit_down_ratio": 0.0018587360594795538,
+          "limit_breadth": 0.006505576208178439,
+          "strength_ratio": 3.3333333333333335,
+          "up_percentile_1y": 23.015873015873016,
+          "down_percentile_1y": 64.28571428571429,
+          "up_percentile_5y": 42.857142857142854,
+          "down_percentile_5y": 66.34920634920636,
+          "up_percentile_full": 48.92601431980907,
+          "down_percentile_full": 69.03341288782816,
+          "up_historical_rank": 857,
+          "down_historical_rank": 520,
+          "universe_verified": false,
+          "calculation_method": "official_market_aggregate"
+        },
+        "tpex": {
+          "market": "tpex",
+          "eligible_count": 872,
+          "limit_up_count": 13,
+          "limit_down_count": 9,
+          "intraday_up_touch_count": null,
+          "intraday_down_touch_count": null,
+          "limit_up_ratio": 0.014908256880733946,
+          "limit_down_ratio": 0.010321100917431193,
+          "limit_breadth": 0.0045871559633027525,
+          "strength_ratio": 1.4,
+          "up_percentile_1y": 54.36507936507937,
+          "down_percentile_1y": 96.42857142857143,
+          "up_percentile_5y": 58.96825396825397,
+          "down_percentile_5y": 95.39682539682539,
+          "up_percentile_full": 60.859188544152744,
+          "down_percentile_full": 95.88305489260144,
+          "up_historical_rank": 657,
+          "down_historical_rank": 70,
+          "universe_verified": false,
+          "calculation_method": "official_market_highlight"
+        },
+        "combined": {
+          "market": "combined",
+          "eligible_count": 1948,
+          "limit_up_count": 22,
+          "limit_down_count": 11,
+          "intraday_up_touch_count": null,
+          "intraday_down_touch_count": null,
+          "limit_up_ratio": 0.011293634496919919,
+          "limit_down_ratio": 0.005646817248459959,
+          "limit_breadth": 0.005646817248459959,
+          "strength_ratio": 1.9166666666666667,
+          "up_percentile_1y": 36.507936507936506,
+          "down_percentile_1y": 92.06349206349206,
+          "up_percentile_5y": 51.34920634920635,
+          "down_percentile_5y": 91.98412698412699,
+          "up_percentile_full": 55.78758949880668,
+          "down_percentile_full": 93.07875894988067,
+          "up_historical_rank": 742,
+          "down_historical_rank": 117,
+          "universe_verified": false,
+          "calculation_method": "combined_mixed_scope"
+        }
+      }
+    },
+    {
+      "trade_date": "2026-10-28",
+      "composite_score": 53.44,
+      "taiex_close": 47035.58
     }
   ],
-  "limit_up_count": 22,
-  "limit_down_count": 11,
-  "limit_up_ratio": 0.011293634496919919,
-  "limit_down_ratio": 0.005646817248459959,
-  "limit_breadth": 0.005646817248459959,
-  "limit_up_percentile_1y": 36.507936507936506,
-  "limit_down_percentile_1y": 92.06349206349206,
-  "limit_up_percentile_5y": 51.34920634920635,
-  "limit_down_percentile_5y": 91.98412698412699,
-  "limit_up_percentile_full": 55.78758949880668,
-  "limit_down_percentile_full": 93.07875894988067,
-  "limit_up_historical_rank": 742,
-  "limit_down_historical_rank": 117,
+  "limit_up_count": 63,
+  "limit_down_count": 2,
+  "limit_up_ratio": 0.03225806451612903,
+  "limit_down_ratio": 0.0010240655401945725,
+  "limit_breadth": 0.03123399897593446,
+  "limit_up_percentile_1y": 91.66666666666667,
+  "limit_down_percentile_1y": 42.857142857142854,
+  "limit_up_percentile_5y": 96.98412698412699,
+  "limit_down_percentile_5y": 39.84126984126984,
+  "limit_up_percentile_full": 97.7340488968396,
+  "limit_down_percentile_full": 38.938580799045916,
+  "limit_up_historical_rank": 39,
+  "limit_down_historical_rank": 1025,
   "intraday_limit_touch_counts": {
     "up": null,
     "down": null
   },
-  "volume_regime": 0.001267562387382433,
-  "capital_rotation": 0.9112581981295816,
+  "volume_regime": 0.015873825446227344,
+  "capital_rotation": 0.9291309624539175,
   "futures_basis": {
-    "points": 9.769999999996799,
-    "percent": 0.0002119479185173451
+    "points": 213.41999999999825,
+    "percent": 0.004537416143268526
   },
   "foreign_futures_scheme7": {
-    "score": 36.01815184808919,
-    "net_equivalent_contracts": -87066.1,
-    "change_5d": 7011.649999999994,
-    "market_oi_equivalent_contracts": 134781.75,
-    "market_share": -0.6459784058301662,
-    "level_score": 5.100234217854152,
-    "change_score": 76.31116390791752,
-    "share_score": 15.423544942861358,
+    "score": 37.54156139319782,
+    "net_equivalent_contracts": -84535.45,
+    "change_5d": 6522.949999999997,
+    "market_oi_equivalent_contracts": 136551.85,
+    "market_share": -0.6190721692895409,
+    "level_score": 6.918055387597294,
+    "change_score": 74.83002788899864,
+    "share_score": 21.626654357296527,
     "persistence_score": 80.0,
     "weights": {
       "level": 0.4,
@@ -96198,37 +98364,37 @@
     "short_long_ratio": null,
     "label": "非三大法人部位代理"
   },
-  "taiwan_vix": 29.86,
-  "us_vix": 18.39,
-  "tsm_adr_premium": 0.1820250019547529,
+  "taiwan_vix": 27.42,
+  "us_vix": 17.52,
+  "tsm_adr_premium": 0.1704813627135584,
   "sox_change": {
-    "1d": 0.03526877415365459,
-    "5d": 0.016887961967770204,
-    "20d": -0.0914383874125636
+    "1d": 0.014453124999999956,
+    "5d": 0.012419946776749402,
+    "20d": -0.07761434743301865
   },
   "margin_stress": {
     "proxy": null,
     "percentile": null
   },
   "securities_lending": {
-    "borrowed_balance": 90190248000.0,
+    "borrowed_balance": 89428536000.0,
     "borrowed_sell_balance": null,
     "borrowed_sell_change": null
   },
   "decision_summary": {
     "version": 1,
     "status": "ready",
-    "signal": "偏空",
-    "synchrony": "兩者偏空，同向確認",
-    "explanation": "加權收盤在20、60日線之下；櫃買收盤在20、60日線之下。加權與櫃買均偏空；以降低多方曝險、保留現金為主，不代表必須放空。",
-    "target_percent": 30,
-    "cash_percent": 70,
-    "change_text": "較上一份報告增加 5 個百分點",
-    "change_pp": 5,
-    "adjustment_reason": "技術主分數由25.2變為32.0，再依波動風險上限調整。",
-    "previous_generated_at": "2026-10-23T12:39:05.593806+08:00",
-    "valid_until": "2026-10-28T08:45:00+08:00",
-    "data_date": "2026-10-27",
+    "signal": "觀望",
+    "synchrony": "方向尚未一致",
+    "explanation": "加權收盤介於20、60日線之間；櫃買收盤在20、60日線之下。加權與櫃買方向分歧或仍在盤整，等待同向確認；觀望不等於全數出清。",
+    "target_percent": 48,
+    "cash_percent": 52,
+    "change_text": "較上一份報告增加 18 個百分點",
+    "change_pp": 18,
+    "adjustment_reason": "技術主分數由32.0變為49.9，再依波動風險上限調整。",
+    "previous_generated_at": "2026-10-28T13:29:46.938987+08:00",
+    "valid_until": "2026-10-29T08:45:00+08:00",
+    "data_date": "2026-10-28",
     "exposure_note": "模型研究值，未經完整十年策略驗證；不是個人化最佳水位。",
     "leveraged": false
   }
