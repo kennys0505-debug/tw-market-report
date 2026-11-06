@@ -2,22 +2,22 @@
   "method": "rolling downside-extreme reversal study",
   "minimum_samples": 30,
   "baseline_10d": {
-    "samples": 1,
-    "average_return": -0.043639252141851825,
-    "median_return": -0.043639252141851825,
+    "samples": 2,
+    "average_return": -0.0727799995015988,
+    "median_return": -0.0727799995015988,
     "up_probability": 0.0,
-    "max_favorable_excursion": 0.0030102276203871625,
-    "max_adverse_excursion": -0.043639252141851825
+    "max_favorable_excursion": 0.009526317047923394,
+    "max_adverse_excursion": -0.0727799995015988
   },
   "limit_augmented_10d": {
-    "samples": 7,
-    "average_return": 0.0294048027009902,
-    "median_return": 0.02307755264483946,
-    "up_probability": 0.7142857142857143,
-    "max_favorable_excursion": 0.04606607393271278,
-    "max_adverse_excursion": -0.011109202970916046
+    "samples": 8,
+    "average_return": 0.012989109005698204,
+    "median_return": 0.020529520331823092,
+    "up_probability": 0.625,
+    "max_favorable_excursion": 0.04231311550055614,
+    "max_adverse_excursion": -0.022460645957219763
   },
-  "hit_rate_improvement_pp": 71.42857142857143,
+  "hit_rate_improvement_pp": 62.5,
   "limit_scoring_enabled": false,
   "diagnostic_only_reason": "insufficient validated samples",
   "limit_horizon_tests": {
@@ -57,12 +57,12 @@
     },
     "3d": {
       "1": {
-        "samples": 102,
-        "average_return": 0.00047518599040433584,
-        "median_return": 0.0007288545424083415,
-        "up_probability": 0.5392156862745098,
-        "max_favorable_excursion": 0.00047518599040433584,
-        "max_adverse_excursion": 0.00047518599040433584
+        "samples": 103,
+        "average_return": 0.00015993250896995212,
+        "median_return": 0.0007009950011422905,
+        "up_probability": 0.5339805825242718,
+        "max_favorable_excursion": 0.00015993250896995212,
+        "max_adverse_excursion": 0.00015993250896995212
       },
       "5": {
         "samples": 101,
@@ -91,12 +91,12 @@
     },
     "5d": {
       "1": {
-        "samples": 99,
-        "average_return": 0.0034259867258825067,
-        "median_return": 0.0028600996081853403,
-        "up_probability": 0.5959595959595959,
-        "max_favorable_excursion": 0.0034259867258825067,
-        "max_adverse_excursion": 0.0034259867258825067
+        "samples": 100,
+        "average_return": 0.0030717676326503097,
+        "median_return": 0.0027628122543001954,
+        "up_probability": 0.59,
+        "max_favorable_excursion": 0.0030717676326503097,
+        "max_adverse_excursion": 0.0030717676326503097
       },
       "5": {
         "samples": 98,
